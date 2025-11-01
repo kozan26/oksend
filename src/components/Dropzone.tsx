@@ -90,6 +90,9 @@ export default function Dropzone({ onFilesUploaded, onError }: DropzoneProps) {
     formData.append('file', file);
 
     const authHeaders = getAuthHeaders();
+    
+    // Debug: Log auth headers (remove in production)
+    console.log('Auth headers:', authHeaders);
 
     // For progress tracking, we'll use XMLHttpRequest as fetch doesn't support progress
     return new Promise((resolve, reject) => {

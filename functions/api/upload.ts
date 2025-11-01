@@ -48,6 +48,13 @@ async function verifyTurnstile(
  */
 function validateAuth(request: Request, env: Env): boolean {
   const authHeader = request.headers.get('X-Auth');
+  // Debug logging (will appear in Cloudflare Functions logs)
+  console.log('Auth check:', {
+    hasPassword: !!env.UPLOAD_PASSWORD,
+    hasHeader: !!authHeader,
+    headerLength: authHeader?.length || 0,
+    passwordLength: env.UPLOAD_PASSWORD?.length || 0,
+  });
   if (!env.UPLOAD_PASSWORD || !authHeader) {
     return false;
   }
