@@ -95,13 +95,6 @@ export default function Dropzone({ onFilesUploaded, onError }: DropzoneProps) {
     return new Promise((resolve, reject) => {
       const xhr = new XMLHttpRequest();
 
-      xhr.upload.addEventListener('progress', (e) => {
-        if (e.lengthComputable) {
-          const percent = Math.round((e.loaded / e.total) * 100);
-          setUploadProgress((prev) => ({ ...prev, [fileId]: percent }));
-        }
-      });
-
       xhr.addEventListener('load', () => {
         if (xhr.status >= 200 && xhr.status < 300) {
           try {
