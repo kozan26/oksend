@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { formatBytes, getShareUrl } from '../lib/utils';
 import { copyToClipboard } from '../lib/copy';
 import type { UploadedFile } from '../App';
+import { MdCheckCircle, MdError } from 'react-icons/md';
 
 interface FileRowProps {
   file: UploadedFile;
@@ -47,10 +48,14 @@ export default function FileRow({ file, baseUrl }: FileRowProps) {
               <span className="text-xs text-blue-600">Uploading...</span>
             )}
             {file.status === 'success' && (
-              <span className="text-xs text-green-600">✓ Uploaded</span>
+              <span className="text-xs text-green-600 flex items-center gap-1">
+                <MdCheckCircle className="w-3 h-3" /> Uploaded
+              </span>
             )}
             {file.status === 'error' && (
-              <span className="text-xs text-red-600">✗ Failed</span>
+              <span className="text-xs text-red-600 flex items-center gap-1">
+                <MdError className="w-3 h-3" /> Failed
+              </span>
             )}
           </div>
           <div className="mt-1 flex items-center space-x-4 text-xs text-gray-500">

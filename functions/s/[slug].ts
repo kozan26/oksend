@@ -18,17 +18,17 @@ function formatBytes(bytes: number): string {
 }
 
 /**
- * Get file icon based on MIME type
+ * Get file icon based on MIME type (Material Icons name)
  */
 function getFileIcon(contentType: string): string {
-  if (contentType.startsWith('image/')) return '🖼️';
-  if (contentType.startsWith('video/')) return '🎥';
-  if (contentType.startsWith('audio/')) return '🎵';
-  if (contentType.startsWith('text/')) return '📄';
-  if (contentType.includes('pdf')) return '📕';
-  if (contentType.includes('zip') || contentType.includes('archive')) return '📦';
-  if (contentType.includes('json')) return '📋';
-  return '📎';
+  if (contentType.startsWith('image/')) return 'image';
+  if (contentType.startsWith('video/')) return 'video_library';
+  if (contentType.startsWith('audio/')) return 'audiotrack';
+  if (contentType.startsWith('text/')) return 'description';
+  if (contentType.includes('pdf')) return 'picture_as_pdf';
+  if (contentType.includes('zip') || contentType.includes('archive')) return 'folder_zip';
+  if (contentType.includes('json')) return 'code';
+  return 'attach_file';
 }
 
 /**
@@ -76,6 +76,7 @@ export const onRequestGet = async (context: PagesFunctionContext<Env>) => {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Link Not Found - oksend</title>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
@@ -103,7 +104,7 @@ export const onRequestGet = async (context: PagesFunctionContext<Env>) => {
 </head>
 <body>
   <div class="container">
-    <div class="icon">🔗</div>
+    <i class="material-icons" style="font-size: 64px; color: #6b7280; margin-bottom: 24px;">link_off</i>
     <h1>Link Not Found</h1>
     <p>This link may have expired or doesn't exist.</p>
   </div>
@@ -165,6 +166,7 @@ export const onRequestGet = async (context: PagesFunctionContext<Env>) => {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>${escapedFilename} - oksend</title>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
@@ -249,15 +251,20 @@ export const onRequestGet = async (context: PagesFunctionContext<Env>) => {
 </head>
 <body>
   <div class="container">
-    ${contentType.startsWith('image/') ? `<img src="${downloadUrl}" alt="${escapedFilename}" class="file-preview" onerror="this.style.display='none'; document.querySelector('.file-icon').style.display='block';">` : ''}
-    <span class="file-icon" style="${contentType.startsWith('image/') ? 'display: none;' : 'display: block;'}">${fileIcon}</span>
+    ${contentType.startsWith('image/') ? `<img src="${downloadUrl}" alt="${escapedFilename}" class="file-preview" onerror="this.style.display='none'; document.querySelector('.file-icon').style.display='flex';">` : ''}
+    <span class="file-icon" style="${contentType.startsWith('image/') ? 'display: none;' : 'display: flex; align-items: center; justify-content: center;'}">
+      <i class="material-icons" style="font-size: 80px; color: #6b7280;">${fileIcon}</i>
+    </span>
     <h1>${escapedFilename}</h1>
     <div class="file-info">
       <div class="file-info-item"><strong>Size:</strong> ${escapedFormattedSize}</div>
       <div class="file-info-item"><strong>Type:</strong> ${escapedContentType}</div>
       ${fileInfo?.lastModified ? `<div class="file-info-item"><strong>Uploaded:</strong> ${escapeHtml(new Date(fileInfo.lastModified).toLocaleDateString())}</div>` : ''}
     </div>
-    <a href="${downloadUrl}" class="download-btn" download="${escapedFilename}">⬇️ Download File</a>
+    <a href="${downloadUrl}" class="download-btn" download="${escapedFilename}">
+      <i class="material-icons" style="vertical-align: middle; margin-right: 8px;">download</i>
+      Download File
+    </a>
     <div class="brand">
       Shared via <a href="${origin}">oksend</a>
     </div>
@@ -281,6 +288,7 @@ export const onRequestGet = async (context: PagesFunctionContext<Env>) => {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Error - oksend</title>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
@@ -308,7 +316,7 @@ export const onRequestGet = async (context: PagesFunctionContext<Env>) => {
 </head>
 <body>
   <div class="container">
-    <div class="icon">⚠️</div>
+    <i class="material-icons" style="font-size: 64px; color: #ef4444; margin-bottom: 24px;">error_outline</i>
     <h1>Something went wrong</h1>
     <p>We encountered an error loading this file.</p>
   </div>

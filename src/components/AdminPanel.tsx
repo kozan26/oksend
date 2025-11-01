@@ -2,6 +2,19 @@ import { useState, useEffect } from 'react';
 import { getAuthHeaders } from '../lib/auth';
 import { formatBytes } from '../lib/utils';
 import { copyToClipboard } from '../lib/copy';
+import {
+  MdImage,
+  MdVideoLibrary,
+  MdAudiotrack,
+  MdDescription,
+  MdPictureAsPdf,
+  MdFolderZip,
+  MdCode,
+  MdAttachFile,
+  MdCheckCircle,
+  MdLink,
+  MdDelete,
+} from 'react-icons/md';
 
 interface FileItem {
   key: string;
@@ -92,15 +105,15 @@ export default function AdminPanel() {
     }
   };
 
-  const getFileIcon = (contentType: string) => {
-    if (contentType.startsWith('image/')) return '🖼️';
-    if (contentType.startsWith('video/')) return '🎥';
-    if (contentType.startsWith('audio/')) return '🎵';
-    if (contentType.startsWith('text/')) return '📄';
-    if (contentType.includes('pdf')) return '📕';
-    if (contentType.includes('zip') || contentType.includes('archive')) return '📦';
-    if (contentType.includes('json')) return '📋';
-    return '📎';
+  const getFileIcon = (contentType: string, className: string = 'w-6 h-6') => {
+    if (contentType.startsWith('image/')) return <MdImage className={className} />;
+    if (contentType.startsWith('video/')) return <MdVideoLibrary className={className} />;
+    if (contentType.startsWith('audio/')) return <MdAudiotrack className={className} />;
+    if (contentType.startsWith('text/')) return <MdDescription className={className} />;
+    if (contentType.includes('pdf')) return <MdPictureAsPdf className={className} />;
+    if (contentType.includes('zip') || contentType.includes('archive')) return <MdFolderZip className={className} />;
+    if (contentType.includes('json')) return <MdCode className={className} />;
+    return <MdAttachFile className={className} />;
   };
 
   return (
@@ -165,7 +178,7 @@ export default function AdminPanel() {
                   <tr key={file.key} className="hover:bg-gray-50">
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div className="flex items-center">
-                        <span className="text-2xl mr-3">{getFileIcon(file.contentType)}</span>
+                        <span className="text-gray-600 mr-3">{getFileIcon(file.contentType, 'w-6 h-6')}</span>
                         <div className="min-w-0 flex-1">
                           <p className="text-sm font-medium text-gray-900 truncate max-w-xs">
                             {file.filename}
@@ -192,10 +205,18 @@ export default function AdminPanel() {
                     <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium space-x-2">
                       <button
                         onClick={() => handleCopyUrl(file.url, file.key)}
-                        className="text-blue-600 hover:text-blue-900 px-3 py-1 rounded hover:bg-blue-50 transition-colors"
+                        className="text-blue-600 hover:text-blue-900 px-3 py-1 rounded hover:bg-blue-50 transition-colors flex items-center gap-1"
                         title="Copy URL"
                       >
-                        {copiedKey === file.key ? '✓ Copied' : '🔗 Copy'}
+                        {copiedKey === file.key ? (
+                          <>
+                            <MdCheckCircle className="w-4 h-4" /> Copied
+                          </>
+                        ) : (
+                          <>
+                            <MdLink className="w-4 h-4" /> Copy
+                          </>
+                        )}
                       </button>
                       <a
                         href={file.url}
@@ -208,10 +229,11 @@ export default function AdminPanel() {
                       <button
                         onClick={() => handleDeleteFile(file.key)}
                         disabled={deleting === file.key}
-                        className="text-red-600 hover:text-red-900 px-3 py-1 rounded hover:bg-red-50 disabled:opacity-50 transition-colors"
+                        className="text-red-600 hover:text-red-900 px-3 py-1 rounded hover:bg-red-50 disabled:opacity-50 transition-colors flex items-center gap-1"
                         title="Delete file"
                       >
-                        {deleting === file.key ? '...' : '🗑️ Delete'}
+                        <MdDelete className="w-4 h-4" />
+                        {deleting === file.key ? 'Deleting...' : 'Delete'}
                       </button>
                     </td>
                   </tr>

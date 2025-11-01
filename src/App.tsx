@@ -5,6 +5,7 @@ import AdminPanel from './components/AdminPanel';
 import Toast from './components/Toast';
 import { hasPassword, setPassword } from './lib/auth';
 import type { ToastMessage } from './components/Toast';
+import { MdCloudUpload, MdSettings } from 'react-icons/md';
 
 export interface UploadedFile {
   key: string;
@@ -121,23 +122,25 @@ function App() {
             <nav className="flex gap-2">
               <button
                 onClick={() => setCurrentView('upload')}
-                className={`px-4 py-2 rounded-lg font-medium transition-colors ${
+                className={`px-4 py-2 rounded-lg font-medium transition-colors flex items-center gap-2 ${
                   currentView === 'upload'
                     ? 'bg-blue-600 text-white shadow-md'
                     : 'text-gray-600 hover:bg-gray-100'
                 }`}
               >
-                📤 Upload
+                <MdCloudUpload className="w-5 h-5" />
+                Upload
               </button>
               <button
                 onClick={() => setCurrentView('admin')}
-                className={`px-4 py-2 rounded-lg font-medium transition-colors ${
+                className={`px-4 py-2 rounded-lg font-medium transition-colors flex items-center gap-2 ${
                   currentView === 'admin'
                     ? 'bg-blue-600 text-white shadow-md'
                     : 'text-gray-600 hover:bg-gray-100'
                 }`}
               >
-                ⚙️ Admin
+                <MdSettings className="w-5 h-5" />
+                Admin
               </button>
             </nav>
           </div>
