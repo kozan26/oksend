@@ -2,14 +2,54 @@ import type { PagesFunctionContext } from '../types';
 
 interface Env {
   LINKS?: KVNamespace;
+  BUCKET?: R2Bucket;
   BASE_URL?: string;
 }
 
 /**
- * Slug resolution endpoint - redirects short slugs to full download URLs
+ * Format bytes to human-readable string
+ */
+function formatBytes(bytes: number): string {
+  if (bytes === 0) return '0 Bytes';
+  const k = 1024;
+  const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+  const i = Math.floor(Math.log(bytes) / Math.log(k));
+  return Math.round((bytes / Math.pow(k, i)) * 100) / 100 + ' ' + sizes[i];
+}
+
+/**
+ * Get file icon based on MIME type
+ */
+function getFileIcon(contentType: string): string {
+  if (contentType.startsWith('image/')) return '🖼️';
+  if (contentType.startsWith('video/')) return '🎥';
+  if (contentType.startsWith('audio/')) return '🎵';
+  if (contentType.startsWith('text/')) return '📄';
+  if (contentType.includes('pdf')) return '📕';
+  if (contentType.includes('zip') || contentType.includes('archive')) return '📦';
+  if (contentType.includes('json')) return '📋';
+  return '📎';
+}
+
+/**
+ * Escape HTML to prevent XSS
+ */
+function escapeHtml(text: string): string {
+  const map: Record<string, string> = {
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#039;',
+  };
+  return text.replace(/[&<>"']/g, (m) => map[m]);
+}
+
+/**
+ * Slug resolution endpoint - shows a nice landing page with file info and download button
  */
 export const onRequestGet = async (context: PagesFunctionContext<Env>) => {
-  const { env, params } = context;
+  const { request, env, params } = context;
   const slug = params.slug as string;
 
   if (!slug) {
@@ -29,22 +69,255 @@ export const onRequestGet = async (context: PagesFunctionContext<Env>) => {
     const key = await env.LINKS.get(slug);
 
     if (!key) {
-      return new Response('Link not found or expired', { status: 404 });
+      return new Response(
+        `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Link Not Found - oksend</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .container {
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+      padding: 40px;
+      max-width: 500px;
+      width: 100%;
+      text-align: center;
+    }
+    h1 { color: #1f2937; margin-bottom: 16px; font-size: 28px; }
+    p { color: #6b7280; margin-bottom: 24px; font-size: 16px; }
+    .icon { font-size: 64px; margin-bottom: 24px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="icon">🔗</div>
+    <h1>Link Not Found</h1>
+    <p>This link may have expired or doesn't exist.</p>
+  </div>
+</body>
+</html>`,
+        {
+          status: 404,
+          headers: { 'Content-Type': 'text/html' },
+        }
+      );
     }
 
-    // Generate redirect URL - Response.redirect() requires absolute URL
-    const { request } = context;
+    // If bucket is available, get file metadata
+    let fileInfo: {
+      filename: string;
+      size: number;
+      contentType: string;
+      lastModified?: Date;
+    } | null = null;
+
+    if (env.BUCKET) {
+      try {
+        const object = await env.BUCKET.head(key);
+        if (object) {
+          fileInfo = {
+            filename: object.customMetadata?.originalFilename || key.split('/').pop() || 'file',
+            size: object.size,
+            contentType: object.httpMetadata?.contentType || object.customMetadata?.contentType || 'application/octet-stream',
+            lastModified: object.uploaded,
+          };
+        }
+      } catch (error) {
+        console.error('Error fetching file metadata:', error);
+        // Continue without metadata
+      }
+    }
+
+    // Generate download URL
     const url = new URL(request.url);
     const origin = url.origin;
-    const redirectUrl = `${origin}/d/${key}`;
+    const downloadUrl = `${origin}/d/${key}`;
 
-    // Redirect to download endpoint
-    return Response.redirect(redirectUrl, 302);
+    // Get file info or use defaults
+    const filename = fileInfo?.filename || key.split('/').pop() || 'file';
+    const size = fileInfo?.size || 0;
+    const contentType = fileInfo?.contentType || 'application/octet-stream';
+    const fileIcon = getFileIcon(contentType);
+    const formattedSize = size > 0 ? formatBytes(size) : 'Unknown size';
+
+    // Escape user input to prevent XSS
+    const escapedFilename = escapeHtml(filename);
+    const escapedContentType = escapeHtml(contentType);
+    const escapedFormattedSize = escapeHtml(formattedSize);
+
+    // Generate HTML page
+    const html = `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>${escapedFilename} - oksend</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .container {
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+      padding: 40px;
+      max-width: 600px;
+      width: 100%;
+      text-align: center;
+    }
+    .file-icon {
+      font-size: 80px;
+      margin-bottom: 24px;
+      display: block;
+    }
+    .file-preview {
+      max-width: 100%;
+      max-height: 400px;
+      border-radius: 12px;
+      margin: 0 auto 24px;
+      display: block;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    h1 {
+      color: #1f2937;
+      margin-bottom: 12px;
+      font-size: 24px;
+      word-break: break-word;
+      line-height: 1.4;
+    }
+    .file-info {
+      color: #6b7280;
+      margin-bottom: 32px;
+      font-size: 14px;
+    }
+    .file-info-item {
+      margin: 8px 0;
+    }
+    .download-btn {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border: none;
+      padding: 16px 32px;
+      font-size: 16px;
+      font-weight: 600;
+      border-radius: 8px;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+    }
+    .download-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
+    }
+    .download-btn:active {
+      transform: translateY(0);
+    }
+    .brand {
+      margin-top: 32px;
+      padding-top: 24px;
+      border-top: 1px solid #e5e7eb;
+      color: #9ca3af;
+      font-size: 12px;
+    }
+    .brand a {
+      color: #667eea;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    ${contentType.startsWith('image/') ? `<img src="${downloadUrl}" alt="${escapedFilename}" class="file-preview" onerror="this.style.display='none'; document.querySelector('.file-icon').style.display='block';">` : ''}
+    <span class="file-icon" style="${contentType.startsWith('image/') ? 'display: none;' : 'display: block;'}">${fileIcon}</span>
+    <h1>${escapedFilename}</h1>
+    <div class="file-info">
+      <div class="file-info-item"><strong>Size:</strong> ${escapedFormattedSize}</div>
+      <div class="file-info-item"><strong>Type:</strong> ${escapedContentType}</div>
+      ${fileInfo?.lastModified ? `<div class="file-info-item"><strong>Uploaded:</strong> ${escapeHtml(new Date(fileInfo.lastModified).toLocaleDateString())}</div>` : ''}
+    </div>
+    <a href="${downloadUrl}" class="download-btn" download="${escapedFilename}">⬇️ Download File</a>
+    <div class="brand">
+      Shared via <a href="${origin}">oksend</a>
+    </div>
+  </div>
+</body>
+</html>`;
+
+    return new Response(html, {
+      status: 200,
+      headers: {
+        'Content-Type': 'text/html; charset=utf-8',
+        'Cache-Control': 'public, max-age=3600',
+      },
+    });
   } catch (error) {
     console.error('Slug resolution error:', error);
     return new Response(
-      'Internal server error',
-      { status: 500 }
+      `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Error - oksend</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .container {
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+      padding: 40px;
+      max-width: 500px;
+      width: 100%;
+      text-align: center;
+    }
+    .icon { font-size: 64px; margin-bottom: 24px; }
+    h1 { color: #1f2937; margin-bottom: 16px; font-size: 28px; }
+    p { color: #6b7280; font-size: 16px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="icon">⚠️</div>
+    <h1>Something went wrong</h1>
+    <p>We encountered an error loading this file.</p>
+  </div>
+</body>
+</html>`,
+      {
+        status: 500,
+        headers: { 'Content-Type': 'text/html' },
+      }
     );
   }
 };
