@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import Dropzone from './components/Dropzone';
 import FileRow from './components/FileRow';
+import AdminPanel from './components/AdminPanel';
 import Toast from './components/Toast';
 import { hasPassword, setPassword } from './lib/auth';
 import type { ToastMessage } from './components/Toast';
@@ -25,6 +26,7 @@ function App() {
   const [passwordError, setPasswordError] = useState('');
   const [uploadedFiles, setUploadedFiles] = useState<UploadedFile[]>([]);
   const [toasts, setToasts] = useState<ToastMessage[]>([]);
+  const [currentView, setCurrentView] = useState<'upload' | 'admin'>('upload');
 
   useEffect(() => {
     setAuthenticated(hasPassword());
@@ -104,33 +106,71 @@ function App() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <header className="bg-white shadow-sm border-b">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
+      <header className="bg-white shadow-sm border-b sticky top-0 z-10">
         <div className="max-w-7xl mx-auto px-4 py-4">
-          <h1 className="text-2xl font-bold text-gray-900">oksend</h1>
-          <p className="text-sm text-gray-600 mt-1">
-            Simple drag-and-drop file sharing
-          </p>
+          <div className="flex items-center justify-between">
+            <div>
+              <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                oksend
+              </h1>
+              <p className="text-sm text-gray-600 mt-1">
+                Simple drag-and-drop file sharing
+              </p>
+            </div>
+            <nav className="flex gap-2">
+              <button
+                onClick={() => setCurrentView('upload')}
+                className={`px-4 py-2 rounded-lg font-medium transition-colors ${
+                  currentView === 'upload'
+                    ? 'bg-blue-600 text-white shadow-md'
+                    : 'text-gray-600 hover:bg-gray-100'
+                }`}
+              >
+                📤 Upload
+              </button>
+              <button
+                onClick={() => setCurrentView('admin')}
+                className={`px-4 py-2 rounded-lg font-medium transition-colors ${
+                  currentView === 'admin'
+                    ? 'bg-blue-600 text-white shadow-md'
+                    : 'text-gray-600 hover:bg-gray-100'
+                }`}
+              >
+                ⚙️ Admin
+              </button>
+            </nav>
+          </div>
         </div>
       </header>
 
       <main className="max-w-7xl mx-auto px-4 py-8">
-        <Dropzone
-          onFilesUploaded={handleFilesUploaded}
-          onError={handleUploadError}
-        />
+        {currentView === 'upload' ? (
+          <>
+            <Dropzone
+              onFilesUploaded={handleFilesUploaded}
+              onError={handleUploadError}
+            />
 
-        {uploadedFiles.length > 0 && (
-          <div className="mt-8">
-            <h2 className="text-xl font-semibold mb-4">Uploaded Files</h2>
-            <div className="bg-white rounded-lg shadow overflow-hidden">
-              <div className="divide-y divide-gray-200">
-                {uploadedFiles.map((file) => (
-                  <FileRow key={file.key} file={file} />
-                ))}
+            {uploadedFiles.length > 0 && (
+              <div className="mt-8">
+                <div className="bg-white rounded-xl shadow-lg overflow-hidden">
+                  <div className="bg-gradient-to-r from-blue-500 to-purple-600 px-6 py-4">
+                    <h2 className="text-xl font-bold text-white">
+                      Recently Uploaded ({uploadedFiles.length})
+                    </h2>
+                  </div>
+                  <div className="divide-y divide-gray-200">
+                    {uploadedFiles.map((file) => (
+                      <FileRow key={file.key} file={file} />
+                    ))}
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
+            )}
+          </>
+        ) : (
+          <AdminPanel />
         )}
       </main>
 

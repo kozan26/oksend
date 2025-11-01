@@ -149,11 +149,11 @@ export default function Dropzone({ onFilesUploaded, onError }: DropzoneProps) {
         onDragOver={handleDragOver}
         onDragLeave={handleDragLeave}
         onDrop={handleDrop}
-        className={`border-2 border-dashed rounded-lg p-12 text-center transition-colors ${
+        className={`relative border-2 border-dashed rounded-xl p-16 text-center transition-all duration-200 ${
           isDragging
-            ? 'border-blue-500 bg-blue-50'
-            : 'border-gray-300 bg-white hover:border-gray-400'
-        } ${uploading ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`}
+            ? 'border-blue-500 bg-gradient-to-br from-blue-50 to-purple-50 scale-[1.02] shadow-lg'
+            : 'border-gray-300 bg-white hover:border-blue-400 hover:bg-gray-50'
+        } ${uploading ? 'opacity-60 cursor-not-allowed' : 'cursor-pointer'}`}
       >
         <input
           type="file"
@@ -167,31 +167,54 @@ export default function Dropzone({ onFilesUploaded, onError }: DropzoneProps) {
           htmlFor="file-input"
           className="cursor-pointer flex flex-col items-center"
         >
-          <svg
-            className="w-12 h-12 text-gray-400 mb-4"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
-            />
-          </svg>
-          <p className="text-lg font-medium text-gray-700 mb-2">
-            {uploading ? 'Uploading...' : 'Drag and drop files here'}
+          {uploading ? (
+            <div className="mb-6">
+              <div className="inline-block animate-spin rounded-full h-16 w-16 border-4 border-blue-500 border-t-transparent"></div>
+            </div>
+          ) : (
+            <div className="mb-6 relative">
+              <div className="w-20 h-20 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center shadow-lg transform transition-transform hover:scale-110">
+                <svg
+                  className="w-10 h-10 text-white"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
+                  />
+                </svg>
+              </div>
+              {isDragging && (
+                <div className="absolute inset-0 rounded-full bg-blue-400 opacity-20 animate-ping"></div>
+              )}
+            </div>
+          )}
+          <h3 className="text-2xl font-bold text-gray-900 mb-2">
+            {uploading ? 'Uploading files...' : isDragging ? 'Drop files here' : 'Upload Files'}
+          </h3>
+          <p className="text-base text-gray-600 mb-1">
+            {uploading 
+              ? 'Please wait while your files are being uploaded'
+              : 'Drag and drop your files here, or click to browse'}
           </p>
-          <p className="text-sm text-gray-500 mb-4">
-            or click to select files
-          </p>
-          {uploading && (
-            <p className="text-xs text-gray-400">
-              Please wait while files are being uploaded
+          {!uploading && (
+            <p className="text-sm text-gray-500 mt-2">
+              Supports multiple files • No file size limit
             </p>
           )}
         </label>
+        {uploading && (
+          <div className="absolute inset-0 flex items-center justify-center bg-white bg-opacity-80 rounded-xl">
+            <div className="text-center">
+              <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mb-2"></div>
+              <p className="text-sm text-gray-600">Processing...</p>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
