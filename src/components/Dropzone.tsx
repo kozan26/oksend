@@ -111,8 +111,17 @@ export default function Dropzone({ onFilesUploaded, onError }: DropzoneProps) {
             reject(new Error('Invalid response from server'));
           }
         } else {
-          const errorMessage =
-            xhr.responseText || `Upload failed: ${xhr.statusText}`;
+          let errorMessage = xhr.responseText || `Upload failed: ${xhr.statusText}`;
+          try {
+            const errorJson = JSON.parse(xhr.responseText);
+            if (errorJson.reason) {
+              errorMessage = errorJson.reason;
+            } else if (errorJson.error) {
+              errorMessage = errorJson.error;
+            }
+          } catch {
+            // Use the raw error text if JSON parsing fails
+          }
           reject(new Error(errorMessage));
         }
       });
