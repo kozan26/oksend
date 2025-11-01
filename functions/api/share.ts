@@ -1,4 +1,4 @@
-import type { OnRequest } from '@cloudflare/workers-types';
+import type { PagesFunctionContext } from '../types';
 
 interface Env {
   BUCKET: R2Bucket;
@@ -33,7 +33,7 @@ function generateSlug(): string {
 /**
  * Share endpoint - creates a short slug link (optional, requires KV)
  */
-export const onRequestPost: OnRequest<Env> = async (context) => {
+export const onRequestPost = async (context: PagesFunctionContext<Env>) => {
   const { request, env } = context;
 
   // CORS headers
@@ -75,10 +75,10 @@ export const onRequestPost: OnRequest<Env> = async (context) => {
 
   try {
     // Parse request body
-    const body = await request.json<{
+    const body = (await request.json()) as {
       key: string;
       ttl?: number; // TTL in seconds (default 24 hours)
-    }>();
+    };
 
     if (!body || !body.key) {
       return new Response(

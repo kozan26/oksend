@@ -10,9 +10,6 @@ interface DropzoneProps {
 export default function Dropzone({ onFilesUploaded, onError }: DropzoneProps) {
   const [isDragging, setIsDragging] = useState(false);
   const [uploading, setUploading] = useState(false);
-  const [uploadProgress, setUploadProgress] = useState<
-    Record<string, number>
-  >({});
 
   const handleDragOver = useCallback((e: React.DragEvent) => {
     e.preventDefault();
@@ -85,7 +82,6 @@ export default function Dropzone({ onFilesUploaded, onError }: DropzoneProps) {
       onFilesUploaded(uploadedFiles);
     } finally {
       setUploading(false);
-      setUploadProgress({});
     }
   };
 
@@ -94,19 +90,6 @@ export default function Dropzone({ onFilesUploaded, onError }: DropzoneProps) {
     formData.append('file', file);
 
     const authHeaders = getAuthHeaders();
-    const controller = new AbortController();
-
-    // Create a file entry for progress tracking
-    const fileId = `${file.name}-${file.size}`;
-    const tempFile: UploadedFile = {
-      key: '',
-      filename: file.name,
-      size: file.size,
-      contentType: file.type || 'application/octet-stream',
-      url: '',
-      status: 'uploading',
-      progress: 0,
-    };
 
     // For progress tracking, we'll use XMLHttpRequest as fetch doesn't support progress
     return new Promise((resolve, reject) => {

@@ -1,4 +1,4 @@
-import type { OnRequest } from '@cloudflare/workers-types';
+import type { PagesFunctionContext } from '../types';
 
 interface Env {
   BUCKET: R2Bucket;
@@ -19,7 +19,7 @@ function validateAuth(request: Request, env: Env): boolean {
 /**
  * Delete endpoint
  */
-export const onRequestPost: OnRequest<Env> = async (context) => {
+export const onRequestPost = async (context: PagesFunctionContext<Env>) => {
   const { request, env } = context;
 
   // CORS headers
@@ -47,7 +47,7 @@ export const onRequestPost: OnRequest<Env> = async (context) => {
 
   try {
     // Parse request body
-    const body = await request.json<{ key: string }>();
+    const body = (await request.json()) as { key: string };
 
     if (!body || !body.key) {
       return new Response(

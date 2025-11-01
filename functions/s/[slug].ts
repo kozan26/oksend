@@ -1,4 +1,4 @@
-import type { OnRequest } from '@cloudflare/workers-types';
+import type { PagesFunctionContext } from '../types';
 
 interface Env {
   LINKS?: KVNamespace;
@@ -8,8 +8,8 @@ interface Env {
 /**
  * Slug resolution endpoint - redirects short slugs to full download URLs
  */
-export const onRequestGet: OnRequest<Env> = async (context) => {
-  const { request, env, params } = context;
+export const onRequestGet = async (context: PagesFunctionContext<Env>) => {
+  const { env, params } = context;
   const slug = params.slug as string;
 
   if (!slug) {

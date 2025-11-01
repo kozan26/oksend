@@ -1,4 +1,4 @@
-import type { OnRequest } from '@cloudflare/workers-types';
+import type { PagesFunctionContext } from '../types';
 
 interface Env {
   BUCKET: R2Bucket;
@@ -20,7 +20,7 @@ function validateAuth(request: Request, env: Env): boolean {
 /**
  * List endpoint - returns recent files
  */
-export const onRequestGet: OnRequest<Env> = async (context) => {
+export const onRequestGet = async (context: PagesFunctionContext<Env>) => {
   const { request, env } = context;
 
   // CORS headers
@@ -60,7 +60,7 @@ export const onRequestGet: OnRequest<Env> = async (context) => {
     const baseUrl = env.BASE_URL || '';
 
     // Format response
-    const items = listResult.objects.map((obj) => ({
+    const items = listResult.objects.map((obj: any) => ({
       key: obj.key,
       size: obj.size,
       contentType:
@@ -71,7 +71,7 @@ export const onRequestGet: OnRequest<Env> = async (context) => {
     }));
 
     // Sort by lastModified (newest first)
-    items.sort((a, b) => {
+    items.sort((a: any, b: any) => {
       return new Date(b.lastModified).getTime() - new Date(a.lastModified).getTime();
     });
 

@@ -1,4 +1,4 @@
-import type { OnRequest } from '@cloudflare/workers-types';
+import type { PagesFunctionContext } from '../types';
 
 interface Env {
   BUCKET: R2Bucket;
@@ -7,7 +7,7 @@ interface Env {
 /**
  * Download endpoint - streams files from R2
  */
-export const onRequestGet: OnRequest<Env> = async (context) => {
+export const onRequestGet = async (context: PagesFunctionContext<Env>) => {
   const { request, env, params } = context;
   const key = params.key as string;
 

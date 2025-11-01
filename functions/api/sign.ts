@@ -1,4 +1,4 @@
-import type { OnRequest } from '@cloudflare/workers-types';
+import type { PagesFunctionContext } from '../types';
 
 interface Env {
   BUCKET: R2Bucket;
@@ -23,7 +23,7 @@ function validateAuth(request: Request, env: Env): boolean {
  * This endpoint will generate presigned URLs for direct-to-R2 uploads,
  * bypassing Worker body size limits. Not yet implemented.
  */
-export const onRequestPost: OnRequest<Env> = async (context) => {
+export const onRequestPost = async (context: PagesFunctionContext<Env>) => {
   const { request, env } = context;
 
   // CORS headers
