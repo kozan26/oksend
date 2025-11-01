@@ -1,10 +1,12 @@
 name = "oksend"
 compatibility_date = "2024-10-01"
+pages_build_output_dir = "dist"
 
 # R2 bucket binding (create bucket in Cloudflare dashboard first)
-[[r2_buckets]]
-binding = "BUCKET"
-bucket_name = "oksend-bucket"
+# Note: For Cloudflare Pages, configure bindings in the dashboard, not here
+# [[r2_buckets]]
+# binding = "BUCKET"
+# bucket_name = "oksend-bucket"
 
 # Optional: KV namespace for slug-based links
 # Uncomment and set id after creating KV namespace
