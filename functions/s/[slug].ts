@@ -32,11 +32,11 @@ export const onRequestGet = async (context: PagesFunctionContext<Env>) => {
       return new Response('Link not found or expired', { status: 404 });
     }
 
-    // Generate redirect URL
-    const baseUrl = env.BASE_URL || '';
-    const redirectUrl = baseUrl
-      ? `${baseUrl}/d/${key}`
-      : `/d/${key}`;
+    // Generate redirect URL - Response.redirect() requires absolute URL
+    const { request } = context;
+    const url = new URL(request.url);
+    const origin = url.origin;
+    const redirectUrl = `${origin}/d/${key}`;
 
     // Redirect to download endpoint
     return Response.redirect(redirectUrl, 302);
