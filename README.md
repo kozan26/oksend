@@ -134,7 +134,30 @@ This generates the production build in the `dist/` directory.
 
 ### 5. Configure Environment Variables
 
-In Pages → Settings → Environment variables, add:
+**Finding Environment Variables in Cloudflare Pages:**
+
+1. Go to https://dash.cloudflare.com and log in
+2. Navigate to **Workers & Pages** → **Pages** in the left sidebar
+3. Click on your project name (**"oksend"**)
+4. Click the **"Settings"** tab at the top
+5. Look for **"Environment variables"** in the left sidebar (under Settings) OR scroll down in the Settings page
+6. If you still can't see it, make sure you have Admin/Owner permissions on the project
+
+**Alternative - Using Wrangler CLI:**
+
+If you can't access the UI option, use the command line:
+
+```bash
+# First, login to Cloudflare (if not already logged in)
+npx wrangler login
+
+# Set the secret (will prompt you to enter the password value)
+npx wrangler pages secret put UPLOAD_PASSWORD --project-name=oksend
+```
+
+**Setting Variables:**
+
+In Pages → Settings → Environment variables (or via CLI above), add:
 
 **Production:**
 - `UPLOAD_PASSWORD` (required) - Password for upload/delete operations
