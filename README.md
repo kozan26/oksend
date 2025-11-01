@@ -69,13 +69,7 @@ binding = "BUCKET"
 bucket_name = "your-bucket-name"
 ```
 
-If using KV for slug links, uncomment and configure:
-
-```toml
-[[kv_namespaces]]
-binding = "LINKS"
-id = "your-kv-namespace-id"
-```
+If using KV for slug links, it's already configured in `wrangler.toml` for local development. For production, bind it in Cloudflare Pages dashboard (see Step 6 below).
 
 ### 4. Run Development Servers
 

@@ -8,8 +8,7 @@ binding = "BUCKET"
 bucket_name = "oksend-bucket"
 
 # Optional: KV namespace for slug-based links
-# Uncomment and set id after creating KV namespace
-# [[kv_namespaces]]
-# binding = "LINKS"
-# id = "your-kv-namespace-id"
+[[kv_namespaces]]
+binding = "LINKS"
+id = "2893e1a42c274e049f4a00fff10b0b37"
 
