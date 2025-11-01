@@ -176,9 +176,19 @@ In Pages → Settings → Functions:
 - Variable name: `BUCKET`
 - Bucket: Select your R2 bucket
 
-**KV Namespace Binding (Optional):**
+**KV Namespace Binding (Required for Short URLs):**
 - Variable name: `LINKS`
 - KV namespace: Select your KV namespace
+
+**To create a KV namespace:**
+1. Go to Cloudflare Dashboard → Workers & Pages → KV
+2. Click "Create a namespace"
+3. Name it (e.g., "oksend-links")
+4. Copy the namespace ID
+5. Go back to Pages → Settings → Functions
+6. Add KV binding with variable name `LINKS` and select your namespace
+
+**Note:** Short URLs will be automatically generated when KV is configured. Without KV, files will use the full `/d/date/uuid/filename` URLs.
 
 ### 7. Deploy
 
