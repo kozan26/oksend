@@ -177,18 +177,34 @@ In Pages → Settings → Functions:
 - Bucket: Select your R2 bucket
 
 **KV Namespace Binding (Required for Short URLs):**
-- Variable name: `LINKS`
-- KV namespace: Select your KV namespace
 
-**To create a KV namespace:**
-1. Go to Cloudflare Dashboard → Workers & Pages → KV
-2. Click "Create a namespace"
-3. Name it (e.g., "oksend-links")
-4. Copy the namespace ID
-5. Go back to Pages → Settings → Functions
-6. Add KV binding with variable name `LINKS` and select your namespace
+**To enable short URLs, follow these steps:**
 
-**Note:** Short URLs will be automatically generated when KV is configured. Without KV, files will use the full `/d/date/uuid/filename` URLs.
+1. **Create KV Namespace:**
+   - Go to Cloudflare Dashboard → **Workers & Pages** → **KV**
+   - Click **"Create a namespace"**
+   - Name it (e.g., "oksend-links")
+   - Click **"Add"**
+   - Copy the namespace ID (you'll see it in the list)
+
+2. **Bind KV to Pages Project:**
+   - Go to your Pages project → **Settings** → **Functions** tab
+   - Scroll down to **"KV namespace bindings"** section
+   - Click **"Add binding"**
+   - Enter:
+     - **Variable name:** `LINKS` (must be exactly `LINKS`)
+     - **KV namespace:** Select your namespace from the dropdown
+   - Click **"Save"**
+
+3. **Verify:**
+   - After binding, wait a few seconds for it to propagate
+   - Upload a new file - you should see a short URL like `/s/abc12345`
+   - Check Cloudflare Functions logs to see if KV is detected
+
+**Note:** 
+- Short URLs are only generated for **new uploads** after KV is configured
+- Existing files will continue to use long URLs unless re-uploaded
+- Without KV binding, files will use full `/d/date/uuid/filename` URLs
 
 ### 7. Deploy
 

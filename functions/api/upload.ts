@@ -299,6 +299,11 @@ export const onRequestPost = async (
     let shortUrl: string | undefined;
     let slug: string | undefined;
     
+    console.log('KV namespace check:', {
+      hasKV: !!env.LINKS,
+      kvType: env.LINKS ? typeof env.LINKS : 'undefined',
+    });
+    
     if (env.LINKS) {
       try {
         // Generate a unique 8-character slug
