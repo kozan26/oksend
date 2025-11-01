@@ -46,7 +46,7 @@ async function verifyTurnstile(
 /**
  * Validate authentication
  */
-function validateAuth(request: Request, env: Env): boolean {
+function validateAuth(request: Request, env: Env): { valid: boolean; reason?: string } {
   const authHeader = request.headers.get('X-Auth');
   // Debug logging (will appear in Cloudflare Functions logs)
   console.log('Auth check:', {
@@ -54,11 +54,20 @@ function validateAuth(request: Request, env: Env): boolean {
     hasHeader: !!authHeader,
     headerLength: authHeader?.length || 0,
     passwordLength: env.UPLOAD_PASSWORD?.length || 0,
+    headerValue: authHeader ? `[${authHeader.substring(0, 3)}...]` : 'missing',
+    passwordValue: env.UPLOAD_PASSWORD ? `[${env.UPLOAD_PASSWORD.substring(0, 3)}...]` : 'missing',
   });
-  if (!env.UPLOAD_PASSWORD || !authHeader) {
-    return false;
+  
+  if (!env.UPLOAD_PASSWORD) {
+    return { valid: false, reason: 'UPLOAD_PASSWORD environment variable not set' };
   }
-  return authHeader === env.UPLOAD_PASSWORD;
+  if (!authHeader) {
+    return { valid: false, reason: 'X-Auth header missing' };
+  }
+  if (authHeader !== env.UPLOAD_PASSWORD) {
+    return { valid: false, reason: 'Password mismatch' };
+  }
+  return { valid: true };
 }
 
 /**
@@ -160,9 +169,14 @@ export const onRequestPost = async (
   }
 
   // Validate authentication
-  if (!validateAuth(request, env)) {
+  const authResult = validateAuth(request, env);
+  if (!authResult.valid) {
+    console.error('Authentication failed:', authResult.reason);
     return new Response(
-      JSON.stringify({ error: 'Unauthorized' }),
+      JSON.stringify({ 
+        error: 'Unauthorized',
+        reason: authResult.reason || 'Authentication failed'
+      }),
       {
         status: 401,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
