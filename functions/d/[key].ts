@@ -6,16 +6,19 @@ interface Env {
 
 /**
  * Download endpoint - streams files from R2
- * Uses catch-all route [...] to handle keys with slashes
+ * Extracts the full key from the URL path to handle keys with slashes
  */
 export const onRequestGet = async (context: PagesFunctionContext<Env>) => {
-  const { request, env, params } = context;
+  const { request, env } = context;
   
-  // Get the full path from params - Cloudflare Pages uses 'path' for catch-all routes
-  const path = params.path as string | string[];
+  // Extract the full key from the URL path
+  // URL is like: https://domain.com/d/2025-11-01/uuid/filename.pdf
+  // We need to get everything after /d/
+  const url = new URL(request.url);
+  const pathname = url.pathname;
   
-  // Convert path to string if it's an array (multiple segments)
-  const key = Array.isArray(path) ? path.join('/') : path;
+  // Remove leading /d/ to get the key
+  const key = pathname.replace(/^\/d\//, '');
 
   if (!key) {
     return new Response('Invalid key', { status: 400 });
@@ -30,7 +33,6 @@ export const onRequestGet = async (context: PagesFunctionContext<Env>) => {
     }
 
     // Get download query parameter
-    const url = new URL(request.url);
     const isDownload = url.searchParams.get('download') === '1';
 
     // Get content type from object metadata or default
