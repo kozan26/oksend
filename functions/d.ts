@@ -1,4 +1,4 @@
-import type { PagesFunctionContext } from '../types';
+import type { PagesFunctionContext } from './types';
 
 interface Env {
   BUCKET: R2Bucket;
@@ -6,7 +6,7 @@ interface Env {
 
 /**
  * Download endpoint - streams files from R2
- * Extracts the full key from the URL path to handle keys with slashes
+ * Handles all /d/* routes to support keys with slashes
  */
 export const onRequestGet = async (context: PagesFunctionContext<Env>) => {
   const { request, env } = context;
@@ -17,8 +17,8 @@ export const onRequestGet = async (context: PagesFunctionContext<Env>) => {
   const url = new URL(request.url);
   const pathname = url.pathname;
   
-  // Remove leading /d/ to get the key
-  const key = pathname.replace(/^\/d\//, '');
+  // Remove leading /d/ to get the key (handle both /d/key and /d/key/...)
+  const key = pathname.replace(/^\/d\//, '').replace(/\/$/, '');
 
   if (!key) {
     return new Response('Invalid key', { status: 400 });
