@@ -1,12 +1,12 @@
-import type { PagesFunctionContext } from './types';
+import type { PagesFunctionContext } from '../types';
 
 interface Env {
   BUCKET: R2Bucket;
 }
 
 /**
- * Download endpoint - streams files from R2
- * Handles all /d/* routes to support keys with slashes
+ * Middleware to handle all /d/* download routes
+ * This catches all requests to /d/... and serves files from R2
  */
 export const onRequestGet = async (context: PagesFunctionContext<Env>) => {
   const { request, env } = context;
