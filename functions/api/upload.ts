@@ -2,6 +2,7 @@ import type { PagesFunctionContext } from '../types';
 
 interface Env {
   BUCKET: R2Bucket;
+  LINKS?: KVNamespace;
   UPLOAD_PASSWORD?: string;
   MAX_SIZE_MB?: string;
   ALLOWED_MIME?: string;
@@ -290,9 +291,48 @@ export const onRequestPost = async (
       },
     });
 
-    // Generate share URL
+    // Generate full download URL
     const baseUrl = env.BASE_URL || '';
-    const url = baseUrl ? `${baseUrl}/d/${key}` : `/d/${key}`;
+    const fullUrl = baseUrl ? `${baseUrl}/d/${key}` : `/d/${key}`;
+
+    // Generate short slug URL if KV is configured
+    let shortUrl: string | undefined;
+    let slug: string | undefined;
+    
+    if (env.LINKS) {
+      try {
+        // Generate a unique 8-character slug
+        const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+        let generatedSlug = '';
+        for (let i = 0; i < 8; i++) {
+          generatedSlug += chars[Math.floor(Math.random() * chars.length)];
+        }
+
+        // Check if slug exists and regenerate if needed (up to 5 attempts)
+        let attempts = 0;
+        while (attempts < 5) {
+          const existing = await env.LINKS.get(generatedSlug);
+          if (!existing) {
+            break;
+          }
+          generatedSlug = '';
+          for (let i = 0; i < 8; i++) {
+            generatedSlug += chars[Math.floor(Math.random() * chars.length)];
+          }
+          attempts++;
+        }
+
+        if (attempts < 5) {
+          // Store slug -> key mapping in KV (no expiration for permanent links)
+          await env.LINKS.put(generatedSlug, key);
+          slug = generatedSlug;
+          shortUrl = baseUrl ? `${baseUrl}/s/${generatedSlug}` : `/s/${generatedSlug}`;
+        }
+      } catch (error) {
+        console.error('Failed to generate short URL:', error);
+        // Continue without short URL if generation fails
+      }
+    }
 
     return new Response(
       JSON.stringify({
@@ -300,7 +340,10 @@ export const onRequestPost = async (
         filename: file.name,
         size: arrayBuffer.byteLength,
         contentType: mimeType,
-        url,
+        url: shortUrl || fullUrl, // Return short URL if available, otherwise full URL
+        fullUrl, // Always include full URL for reference
+        shortUrl: shortUrl || undefined, // Include short URL only if generated
+        slug: slug || undefined,
       }),
       {
         status: 200,

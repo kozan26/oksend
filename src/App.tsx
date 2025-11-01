@@ -11,6 +11,9 @@ export interface UploadedFile {
   size: number;
   contentType: string;
   url: string;
+  fullUrl?: string;
+  shortUrl?: string;
+  slug?: string;
   progress?: number;
   status?: 'uploading' | 'success' | 'error';
   error?: string;
