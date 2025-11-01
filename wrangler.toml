@@ -1,0 +1,14 @@
+name = "oksend"
+compatibility_date = "2024-10-01"
+
+# R2 bucket binding (create bucket in Cloudflare dashboard first)
+[[r2_buckets]]
+binding = "BUCKET"
+bucket_name = "oksend-bucket"
+
+# Optional: KV namespace for slug-based links
+# Uncomment and set id after creating KV namespace
+# [[kv_namespaces]]
+# binding = "LINKS"
+# id = "your-kv-namespace-id"
+

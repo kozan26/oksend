@@ -1,0 +1,70 @@
+import type { OnRequest } from '@cloudflare/workers-types';
+
+interface Env {
+  BUCKET: R2Bucket;
+  UPLOAD_PASSWORD?: string;
+  BASE_URL?: string;
+}
+
+/**
+ * Validate authentication
+ */
+function validateAuth(request: Request, env: Env): boolean {
+  const authHeader = request.headers.get('X-Auth');
+  if (!env.UPLOAD_PASSWORD || !authHeader) {
+    return false;
+  }
+  return authHeader === env.UPLOAD_PASSWORD;
+}
+
+/**
+ * Presigned upload endpoint (stub for v1.1)
+ * 
+ * This endpoint will generate presigned URLs for direct-to-R2 uploads,
+ * bypassing Worker body size limits. Not yet implemented.
+ */
+export const onRequestPost: OnRequest<Env> = async (context) => {
+  const { request, env } = context;
+
+  // CORS headers
+  const corsHeaders = {
+    'Access-Control-Allow-Origin': new URL(request.url).origin,
+    'Access-Control-Allow-Methods': 'POST, OPTIONS',
+    'Access-Control-Allow-Headers': 'Content-Type, X-Auth',
+  };
+
+  // Handle preflight
+  if (request.method === 'OPTIONS') {
+    return new Response(null, { status: 204, headers: corsHeaders });
+  }
+
+  // Validate authentication
+  if (!validateAuth(request, env)) {
+    return new Response(
+      JSON.stringify({ error: 'Unauthorized' }),
+      {
+        status: 401,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      }
+    );
+  }
+
+  // TODO: Implement presigned upload generation
+  // This would involve:
+  // 1. Generate a unique key
+  // 2. Create presigned PUT URL from R2 bucket
+  // 3. Optionally support multipart upload for large files
+  // 4. Return upload URL and completion endpoint
+
+  return new Response(
+    JSON.stringify({
+      error: 'Presigned uploads not yet implemented',
+      message: 'This feature will be available in v1.1',
+    }),
+    {
+      status: 501,
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    }
+  );
+};
+

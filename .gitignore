@@ -16,3 +16,18 @@ npm-debug.log*
 # Dependencies
 node_modules/
 
+# Build outputs
+dist/
+build/
+.wrangler/
+
+# Environment variables
+.env
+.env.local
+.dev.vars
+.dev.vars.local
+
+# Cloudflare
+.wrangler/
+.wrangler-tsconfig.json
+
