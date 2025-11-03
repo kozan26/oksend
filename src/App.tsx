@@ -154,10 +154,14 @@ function App() {
             </div>
             <nav className="flex gap-2">
               <button
-                onClick={() => setCurrentView('upload')}
-                className={`px-4 py-2 rounded-lg font-medium transition-colors flex items-center gap-2 ${
+                type="button"
+                onClick={() => {
+                  setCurrentView('upload');
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }}
+                className={`px-4 py-2 rounded-lg font-medium transition-colors flex items-center gap-2 cursor-pointer ${
                   currentView === 'upload'
-                    ? 'bg-blue-600 text-white shadow-md'
+                    ? 'bg-blue-600 text-white shadow-md hover:bg-blue-700'
                     : 'text-gray-600 hover:bg-gray-100'
                 }`}
               >
@@ -165,10 +169,14 @@ function App() {
                 Upload
               </button>
               <button
-                onClick={() => setCurrentView('admin')}
-                className={`px-4 py-2 rounded-lg font-medium transition-colors flex items-center gap-2 ${
+                type="button"
+                onClick={() => {
+                  setCurrentView('admin');
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }}
+                className={`px-4 py-2 rounded-lg font-medium transition-colors flex items-center gap-2 cursor-pointer ${
                   currentView === 'admin'
-                    ? 'bg-blue-600 text-white shadow-md'
+                    ? 'bg-blue-600 text-white shadow-md hover:bg-blue-700'
                     : 'text-gray-600 hover:bg-gray-100'
                 }`}
               >
