@@ -90,9 +90,6 @@ export default function Dropzone({ onFilesUploaded, onError }: DropzoneProps) {
     formData.append('file', file);
 
     const authHeaders = getAuthHeaders();
-    
-    // Debug: Log auth headers (remove in production)
-    console.log('Auth headers:', authHeaders);
 
     // For progress tracking, we'll use XMLHttpRequest as fetch doesn't support progress
     return new Promise((resolve, reject) => {
@@ -152,7 +149,7 @@ export default function Dropzone({ onFilesUploaded, onError }: DropzoneProps) {
         className={`relative border-2 border-dashed rounded-xl p-16 text-center transition-all duration-200 ${
           isDragging
             ? 'border-blue-500 bg-gradient-to-br from-blue-50 to-purple-50 scale-[1.02] shadow-lg'
-            : 'border-gray-300 bg-white hover:border-blue-400 hover:bg-gray-50'
+            : 'border-gray-300 bg-white hover:border-blue-400 hover:bg-blue-50'
         } ${uploading ? 'opacity-60 cursor-not-allowed' : 'cursor-pointer'}`}
       >
         <input
