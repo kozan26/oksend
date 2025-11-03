@@ -63,25 +63,39 @@ export const onRequestGet = async (context: PagesFunctionContext<Env>) => {
     });
 
     // Map objects to response format
+    // Note: R2.list() doesn't return customMetadata, so we need to use head() for each object
     const items = await Promise.all(
       listResult.objects.map(async (obj: any) => {
         const key = obj.key as string;
         const filename = key.split('/').pop() || key;
         
-        // Check if there's a short URL slug for this key from R2 metadata
-        const slug = obj.customMetadata?.slug || null;
+        // Get object metadata to read customMetadata (which includes slug)
+        let slug: string | null = null;
         let shortUrl: string | null = null;
+        let contentType = obj.httpMetadata?.contentType || 'application/octet-stream';
         
-        if (slug) {
-          const baseUrl = new URL(request.url).origin;
-          shortUrl = `${baseUrl}/s/${slug}`;
+        try {
+          const objectHead = await env.BUCKET.head(key);
+          if (objectHead) {
+            // Get slug from customMetadata
+            slug = objectHead.customMetadata?.slug || null;
+            contentType = objectHead.httpMetadata?.contentType || contentType;
+            
+            if (slug) {
+              const baseUrl = new URL(request.url).origin;
+              shortUrl = `${baseUrl}/s/${slug}`;
+            }
+          }
+        } catch (error) {
+          console.error(`Error reading metadata for ${key}:`, error);
+          // Continue without metadata if head() fails
         }
         
         return {
           key,
           filename,
           size: obj.size || 0,
-          contentType: obj.httpMetadata?.contentType || 'application/octet-stream',
+          contentType,
           uploaded: obj.uploaded ? new Date(obj.uploaded).toISOString() : null,
           etag: obj.etag || null,
           url: `/d/${key}`,

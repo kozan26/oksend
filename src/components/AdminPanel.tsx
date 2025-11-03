@@ -227,10 +227,11 @@ export default function AdminPanel() {
                         )}
                       </button>
                       <a
-                        href={file.url}
+                        href={file.shortUrl || file.url}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="text-green-600 hover:text-green-900 px-3 py-1 rounded hover:bg-green-50 transition-colors inline-block"
+                        title={file.shortUrl ? "Open short URL" : "Open file"}
                       >
                         Open
                       </a>
