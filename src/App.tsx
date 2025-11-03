@@ -94,7 +94,7 @@ function App() {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-100">
         <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
-          <h1 className="text-2xl font-bold mb-6 text-center">oksend</h1>
+          <h1 className="text-2xl font-bold mb-6 text-center">ozan.cloud</h1>
           <form onSubmit={handlePasswordSubmit}>
             <div className="mb-4">
               <label
@@ -146,7 +146,7 @@ function App() {
           <div className="flex items-center justify-between">
             <div>
               <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                oksend
+                ozan.cloud
               </h1>
               <p className="text-sm text-gray-600 mt-1">
                 Simple drag-and-drop file sharing
