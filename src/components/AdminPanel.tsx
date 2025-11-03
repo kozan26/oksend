@@ -23,6 +23,8 @@ interface FileItem {
   contentType: string;
   uploaded: string | null;
   url: string;
+  shortUrl?: string | null;
+  slug?: string | null;
 }
 
 interface KVItem {
@@ -96,11 +98,17 @@ export default function AdminPanel() {
     }
   };
 
-  const handleCopyUrl = async (url: string, key: string) => {
-    const fullUrl = url.startsWith('http') ? url : window.location.origin + url;
-    const success = await copyToClipboard(fullUrl);
+  const handleCopyUrl = async (file: FileItem) => {
+    // Use short URL if available, otherwise use full URL
+    const urlToCopy = file.shortUrl 
+      ? (file.shortUrl.startsWith('http') ? file.shortUrl : window.location.origin + file.shortUrl)
+      : file.url.startsWith('http') 
+        ? file.url 
+        : window.location.origin + file.url;
+    
+    const success = await copyToClipboard(urlToCopy);
     if (success) {
-      setCopiedKey(key);
+      setCopiedKey(file.key);
       setTimeout(() => setCopiedKey(null), 2000);
     }
   };
@@ -204,9 +212,9 @@ export default function AdminPanel() {
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium space-x-2">
                       <button
-                        onClick={() => handleCopyUrl(file.url, file.key)}
+                        onClick={() => handleCopyUrl(file)}
                         className="text-blue-600 hover:text-blue-900 px-3 py-1 rounded hover:bg-blue-50 transition-colors flex items-center gap-1"
-                        title="Copy URL"
+                        title={file.shortUrl ? "Copy short URL" : "Copy URL"}
                       >
                         {copiedKey === file.key ? (
                           <>
@@ -214,7 +222,7 @@ export default function AdminPanel() {
                           </>
                         ) : (
                           <>
-                            <MdLink className="w-4 h-4" /> Copy
+                            <MdLink className="w-4 h-4" /> {file.shortUrl ? "Copy Short URL" : "Copy URL"}
                           </>
                         )}
                       </button>

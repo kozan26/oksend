@@ -2,6 +2,7 @@ import type { PagesFunctionContext } from '../../types';
 
 interface Env {
   BUCKET: R2Bucket;
+  LINKS?: KVNamespace;
   UPLOAD_PASSWORD?: string;
 }
 
@@ -62,20 +63,33 @@ export const onRequestGet = async (context: PagesFunctionContext<Env>) => {
     });
 
     // Map objects to response format
-    const items = listResult.objects.map((obj: any) => {
-      const key = obj.key as string;
-      const filename = key.split('/').pop() || key;
-      
-      return {
-        key,
-        filename,
-        size: obj.size || 0,
-        contentType: obj.httpMetadata?.contentType || 'application/octet-stream',
-        uploaded: obj.uploaded ? new Date(obj.uploaded).toISOString() : null,
-        etag: obj.etag || null,
-        url: `/d/${key}`,
-      };
-    });
+    const items = await Promise.all(
+      listResult.objects.map(async (obj: any) => {
+        const key = obj.key as string;
+        const filename = key.split('/').pop() || key;
+        
+        // Check if there's a short URL slug for this key from R2 metadata
+        const slug = obj.customMetadata?.slug || null;
+        let shortUrl: string | null = null;
+        
+        if (slug) {
+          const baseUrl = new URL(request.url).origin;
+          shortUrl = `${baseUrl}/s/${slug}`;
+        }
+        
+        return {
+          key,
+          filename,
+          size: obj.size || 0,
+          contentType: obj.httpMetadata?.contentType || 'application/octet-stream',
+          uploaded: obj.uploaded ? new Date(obj.uploaded).toISOString() : null,
+          etag: obj.etag || null,
+          url: `/d/${key}`,
+          shortUrl,
+          slug,
+        };
+      })
+    );
 
     return new Response(
       JSON.stringify({

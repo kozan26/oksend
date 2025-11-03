@@ -272,20 +272,7 @@ export const onRequestPost = async (
       );
     }
 
-    await env.BUCKET.put(key, arrayBuffer, {
-      httpMetadata: {
-        contentType: mimeType,
-      },
-      customMetadata: {
-        originalFilename: file.name,
-      },
-    });
-
-    // Generate full download URL
-    const baseUrl = env.BASE_URL || '';
-    const fullUrl = baseUrl ? `${baseUrl}/d/${key}` : `/d/${key}`;
-
-    // Generate short slug URL if KV is configured
+    // Generate short slug URL if KV is configured (before storing to R2)
     let shortUrl: string | undefined;
     let slug: string | undefined;
     
@@ -321,6 +308,7 @@ export const onRequestPost = async (
           // Store slug -> key mapping in KV (no expiration for permanent links)
           await env.LINKS.put(generatedSlug, key);
           slug = generatedSlug;
+          const baseUrl = env.BASE_URL || '';
           shortUrl = baseUrl ? `${baseUrl}/s/${generatedSlug}` : `/s/${generatedSlug}`;
         }
       } catch (error) {
@@ -328,6 +316,21 @@ export const onRequestPost = async (
         // Continue without short URL if generation fails
       }
     }
+
+    // Store file to R2 with metadata (including slug if available)
+    await env.BUCKET.put(key, arrayBuffer, {
+      httpMetadata: {
+        contentType: mimeType,
+      },
+      customMetadata: {
+        originalFilename: file.name,
+        ...(slug ? { slug } : {}),
+      },
+    });
+
+    // Generate full download URL
+    const baseUrl = env.BASE_URL || '';
+    const fullUrl = baseUrl ? `${baseUrl}/d/${key}` : `/d/${key}`;
 
     return new Response(
       JSON.stringify({
