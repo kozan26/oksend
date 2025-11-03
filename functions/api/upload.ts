@@ -49,16 +49,6 @@ async function verifyTurnstile(
  */
 function validateAuth(request: Request, env: Env): { valid: boolean; reason?: string } {
   const authHeader = request.headers.get('X-Auth');
-  // Debug logging (will appear in Cloudflare Functions logs)
-  console.log('Auth check:', {
-    hasPassword: !!env.UPLOAD_PASSWORD,
-    hasHeader: !!authHeader,
-    headerLength: authHeader?.length || 0,
-    passwordLength: env.UPLOAD_PASSWORD?.length || 0,
-    headerValue: authHeader ? `[${authHeader.substring(0, 3)}...]` : 'missing',
-    passwordValue: env.UPLOAD_PASSWORD ? `[${env.UPLOAD_PASSWORD.substring(0, 3)}...]` : 'missing',
-  });
-  
   if (!env.UPLOAD_PASSWORD) {
     return { valid: false, reason: 'UPLOAD_PASSWORD environment variable not set' };
   }
