@@ -1,6 +1,8 @@
-# oksend
+# ozan.cloud
 
 A minimal, fast, and secure personal file-sharing site with drag-and-drop uploads, deployed on **Cloudflare Pages** with **Pages Functions** and **R2** storage.
+
+**Live at:** https://ozan.cloud
 
 ## Features
 
@@ -132,7 +134,7 @@ This generates the production build in the `dist/` directory.
 
 1. Go to https://dash.cloudflare.com and log in
 2. Navigate to **Workers & Pages** → **Pages** in the left sidebar
-3. Click on your project name (**"oksend"**)
+3. Click on your project name
 4. Click the **"Settings"** tab at the top
 5. Look for **"Environment variables"** in the left sidebar (under Settings) OR scroll down in the Settings page
 6. If you still can't see it, make sure you have Admin/Owner permissions on the project
@@ -146,7 +148,7 @@ If you can't access the UI option, use the command line:
 npx wrangler login
 
 # Set the secret (will prompt you to enter the password value)
-npx wrangler pages secret put UPLOAD_PASSWORD --project-name=oksend
+npx wrangler pages secret put UPLOAD_PASSWORD --project-name=<your-project-name>
 ```
 
 **Setting Variables:**
@@ -158,7 +160,7 @@ In Pages → Settings → Environment variables (or via CLI above), add:
 - `MAX_SIZE_MB` (optional, default: 200) - Maximum file size in MB
 - `ALLOWED_MIME` (optional) - Comma-separated allowed MIME types
 - `BLOCKED_MIME` (optional) - Comma-separated blocked MIME types
-- `BASE_URL` (optional) - Base URL for share links (e.g., `https://files.example.com`)
+- `BASE_URL` (optional) - Base URL for share links (e.g., `https://ozan.cloud`)
 - `TURNSTILE_SITE_KEY` (optional) - Cloudflare Turnstile site key
 - `TURNSTILE_SECRET` (optional) - Cloudflare Turnstile secret key
 
@@ -200,7 +202,18 @@ In Pages → Settings → Functions:
 - Existing files will continue to use long URLs unless re-uploaded
 - Without KV binding, files will use full `/d/date/uuid/filename` URLs
 
-### 7. Deploy
+### 7. Configure Custom Domain (ozan.cloud)
+
+To use your custom domain:
+
+1. Go to your Cloudflare Pages project → **Custom domains**
+2. Click **"Set up a custom domain"**
+3. Enter your domain: `ozan.cloud`
+4. Cloudflare will automatically configure DNS records
+5. Wait for SSL certificate provisioning (usually takes a few minutes)
+6. Once active, update your `BASE_URL` environment variable to `https://ozan.cloud`
+
+### 8. Deploy
 
 After configuration, each push to your connected branch will automatically trigger a deployment.
 
@@ -227,7 +240,7 @@ Turnstile adds bot protection to uploads:
 - `MAX_SIZE_MB` - Maximum file size in megabytes (default: `200`)
 - `ALLOWED_MIME` - Comma-separated list of allowed MIME types (e.g., `image/jpeg,image/png`)
 - `BLOCKED_MIME` - Comma-separated list of blocked MIME types (e.g., `application/x-executable`)
-- `BASE_URL` - Base URL for generating share links (e.g., `https://files.example.com`). If not set, relative URLs are used.
+- `BASE_URL` - Base URL for generating share links (e.g., `https://ozan.cloud`). If not set, relative URLs are used.
 - `TURNSTILE_SITE_KEY` - Cloudflare Turnstile site key for bot protection
 - `TURNSTILE_SECRET` - Cloudflare Turnstile secret key
 

@@ -266,7 +266,7 @@ export const onRequestGet = async (context: PagesFunctionContext<Env>) => {
       Download File
     </a>
     <div class="brand">
-      Shared via <a href="${origin}">oksend</a>
+      Shared via <a href="${origin}">ozan.cloud</a>
     </div>
   </div>
 </body>
