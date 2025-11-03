@@ -25,6 +25,7 @@ function App() {
   const [authenticated, setAuthenticated] = useState(false);
   const [password, setPasswordInput] = useState('');
   const [passwordError, setPasswordError] = useState('');
+  const [validating, setValidating] = useState(false);
   const [uploadedFiles, setUploadedFiles] = useState<UploadedFile[]>([]);
   const [toasts, setToasts] = useState<ToastMessage[]>([]);
   const [currentView, setCurrentView] = useState<'upload' | 'admin'>('upload');
@@ -33,16 +34,40 @@ function App() {
     setAuthenticated(hasPassword());
   }, []);
 
-  const handlePasswordSubmit = (e: React.FormEvent) => {
+  const handlePasswordSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!password.trim()) {
       setPasswordError('Password is required');
       return;
     }
-    setPassword(password);
-    setAuthenticated(true);
+
+    setValidating(true);
     setPasswordError('');
-    showToast('Authenticated successfully', 'success');
+
+    // Validate password by making a test API call
+    try {
+      const response = await fetch('/api/list', {
+        headers: {
+          'X-Auth': password,
+        },
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        setPasswordError(errorData.reason || errorData.error || 'Invalid password');
+        return;
+      }
+
+      // Password is correct
+      setPassword(password);
+      setAuthenticated(true);
+      setPasswordError('');
+      showToast('Authenticated successfully', 'success');
+    } catch (error) {
+      setPasswordError('Failed to verify password. Please try again.');
+    } finally {
+      setValidating(false);
+    }
   };
 
   const showToast = (message: string, type: 'success' | 'error' = 'error') => {
@@ -96,9 +121,17 @@ function App() {
             </div>
             <button
               type="submit"
-              className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              disabled={validating}
+              className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
             >
-              Authenticate
+              {validating ? (
+                <>
+                  <div className="animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent"></div>
+                  Validating...
+                </>
+              ) : (
+                'Authenticate'
+              )}
             </button>
           </form>
         </div>
