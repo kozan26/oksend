@@ -215,21 +215,33 @@ export default function AdminPanel() {
                         : 'Bilinmiyor'}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium space-x-2">
-                      <button
-                        onClick={() => handleCopyUrl(file)}
-                        className="text-blue-600 hover:text-blue-900 px-3 py-1 rounded hover:bg-blue-50 transition-colors flex items-center gap-1"
-                        title={file.shortUrl ? 'Kısa URL\'i kopyala' : 'URL\'i kopyala'}
-                      >
-                        {copiedKey === file.key ? (
-                          <>
-                            <MdCheckCircle className="w-4 h-4" /> Kopyalandı
-                          </>
-                        ) : (
-                          <>
-                            <MdLink className="w-4 h-4" /> {file.shortUrl ? 'Kısa URL\'i kopyala' : 'URL\'i kopyala'}
-                          </>
-                        )}
-                      </button>
+                      {file.shortUrl ? (
+                        <a
+                          href={file.shortUrl.startsWith('http') ? file.shortUrl : window.location.origin + file.shortUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-blue-600 hover:text-blue-900 px-3 py-1 rounded hover:bg-blue-50 transition-colors flex items-center gap-1 inline-block"
+                          title="Kısa URL landing page'ine git"
+                        >
+                          <MdLink className="w-4 h-4" /> Kısa URL'i kopyala
+                        </a>
+                      ) : (
+                        <button
+                          onClick={() => handleCopyUrl(file)}
+                          className="text-blue-600 hover:text-blue-900 px-3 py-1 rounded hover:bg-blue-50 transition-colors flex items-center gap-1"
+                          title="URL'i kopyala"
+                        >
+                          {copiedKey === file.key ? (
+                            <>
+                              <MdCheckCircle className="w-4 h-4" /> Kopyalandı
+                            </>
+                          ) : (
+                            <>
+                              <MdLink className="w-4 h-4" /> URL'i kopyala
+                            </>
+                          )}
+                        </button>
+                      )}
                       <a
                         href={file.url.startsWith('http') ? file.url : window.location.origin + file.url}
                         target="_blank"
