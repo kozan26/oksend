@@ -177,64 +177,7 @@ function App() {
 
   return (
     <div className="min-h-screen bg-[var(--m3-surface)] text-[var(--m3-on-surface)]">
-      <header className="sticky top-0 z-20 bg-[var(--m3-surface-container)]/90 backdrop-blur">
-        <div className="border-b border-[color:rgba(148,163,184,0.18)] px-4"
-          style={{ boxShadow: 'var(--m3-elev-2)' }}
-        >
-          <div className="mx-auto flex max-w-6xl flex-col gap-4 py-4 lg:flex-row lg:items-center lg:justify-between">
-            <div>
-              <p className="text-xs uppercase tracking-[0.3em] text-[var(--m3-on-surface-variant)]">
-                ozan.cloud
-              </p>
-              <h1 className="text-2xl font-semibold leading-tight text-[var(--m3-on-surface)] md:text-3xl">
-                Tonal Material 3 yüzeyler ile daha rafine yükleme deneyimi
-              </h1>
-            </div>
-            <nav aria-label="Ana görünüm" className="flex justify-end">
-              <div className="flex gap-2 rounded-full bg-[var(--m3-surface-variant)]/60 p-1">
-                <button
-                  type="button"
-                  role="tab"
-                  aria-selected={currentView === 'upload'}
-                  onClick={() => {
-                    setCurrentView('upload');
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
-                  }}
-                  className={`flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium transition-colors focus-visible:outline-none ${
-                    currentView === 'upload'
-                      ? 'bg-[var(--m3-primary)] text-[var(--m3-on-primary)]'
-                      : 'text-[var(--m3-on-surface-variant)] hover:bg-[var(--m3-primary-container)] hover:text-[var(--m3-on-primary-container)]'
-                  }`}
-                  aria-current={currentView === 'upload' ? 'page' : undefined}
-                >
-                  <MdCloudUpload className="h-5 w-5" />
-                  Yükle
-                </button>
-                <button
-                  type="button"
-                  role="tab"
-                  aria-selected={currentView === 'admin'}
-                  onClick={() => {
-                    setCurrentView('admin');
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
-                  }}
-                  className={`flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium transition-colors focus-visible:outline-none ${
-                    currentView === 'admin'
-                      ? 'bg-[var(--m3-primary)] text-[var(--m3-on-primary)]'
-                      : 'text-[var(--m3-on-surface-variant)] hover:bg-[var(--m3-primary-container)] hover:text-[var(--m3-on-primary-container)]'
-                  }`}
-                  aria-current={currentView === 'admin' ? 'page' : undefined}
-                >
-                  <MdSettings className="h-5 w-5" />
-                  Yönetim
-                </button>
-              </div>
-            </nav>
-          </div>
-        </div>
-      </header>
-
-      <main className="mx-auto max-w-6xl px-4 pb-16 pt-8 lg:pt-12">
+      <main className="mx-auto max-w-6xl px-4 pb-16 pt-10">
         {currentView === 'upload' ? (
           <div className="space-y-12">
             <section
@@ -345,11 +288,7 @@ function App() {
             )}
           </div>
         ) : (
-          <div className="rounded-[var(--m3-radius-lg)] border border-[color:rgba(148,163,184,0.15)] bg-[var(--m3-surface-container)]/80 p-4 md:p-6"
-            style={{ boxShadow: 'var(--m3-elev-2)' }}
-          >
-            <AdminPanel />
-          </div>
+          <AdminPanel onBackToUpload={() => setCurrentView('upload')} />
         )}
       </main>
 
