@@ -192,17 +192,17 @@ function App() {
                   Tüm yüklenen dosyalarınızı görüntüleyin, paylaşın ve yönetin. Bağlantıları kopyalayın,
                   dosyaları önizleyin veya silin.
                 </p>
-                <div className="flex gap-1.5 md:gap-3 overflow-x-auto min-w-0">
-                  <span className="inline-flex items-center gap-1.5 rounded-full bg-[var(--m3-primary-container)]/70 px-2.5 py-1.5 text-xs font-medium text-[var(--m3-on-primary-container)] md:gap-2 md:px-4 md:py-2 md:text-subhead whitespace-nowrap flex-shrink-0">
-                    <MdSpeed className="h-3.5 w-3.5 text-[var(--m3-primary)] md:h-4 md:w-4" />
+                <div className="flex gap-1 md:gap-2.5 min-w-0">
+                  <span className="inline-flex items-center gap-1 rounded-full bg-[var(--m3-primary-container)]/70 px-2 py-1 text-[10px] font-medium text-[var(--m3-on-primary-container)] md:gap-1.5 md:px-3 md:py-1.5 md:text-xs whitespace-nowrap flex-shrink-0">
+                    <MdSpeed className="h-3 w-3 text-[var(--m3-primary)] md:h-3.5 md:w-3.5" />
                     Hızlı aktarım
                   </span>
-                  <span className="inline-flex items-center gap-1.5 rounded-full bg-[var(--m3-primary-container)]/70 px-2.5 py-1.5 text-xs font-medium text-[var(--m3-on-primary-container)] md:gap-2 md:px-4 md:py-2 md:text-subhead whitespace-nowrap flex-shrink-0">
-                    <MdLock className="h-3.5 w-3.5 text-[var(--m3-primary)] md:h-4 md:w-4" />
+                  <span className="inline-flex items-center gap-1 rounded-full bg-[var(--m3-primary-container)]/70 px-2 py-1 text-[10px] font-medium text-[var(--m3-on-primary-container)] md:gap-1.5 md:px-3 md:py-1.5 md:text-xs whitespace-nowrap flex-shrink-0">
+                    <MdLock className="h-3 w-3 text-[var(--m3-primary)] md:h-3.5 md:w-3.5" />
                     Parola korumalı
                   </span>
-                  <span className="inline-flex items-center gap-1.5 rounded-full bg-[var(--m3-primary-container)]/70 px-2.5 py-1.5 text-xs font-medium text-[var(--m3-on-primary-container)] md:gap-2 md:px-4 md:py-2 md:text-subhead whitespace-nowrap flex-shrink-0">
-                    <MdInsights className="h-3.5 w-3.5 text-[var(--m3-primary)] md:h-4 md:w-4" />
+                  <span className="inline-flex items-center gap-1 rounded-full bg-[var(--m3-primary-container)]/70 px-2 py-1 text-[10px] font-medium text-[var(--m3-on-primary-container)] md:gap-1.5 md:px-3 md:py-1.5 md:text-xs whitespace-nowrap flex-shrink-0">
+                    <MdInsights className="h-3 w-3 text-[var(--m3-primary)] md:h-3.5 md:w-3.5" />
                     Anlık linkler
                   </span>
                 </div>

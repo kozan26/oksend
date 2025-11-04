@@ -410,17 +410,17 @@ export default function AdminPanel({ onBackToUpload }: AdminPanelProps) {
               ))}
             </div>
           ) : (
-            /* List View */
+            /* List View */}
             <div className="overflow-hidden rounded-2xl bg-[var(--m3-surface)] shadow-apple-md">
-              <div className="overflow-x-auto md:overflow-x-visible">
-                <table className="min-w-full table-fixed">
+              <div className="overflow-x-auto md:overflow-x-visible scrollbar-hide">
+                <table className="min-w-full">
                   <thead className="bg-[var(--m3-surface-container)] border-b border-[var(--m3-surface-variant)]/50">
                     <tr>
-                      <th className="w-[20%] px-4 py-3 text-left text-xs font-semibold text-[var(--m3-on-surface-variant)]">Dosya</th>
-                      <th className="w-[12%] px-4 py-3 text-left text-xs font-semibold text-[var(--m3-on-surface-variant)]">Boyut</th>
-                      <th className="w-[18%] px-4 py-3 text-left text-xs font-semibold text-[var(--m3-on-surface-variant)]">Tür</th>
-                      <th className="w-[15%] px-4 py-3 text-left text-xs font-semibold text-[var(--m3-on-surface-variant)]">Yüklenme</th>
-                      <th className="w-[35%] px-4 py-3 text-left text-xs font-semibold text-[var(--m3-on-surface-variant)]">İşlemler</th>
+                      <th className="px-4 py-3 text-left text-xs font-semibold text-[var(--m3-on-surface-variant)]">Dosya</th>
+                      <th className="px-4 py-3 text-left text-xs font-semibold text-[var(--m3-on-surface-variant)] whitespace-nowrap">Boyut</th>
+                      <th className="px-4 py-3 text-left text-xs font-semibold text-[var(--m3-on-surface-variant)]">Tür</th>
+                      <th className="px-4 py-3 text-left text-xs font-semibold text-[var(--m3-on-surface-variant)] whitespace-nowrap">Yüklenme</th>
+                      <th className="px-2 py-3 text-left text-xs font-semibold text-[var(--m3-on-surface-variant)] w-[140px]">İşlemler</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-[var(--m3-surface-variant)]/30">
@@ -458,8 +458,8 @@ export default function AdminPanel({ onBackToUpload }: AdminPanelProps) {
                               })
                             : 'Bilinmiyor'}
                         </td>
-                        <td className="px-4 py-3">
-                          <div className="flex items-center gap-1.5">
+                        <td className="px-2 py-3">
+                          <div className="flex items-center gap-1">
                             {file.shortUrl ? (
                               <a
                                 href={
@@ -469,7 +469,7 @@ export default function AdminPanel({ onBackToUpload }: AdminPanelProps) {
                                 }
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="inline-flex items-center gap-1 rounded-lg border border-[var(--m3-surface-variant)] bg-[var(--m3-surface-container)] px-2 py-1.5 text-xs font-semibold text-[var(--m3-on-surface)] shadow-apple-sm transition-all duration-200 hover:bg-[var(--m3-surface-container-high)] hover:shadow-apple-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--m3-primary)] focus-visible:ring-offset-2"
+                                className="inline-flex items-center justify-center rounded-lg border border-[var(--m3-surface-variant)] bg-[var(--m3-surface-container)] p-1.5 text-xs font-semibold text-[var(--m3-on-surface)] shadow-apple-sm transition-all duration-200 hover:bg-[var(--m3-surface-container-high)] hover:shadow-apple-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--m3-primary)] focus-visible:ring-offset-2"
                                 title="Kısa URL'yi aç"
                               >
                                 <MdLink className="h-3.5 w-3.5" />
@@ -477,7 +477,7 @@ export default function AdminPanel({ onBackToUpload }: AdminPanelProps) {
                             ) : (
                               <button
                                 onClick={() => handleCopyUrl(file)}
-                                className="inline-flex items-center gap-1 rounded-lg border border-[var(--m3-surface-variant)] bg-[var(--m3-surface-container)] px-2 py-1.5 text-xs font-semibold text-[var(--m3-on-surface)] shadow-apple-sm transition-all duration-200 hover:bg-[var(--m3-surface-container-high)] hover:shadow-apple-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--m3-primary)] focus-visible:ring-offset-2"
+                                className="inline-flex items-center justify-center rounded-lg border border-[var(--m3-surface-variant)] bg-[var(--m3-surface-container)] p-1.5 text-xs font-semibold text-[var(--m3-on-surface)] shadow-apple-sm transition-all duration-200 hover:bg-[var(--m3-surface-container-high)] hover:shadow-apple-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--m3-primary)] focus-visible:ring-offset-2"
                                 title={copiedKey === file.key ? 'Kopyalandı' : 'URL\'i kopyala'}
                               >
                                 {copiedKey === file.key ? (
@@ -491,7 +491,7 @@ export default function AdminPanel({ onBackToUpload }: AdminPanelProps) {
                               href={file.url.startsWith('http') ? file.url : window.location.origin + file.url}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="inline-flex items-center gap-1 rounded-lg bg-[var(--m3-primary)] px-2 py-1.5 text-xs font-semibold text-[var(--m3-on-primary)] shadow-apple-md transition-all duration-200 hover:bg-[var(--m3-primary-hover)] hover:shadow-apple-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--m3-primary)] focus-visible:ring-offset-2"
+                              className="inline-flex items-center justify-center rounded-lg bg-[var(--m3-primary)] p-1.5 text-xs font-semibold text-[var(--m3-on-primary)] shadow-apple-md transition-all duration-200 hover:bg-[var(--m3-primary-hover)] hover:shadow-apple-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--m3-primary)] focus-visible:ring-offset-2"
                               title="Dosyayı aç"
                             >
                               <MdOpenInNew className="h-3.5 w-3.5" />
@@ -499,7 +499,7 @@ export default function AdminPanel({ onBackToUpload }: AdminPanelProps) {
                             <button
                               onClick={() => handleDeleteFile(file.key)}
                               disabled={deleting === file.key}
-                              className="inline-flex items-center gap-1 rounded-lg bg-[var(--m3-error)] px-2 py-1.5 text-xs font-semibold text-[var(--m3-on-error)] shadow-apple-md transition-all duration-200 hover:opacity-90 disabled:opacity-70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--m3-error)] focus-visible:ring-offset-2"
+                              className="inline-flex items-center justify-center rounded-lg bg-[var(--m3-error)] p-1.5 text-xs font-semibold text-[var(--m3-on-error)] shadow-apple-md transition-all duration-200 hover:opacity-90 disabled:opacity-70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--m3-error)] focus-visible:ring-offset-2"
                               title="Dosyayı sil"
                             >
                               <MdDelete className="h-3.5 w-3.5" />
