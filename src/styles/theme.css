@@ -1,0 +1,90 @@
+/* Material Design 3 tokens (seed: blue #2563EB) */
+:root {
+  /* Colors */
+  --m3-primary: #2563eb; /* primary */
+  --m3-on-primary: #ffffff;
+  --m3-primary-container: #dbe7ff;
+  --m3-on-primary-container: #001a43;
+
+  --m3-secondary: #4f5a6a;
+  --m3-on-secondary: #ffffff;
+  --m3-secondary-container: #dbe1ea;
+  --m3-on-secondary-container: #0b121d;
+
+  --m3-surface: #f9fafb; /* background/surface */
+  --m3-on-surface: #1f2937;
+  --m3-surface-variant: #e5e7eb;
+  --m3-on-surface-variant: #374151;
+  --m3-surface-container: #ffffff;
+  --m3-outline: #9ca3af;
+
+  --m3-error: #b00020;
+  --m3-on-error: #ffffff;
+  --m3-error-container: #fcdcdc;
+  --m3-on-error-container: #5f1317;
+
+  /* Shape */
+  --m3-radius-sm: 8px;
+  --m3-radius-md: 12px;
+  --m3-radius-lg: 16px;
+
+  /* Elevation (shadow) */
+  --m3-elev-1: 0 1px 2px rgba(0,0,0,0.08), 0 1px 3px rgba(0,0,0,0.06);
+  --m3-elev-2: 0 2px 6px rgba(0,0,0,0.08), 0 2px 4px rgba(0,0,0,0.06);
+  --m3-elev-3: 0 6px 12px rgba(0,0,0,0.1);
+  --m3-elev-4: 0 8px 16px rgba(0,0,0,0.12);
+  --m3-elev-5: 0 12px 20px rgba(0,0,0,0.16);
+
+  /* State layers */
+  --m3-state-hover: 0.08;
+  --m3-state-pressed: 0.12;
+  --m3-state-focus: 0.12;
+}
+
+/* Dark mode */
+.dark {
+  --m3-primary: #93c5fd;
+  --m3-on-primary: #0b1b3a;
+  --m3-primary-container: #102a5c;
+  --m3-on-primary-container: #dbe7ff;
+
+  --m3-secondary: #c8d0da;
+  --m3-on-secondary: #1d2632;
+  --m3-secondary-container: #303844;
+  --m3-on-secondary-container: #dbe1ea;
+
+  --m3-surface: #0b1220;
+  --m3-on-surface: #e5e7eb;
+  --m3-surface-variant: #30353d;
+  --m3-on-surface-variant: #cbd5e1;
+  --m3-surface-container: #111827;
+  --m3-outline: #6b7280;
+
+  --m3-error: #ffb4ab;
+  --m3-on-error: #690005;
+  --m3-error-container: #93000a;
+  --m3-on-error-container: #ffdad6;
+}
+
+/* Helper classes (optional) */
+.elev-1 { box-shadow: var(--m3-elev-1); }
+.elev-2 { box-shadow: var(--m3-elev-2); }
+.elev-3 { box-shadow: var(--m3-elev-3); }
+.elev-4 { box-shadow: var(--m3-elev-4); }
+.elev-5 { box-shadow: var(--m3-elev-5); }
+
+.surface { background-color: var(--m3-surface); color: var(--m3-on-surface); }
+.surface-container { background-color: var(--m3-surface-container); }
+.surface-variant { background-color: var(--m3-surface-variant); color: var(--m3-on-surface-variant); }
+
+.btn-primary { background-color: var(--m3-primary); color: var(--m3-on-primary); }
+.btn-tonal { background-color: var(--m3-primary-container); color: var(--m3-on-primary-container); }
+.btn-text { color: var(--m3-primary); background-color: transparent; }
+
+/* Focus ring for accessibility */
+:where(button, a, input, select, textarea):focus-visible {
+  outline: 2px solid var(--m3-primary);
+  outline-offset: 2px;
+  border-radius: var(--m3-radius-sm);
+}
+

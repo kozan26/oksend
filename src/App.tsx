@@ -153,7 +153,7 @@ function App() {
               </p>
             </div>
             <nav className="w-full max-w-md">
-              <div className="flex items-end gap-6 border-b">
+              <div className="flex items-end gap-6 border-b border-outline">
                 <button
                   type="button"
                   role="tab"
@@ -162,10 +162,10 @@ function App() {
                     setCurrentView('upload');
                     window.scrollTo({ top: 0, behavior: 'smooth' });
                   }}
-                  className={`-mb-px pb-2 px-1 font-medium flex items-center gap-2 cursor-pointer transition-colors border-b-2 ${
+                  className={`-mb-px pb-2 px-1 font-medium flex items-center gap-2 cursor-pointer transition-colors border-b-2 focus-visible:outline-none ${
                     currentView === 'upload'
-                      ? 'text-blue-600 border-blue-600'
-                      : 'text-gray-600 border-transparent hover:text-gray-800'
+                      ? 'text-primary border-primary'
+                      : 'text-on-surface-variant border-transparent hover:text-on-surface'
                   }`}
                 >
                   <MdCloudUpload className="w-5 h-5" />
@@ -179,10 +179,10 @@ function App() {
                     setCurrentView('admin');
                     window.scrollTo({ top: 0, behavior: 'smooth' });
                   }}
-                  className={`-mb-px pb-2 px-1 font-medium flex items-center gap-2 cursor-pointer transition-colors border-b-2 ${
+                  className={`-mb-px pb-2 px-1 font-medium flex items-center gap-2 cursor-pointer transition-colors border-b-2 focus-visible:outline-none ${
                     currentView === 'admin'
-                      ? 'text-blue-600 border-blue-600'
-                      : 'text-gray-600 border-transparent hover:text-gray-800'
+                      ? 'text-primary border-primary'
+                      : 'text-on-surface-variant border-transparent hover:text-on-surface'
                   }`}
                 >
                   <MdSettings className="w-5 h-5" />
