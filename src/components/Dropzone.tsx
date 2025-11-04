@@ -1,4 +1,5 @@
 import { useCallback, useState, forwardRef, useImperativeHandle, useRef } from 'react';
+import { MdCloudUpload, MdInsights, MdLock, MdSpeed } from 'react-icons/md';
 import { getAuthHeaders } from '../lib/auth';
 import type { UploadedFile } from '../App';
 
@@ -174,19 +175,22 @@ const Dropzone = forwardRef<DropzoneHandle, DropzoneProps>(
           onDragOver={handleDragOver}
           onDragLeave={handleDragLeave}
         onDrop={handleDrop}
-        className={`group relative overflow-hidden rounded-[var(--m3-radius-lg)] border border-[color:rgba(148,163,184,0.2)] bg-gradient-to-br from-[var(--m3-surface-container)] via-[var(--m3-surface)] to-[color:rgba(57,96,143,0.12)] text-center transition-all duration-200 ease-out ${containerPadding} ${
+        className={`group relative overflow-hidden rounded-[32px] border border-[var(--m3-surface-variant)]/50 bg-[radial-gradient(circle_at_top,var(--m3-surface-container) 0%,var(--m3-surface) 60%,var(--m3-surface-container-high) 100%)] text-center transition-all duration-200 ease-out ${containerPadding} ${
           uploading ? 'cursor-not-allowed opacity-70' : 'cursor-pointer'
         }`}
         style={{
-          boxShadow: isDragging ? 'var(--m3-elev-4)' : 'var(--m3-elev-2)',
+          boxShadow: isDragging
+            ? '0 24px 40px rgba(57,96,143,0.18)'
+            : '0 18px 32px rgba(25,28,32,0.08)',
           outline: isDragging ? '2px solid var(--m3-primary)' : 'none',
           outlineOffset: '4px',
         }}
       >
-          <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-200 group-hover:opacity-100"
+          <div
+            className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-200 group-hover:opacity-100"
             aria-hidden="true"
           >
-            <div className="absolute -inset-px bg-[radial-gradient(circle_at_top,var(--m3-primary)/12,transparent_55%)]" />
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,var(--m3-primary)/10,transparent_65%)]" />
           </div>
           <input
             ref={fileInputRef}
@@ -197,10 +201,10 @@ const Dropzone = forwardRef<DropzoneHandle, DropzoneProps>(
             disabled={uploading}
             className="hidden"
           />
-          <div className="relative z-10 flex w-full max-w-3xl flex-col items-center space-y-8">
-            <div className={`relative flex ${isCompact ? 'h-20 w-20' : 'h-24 w-24'} items-center justify-center`}>
-              <div className="absolute inset-0 rounded-[28px] bg-[var(--m3-primary-container)]" />
-              <div className="absolute inset-3 rounded-[24px] bg-[var(--m3-primary)]/12" />
+          <div className="relative z-10 flex w-full max-w-3xl flex-col items-center gap-8">
+            <div
+              className={`relative flex ${isCompact ? 'h-18 w-18 md:h-20 md:w-20' : 'h-24 w-24'} items-center justify-center rounded-full bg-[var(--m3-primary-container)] shadow-[inset_0_-4px_12px_rgba(57,96,143,0.15)]`}
+            >
               <svg
                 className={`relative ${isCompact ? 'h-10 w-10' : 'h-12 w-12'} text-[var(--m3-primary)]`}
                 fill="none"
@@ -219,39 +223,58 @@ const Dropzone = forwardRef<DropzoneHandle, DropzoneProps>(
               )}
             </div>
 
-            <div className="space-y-3">
-              <h3 className={`${isCompact ? 'text-xl md:text-2xl' : 'text-2xl md:text-3xl'} font-semibold text-[var(--m3-on-surface)]`}>
+            <div className="space-y-3 px-2">
+              <h3
+                className={`${isCompact ? 'text-xl md:text-2xl' : 'text-2xl md:text-3xl'} font-semibold text-[var(--m3-on-surface)]`}
+              >
                 {uploading
                   ? 'Dosyalar yükleniyor...'
                   : isDragging
                     ? 'Bırakın, biz hallederiz'
                     : 'Dosyalarınızı buraya bırakın'}
               </h3>
-              <p className={`${isCompact ? 'text-sm md:text-base' : 'text-sm md:text-base'} text-[var(--m3-on-surface-variant)]`}>
+              <p className="text-sm text-[var(--m3-on-surface-variant)] md:text-base">
                 {uploading
                   ? 'Dosyalarınız güvenli bir şekilde aktarılıyor. Bu pencereyi kapatmayın.'
                   : 'Sürükleyip bırakın veya bilgisayarınızdaki dosyalara göz atmak için dokunun. Şifre korumalı paylaşımınız saniyeler içinde hazır.'}
               </p>
             </div>
 
-            <dl className={`grid w-full gap-3 text-xs text-[var(--m3-on-surface-variant)]/90 ${isCompact ? 'sm:grid-cols-3' : 'md:grid-cols-3'}`}>
-              <div className="rounded-full bg-[var(--m3-primary-container)]/60 px-4 py-2">
-                <dt className="font-semibold text-[var(--m3-on-primary-container)]">Çoklu seçim</dt>
-                <dd className="mt-1 text-[color:rgba(15,23,42,0.55)]">
-                  Aynı anda onlarca dosya sürükleyin.
-                </dd>
+            <div className={`flex flex-wrap items-center justify-center gap-2 ${isCompact ? 'md:gap-3' : 'gap-3'}`}>
+              <button
+                type="button"
+                onClick={() => fileInputRef.current?.click()}
+                disabled={uploading}
+                className="inline-flex items-center gap-2 rounded-full bg-[var(--m3-primary)] px-6 py-3 text-sm font-semibold text-[var(--m3-on-primary)] shadow-[0_12px_24px_rgba(57,96,143,0.24)] transition hover:brightness-105 focus-visible:outline-none disabled:opacity-70"
+              >
+                <MdCloudUpload className="h-5 w-5" />
+                {uploading ? 'Bekleyin' : 'Yükleme Başlat'}
+              </button>
+            </div>
+
+            <dl
+              className={`flex w-full flex-wrap items-center justify-center gap-2 text-xs text-[var(--m3-on-surface-variant)]/90 ${isCompact ? 'md:gap-3' : 'gap-3'}`}
+            >
+              <div className="inline-flex items-center gap-2 rounded-full bg-[var(--m3-primary-container)]/70 px-4 py-2 shadow-[inset_0_-2px_4px_rgba(57,96,143,0.12)]">
+                <MdSpeed className="h-4 w-4 text-[var(--m3-primary)]" />
+                <div>
+                  <dt className="font-semibold text-[var(--m3-on-primary-container)]">Hızlı transfer</dt>
+                  <dd className="text-[10px] text-[var(--m3-on-primary-container)]/70">Sunucuya anında ulaşır</dd>
+                </div>
               </div>
-              <div className="rounded-full bg-[var(--m3-surface-variant)]/80 px-4 py-2">
-                <dt className="font-semibold text-[var(--m3-on-surface-variant)]">Limitsiz boyut</dt>
-                <dd className="mt-1 text-[color:rgba(15,23,42,0.55)]">
-                  Yapay sınırlar olmadan paylaşın.
-                </dd>
+              <div className="inline-flex items-center gap-2 rounded-full bg-[var(--m3-secondary-container)]/70 px-4 py-2 shadow-[inset_0_-2px_4px_rgba(84,95,112,0.12)]">
+                <MdLock className="h-4 w-4 text-[var(--m3-secondary)]" />
+                <div>
+                  <dt className="font-semibold text-[var(--m3-on-secondary-container)]">Parola korumalı</dt>
+                  <dd className="text-[10px] text-[var(--m3-on-secondary-container)]/70">İzinsiz erişim yok</dd>
+                </div>
               </div>
-              <div className="rounded-full bg-[var(--m3-secondary-container)]/60 px-4 py-2">
-                <dt className="font-semibold text-[var(--m3-on-secondary-container)]">Şifreli aktarım</dt>
-                <dd className="mt-1 text-[color:rgba(15,23,42,0.55)]">
-                  Parolanız olmadan kimse erişemez.
-                </dd>
+              <div className="inline-flex items-center gap-2 rounded-full bg-[var(--m3-surface-variant)]/70 px-4 py-2 shadow-[inset_0_-2px_4px_rgba(67,71,78,0.12)]">
+                <MdInsights className="h-4 w-4 text-[var(--m3-primary)]" />
+                <div>
+                  <dt className="font-semibold text-[var(--m3-on-surface-variant)]">Anlık linkler</dt>
+                  <dd className="text-[10px] text-[var(--m3-on-surface-variant)]/70">Paylaşım tek dokunuşla</dd>
+                </div>
               </div>
             </dl>
           </div>

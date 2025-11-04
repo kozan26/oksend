@@ -1,8 +1,8 @@
 import { useMemo, useState } from 'react';
+import { MdCloudDownload, MdContentCopy, MdError, MdSchedule, MdTaskAlt } from 'react-icons/md';
 import { formatBytes, getShareUrl } from '../lib/utils';
 import { copyToClipboard } from '../lib/copy';
 import type { UploadedFile } from '../App';
-import { MdCheckCircle, MdError, MdSchedule, MdContentCopy, MdOpenInNew } from 'react-icons/md';
 
 interface FileRowProps {
   file: UploadedFile;
@@ -35,110 +35,98 @@ export default function FileRow({ file, baseUrl }: FileRowProps) {
 
   const openUrl = file.shortUrl || getShareUrl(file.key, baseUrl);
 
-  const { badgeIcon, badgeLabel, badgeClassName } = useMemo(() => {
+  const statusMeta = useMemo(() => {
     if (file.status === 'success') {
       return {
-        badgeIcon: <MdCheckCircle className="h-4 w-4" />,
-        badgeLabel: 'Yüklendi',
-        badgeClassName:
-          'bg-[var(--m3-primary-container)] text-[var(--m3-on-primary-container)]',
+        iconBg: 'bg-[var(--m3-primary-container)]',
+        iconColor: 'text-[var(--m3-primary)]',
+        icon: <MdTaskAlt className="h-5 w-5" />,
+        label: 'Yüklendi',
       };
     }
     if (file.status === 'error') {
       return {
-        badgeIcon: <MdError className="h-4 w-4" />,
-        badgeLabel: 'Hata',
-        badgeClassName:
-          'bg-[var(--m3-error-container)] text-[var(--m3-on-error-container)]',
+        iconBg: 'bg-[var(--m3-error-container)]',
+        iconColor: 'text-[var(--m3-on-error-container)]',
+        icon: <MdError className="h-5 w-5" />,
+        label: 'Hata',
       };
     }
     return {
-      badgeIcon: <MdSchedule className="h-4 w-4" />,
-      badgeLabel: 'Yükleniyor',
-      badgeClassName:
-        'bg-[var(--m3-secondary-container)] text-[var(--m3-on-secondary-container)]',
+      iconBg: 'bg-[var(--m3-secondary-container)]',
+      iconColor: 'text-[var(--m3-secondary)]',
+      icon: <MdSchedule className="h-5 w-5" />,
+      label: 'Yükleniyor',
     };
   }, [file.status]);
 
   return (
     <article
-      className="flex flex-col gap-4 rounded-[var(--m3-radius-lg)] border border-[color:rgba(148,163,184,0.18)] bg-[var(--m3-surface)]/70 p-4 text-left shadow-sm md:flex-row md:items-center md:justify-between md:gap-6 md:p-5"
-      style={{ boxShadow: 'var(--m3-elev-1)' }}
+      className="flex flex-col gap-4 rounded-[28px] border border-[var(--m3-surface-variant)]/60 bg-[var(--m3-surface)] px-6 py-5 shadow-[0_18px_32px_rgba(25,28,32,0.08)] md:px-7"
     >
-      <div className="flex flex-1 items-start gap-4">
-        <div
-          className={`mt-1 flex h-10 w-10 items-center justify-center rounded-full ${badgeClassName}`}
-        >
-          {badgeIcon}
-        </div>
-        <div className="min-w-0 flex-1 space-y-2">
-          <div>
-            <p className="text-sm font-semibold text-[var(--m3-on-surface)] truncate">
-              {file.filename}
-            </p>
-            <div className="mt-1 flex flex-wrap items-center gap-3 text-xs text-[var(--m3-on-surface-variant)]">
-              <span>{file.contentType || 'Tanımsız tür'}</span>
-              <span className="h-1 w-1 rounded-full bg-[var(--m3-on-surface-variant)]/50" />
-              <span>{formatBytes(file.size)}</span>
-              {file.status === 'success' && file.slug && (
-                <>
-                  <span className="h-1 w-1 rounded-full bg-[var(--m3-on-surface-variant)]/50" />
-                  <span className="font-mono text-[11px] uppercase tracking-wide text-[var(--m3-on-surface-variant)]">
-                    {file.slug}
-                  </span>
-                </>
+      <div className="flex items-start justify-between gap-4">
+        <div className="flex items-start gap-4">
+          <span className={`mt-1 inline-flex h-12 w-12 items-center justify-center rounded-2xl ${statusMeta.iconBg} ${statusMeta.iconColor}`}>
+            {statusMeta.icon}
+          </span>
+          <div className="space-y-2">
+            <div>
+              <p className="truncate text-base font-semibold text-[var(--m3-on-surface)]">
+                {file.filename}
+              </p>
+              <p className="text-sm text-[var(--m3-on-surface-variant)]">
+                {formatBytes(file.size)} · {file.contentType || 'Tanımsız tür'}
+              </p>
+            </div>
+            <div className="flex flex-wrap items-center gap-2 text-xs text-[var(--m3-on-surface-variant)]">
+              <span className="inline-flex items-center gap-1 rounded-full bg-[var(--m3-surface-variant)]/60 px-3 py-1">
+                Durum: <span className="font-semibold text-[var(--m3-on-surface)]">{statusMeta.label}</span>
+              </span>
+              {file.slug && (
+                <span className="inline-flex items-center gap-1 rounded-full bg-[var(--m3-primary-container)]/70 px-3 py-1 text-[var(--m3-on-primary-container)]">
+                  slug · {file.slug}
+                </span>
               )}
             </div>
           </div>
-
-          {file.status === 'error' && file.error && (
-            <p className="text-sm text-[var(--m3-error)]">{file.error}</p>
-          )}
-
-          {file.status === 'success' && (
-            <div className="space-y-2">
-              <div className="flex flex-col gap-2 md:flex-row md:items-center">
-                <input
-                  type="text"
-                  readOnly
-                  value={fullDisplayUrl}
-                  className="flex-1 rounded-lg border border-transparent bg-[var(--m3-surface-variant)]/60 px-3 py-2 text-xs font-medium text-[var(--m3-on-surface)] shadow-inner focus:border-[var(--m3-primary)] focus:ring-2 focus:ring-[var(--m3-primary)]/30"
-                />
-                <button
-                  onClick={handleCopyLink}
-                  className="flex items-center justify-center gap-2 rounded-full bg-[var(--m3-primary)] px-4 py-2 text-xs font-semibold text-[var(--m3-on-primary)] transition-colors hover:bg-[#1d4ed8] focus-visible:outline-none"
-                >
-                  <MdContentCopy className="h-4 w-4" />
-                  {copied ? 'Kopyalandı' : 'Kopyala'}
-                </button>
-              </div>
-              {file.shortUrl && file.fullUrl && (
-                <p className="text-xs text-[var(--m3-on-surface-variant)]">
-                  Kısa bağlantı:{' '}
-                  <span className="font-mono text-[var(--m3-on-surface)]">
-                    {file.shortUrl.replace(window.location.origin, '')}
-                  </span>
-                </p>
-              )}
-            </div>
-          )}
         </div>
       </div>
 
+      {file.status === 'error' && file.error && (
+        <p className="rounded-2xl bg-[var(--m3-error-container)]/60 px-4 py-3 text-sm text-[var(--m3-on-error-container)]">
+          {file.error}
+        </p>
+      )}
+
       {file.status === 'success' && (
-        <a
-          href={openUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 self-start rounded-full border border-[var(--m3-primary)] px-4 py-2 text-sm font-medium text-[var(--m3-primary)] transition hover:bg-[var(--m3-primary)] hover:text-[var(--m3-on-primary)] focus-visible:outline-none"
-        >
-          <MdOpenInNew className="h-4 w-4" />
-          Aç
-        </a>
+        <div className="space-y-3">
+          <div className="rounded-2xl bg-[var(--m3-surface-variant)]/60 px-4 py-3 text-xs text-[var(--m3-on-surface-variant)]">
+            <p className="font-semibold text-[var(--m3-on-surface)]">Paylaşım Bağlantısı</p>
+            <p className="mt-1 break-all font-mono text-[var(--m3-on-surface)]">{fullDisplayUrl}</p>
+          </div>
+          <div className="flex flex-col gap-2 sm:flex-row">
+            <a
+              href={openUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex flex-1 items-center justify-center gap-2 rounded-full bg-[var(--m3-primary)] px-5 py-3 text-sm font-semibold text-[var(--m3-on-primary)] shadow-[0_12px_24px_rgba(57,96,143,0.2)] transition hover:brightness-110 focus-visible:outline-none"
+            >
+              <MdCloudDownload className="h-5 w-5" />
+              Dosyayı Aç
+            </a>
+            <button
+              onClick={handleCopyLink}
+              className="inline-flex flex-1 items-center justify-center gap-2 rounded-full border border-[var(--m3-primary)] bg-[var(--m3-primary-container)] px-5 py-3 text-sm font-semibold text-[var(--m3-on-primary-container)] transition hover:bg-[var(--m3-primary)] hover:text-[var(--m3-on-primary)] focus-visible:outline-none"
+            >
+              <MdContentCopy className="h-5 w-5" />
+              {copied ? 'Kopyalandı' : 'Bağlantıyı Kopyala'}
+            </button>
+          </div>
+        </div>
       )}
 
       {file.status === 'uploading' && file.progress !== undefined && (
-        <div className="mt-1 w-full overflow-hidden rounded-full bg-[var(--m3-surface-variant)]/80 md:mt-0 md:w-60">
+        <div className="overflow-hidden rounded-full bg-[var(--m3-surface-variant)]/80">
           <div
             className="h-2 rounded-full bg-[var(--m3-primary)] transition-all duration-300"
             style={{ width: `${file.progress}%` }}
