@@ -164,8 +164,8 @@ function App() {
                   }}
                   className={`group relative px-3 py-2 font-medium flex items-center gap-2 cursor-pointer transition-colors focus-visible:outline-none rounded-t-lg border-b-2 border-transparent ${
                     currentView === 'upload'
-                      ? 'text-blue-600 border-blue-500 font-semibold bg-white shadow-[0_1px_0_rgba(0,0,0,0.05)]'
-                      : 'text-gray-600 hover:text-blue-600 hover:border-blue-400'
+                      ? 'text-[var(--m3-on-surface-variant)] border-primary font-semibold bg-[var(--m3-surface-variant)]'
+                      : 'text-on-surface-variant hover:text-accent hover:border-accent'
                   }`}
                   aria-current={currentView === 'upload' ? 'page' : undefined}
                 >
@@ -184,8 +184,8 @@ function App() {
                   }}
                   className={`group relative px-3 py-2 font-medium flex items-center gap-2 cursor-pointer transition-colors focus-visible:outline-none rounded-t-lg border-b-2 border-transparent ${
                     currentView === 'admin'
-                      ? 'text-blue-600 border-blue-500 font-semibold bg-white shadow-[0_1px_0_rgba(0,0,0,0.05)]'
-                      : 'text-gray-600 hover:text-blue-600 hover:border-blue-400'
+                      ? 'text-[var(--m3-on-surface-variant)] border-primary font-semibold bg-[var(--m3-surface-variant)]'
+                      : 'text-on-surface-variant hover:text-accent hover:border-accent'
                   }`}
                   aria-current={currentView === 'admin' ? 'page' : undefined}
                 >
