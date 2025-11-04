@@ -174,7 +174,7 @@ function App() {
         {currentView === 'upload' ? (
           <div className="space-y-12">
             <section
-              className="rounded-[var(--m3-radius-lg)] bg-gradient-to-br from-[var(--m3-primary-container)] via-[var(--m3-surface-container)] to-[var(--m3-surface-container-high)] px-6 py-8 md:px-10"
+              className="grid gap-6 rounded-[var(--m3-radius-lg)] bg-gradient-to-br from-[var(--m3-primary-container)] via-[var(--m3-surface-container)] to-[var(--m3-surface-container-high)] px-6 py-8 md:grid-cols-[minmax(0,1fr)_1fr] md:px-10"
               style={{ boxShadow: 'var(--m3-elev-2)' }}
             >
               <div className="space-y-5">
@@ -219,13 +219,15 @@ function App() {
                   </button>
                 </div>
               </div>
+              <div className="self-center">
+                <Dropzone
+                  ref={dropzoneRef}
+                  onFilesUploaded={handleFilesUploaded}
+                  onError={handleUploadError}
+                  variant="compact"
+                />
+              </div>
             </section>
-
-            <Dropzone
-              ref={dropzoneRef}
-              onFilesUploaded={handleFilesUploaded}
-              onError={handleUploadError}
-            />
 
             {uploadedFiles.length > 0 && (
               <section

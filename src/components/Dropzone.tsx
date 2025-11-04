@@ -269,11 +269,11 @@ const Dropzone = forwardRef<DropzoneHandle, DropzoneProps>(
                   <dd className="text-[10px] text-[var(--m3-on-secondary-container)]/70">İzinsiz erişim yok</dd>
                 </div>
               </div>
-              <div className="inline-flex items-center gap-2 rounded-full bg-[var(--m3-tertiary-container)] px-3 py-1.5">
-                <MdInsights className="h-4 w-4 text-[var(--m3-tertiary)]" />
+              <div className="inline-flex items-center gap-2 rounded-full bg-[var(--m3-primary-container)] px-3 py-1.5">
+                <MdInsights className="h-4 w-4 text-[var(--m3-primary)]" />
                 <div>
-                  <dt className="font-medium text-[var(--m3-on-tertiary-container)]">Anlık linkler</dt>
-                  <dd className="text-[10px] text-[var(--m3-on-tertiary-container)]/70">Paylaşım tek dokunuşla</dd>
+                  <dt className="font-medium text-[var(--m3-on-primary-container)]">Anlık linkler</dt>
+                  <dd className="text-[10px] text-[var(--m3-on-primary-container)]/70">Paylaşım tek dokunuşla</dd>
                 </div>
               </div>
             </dl>
