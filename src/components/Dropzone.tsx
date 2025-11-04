@@ -171,7 +171,7 @@ const Dropzone = forwardRef<DropzoneHandle, DropzoneProps>(
           onDragOver={handleDragOver}
           onDragLeave={handleDragLeave}
           onDrop={handleDrop}
-          className={`group relative overflow-hidden rounded-[var(--m3-radius-lg)] border border-[color:rgba(148,163,184,0.2)] bg-gradient-to-br from-[var(--m3-surface-container)] via-[var(--m3-surface)] to-[color:rgba(37,99,235,0.08)] px-6 py-16 text-center transition-all duration-200 ease-out ${
+        className={`group relative overflow-hidden rounded-[var(--m3-radius-lg)] border border-[color:rgba(148,163,184,0.2)] bg-gradient-to-br from-[var(--m3-surface-container)] via-[var(--m3-surface)] to-[color:rgba(57,96,143,0.12)] px-6 py-16 text-center transition-all duration-200 ease-out ${
             uploading ? 'cursor-not-allowed opacity-70' : 'cursor-pointer'
           }`}
           style={{
@@ -183,7 +183,7 @@ const Dropzone = forwardRef<DropzoneHandle, DropzoneProps>(
           <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-200 group-hover:opacity-100"
             aria-hidden="true"
           >
-            <div className="absolute -inset-px bg-[radial-gradient(circle_at_top,var(--m3-primary)/10,transparent_55%)]" />
+            <div className="absolute -inset-px bg-[radial-gradient(circle_at_top,var(--m3-primary)/12,transparent_55%)]" />
           </div>
           <input
             ref={fileInputRef}

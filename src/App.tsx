@@ -181,7 +181,7 @@ function App() {
         {currentView === 'upload' ? (
           <div className="space-y-12">
             <section
-              className="grid gap-6 rounded-[var(--m3-radius-lg)] bg-gradient-to-br from-[var(--m3-primary-container)] via-[var(--m3-surface-container)] to-[color:rgba(37,99,235,0.08)] px-6 py-8 md:grid-cols-[minmax(0,1fr)_280px] md:px-10"
+              className="grid gap-6 rounded-[var(--m3-radius-lg)] bg-gradient-to-br from-[var(--m3-primary-container)] via-[var(--m3-surface-container)] to-[var(--m3-surface-container-high)] px-6 py-8 md:grid-cols-[minmax(0,1fr)_280px] md:px-10"
               style={{ boxShadow: 'var(--m3-elev-2)' }}
             >
               <div className="space-y-5">
@@ -234,7 +234,7 @@ function App() {
                   </button>
                 </div>
               </div>
-              <div className="grid gap-3 self-start rounded-[var(--m3-radius-lg)] bg-[var(--m3-surface)]/70 p-4 text-sm"
+              <div className="grid gap-3 self-start rounded-[var(--m3-radius-lg)] bg-[var(--m3-surface-container-low)] p-4 text-sm"
                 style={{ boxShadow: 'var(--m3-elev-2)' }}
               >
                 <h3 className="text-sm font-semibold text-[var(--m3-on-surface)]">Upload içgörüleri</h3>
