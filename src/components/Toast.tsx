@@ -1,3 +1,5 @@
+import { MdClose } from 'react-icons/md';
+
 export interface ToastMessage {
   id: number;
   message: string;
@@ -30,19 +32,7 @@ export default function Toast({ toasts, onRemove }: ToastProps) {
             className="ml-4 text-[var(--m3-on-surface-variant)] hover:text-[var(--m3-on-surface)] transition-colors duration-200"
             aria-label="Kapat"
           >
-            <svg
-              className="w-5 h-5"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M6 18L18 6M6 6l12 12"
-              />
-            </svg>
+            <MdClose className="w-5 h-5" />
           </button>
         </div>
       ))}
