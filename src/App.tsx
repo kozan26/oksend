@@ -153,7 +153,7 @@ function App() {
               </p>
             </div>
             <nav className="w-full max-w-md">
-              <div className="flex items-end gap-6 border-b border-outline">
+              <div className="flex items-end justify-end gap-6 border-b border-outline">
                 <button
                   type="button"
                   role="tab"
@@ -162,11 +162,12 @@ function App() {
                     setCurrentView('upload');
                     window.scrollTo({ top: 0, behavior: 'smooth' });
                   }}
-                  className={`-mb-px pb-2 px-1 font-medium flex items-center gap-2 cursor-pointer transition-colors border-b-2 focus-visible:outline-none ${
+                  className={`-mb-px pb-2 px-2 font-medium flex items-center gap-2 cursor-pointer transition-colors border-b-2 focus-visible:outline-none rounded-t-m3-sm ${
                     currentView === 'upload'
-                      ? 'text-primary border-primary'
-                      : 'text-on-surface-variant border-transparent hover:text-on-surface'
+                      ? 'border-primary bg-[var(--m3-primary-container)] text-[var(--m3-on-primary-container)] font-semibold'
+                      : 'text-on-surface-variant border-transparent hover:text-on-surface hover:border-primary'
                   }`}
+                  aria-current={currentView === 'upload' ? 'page' : undefined}
                 >
                   <MdCloudUpload className="w-5 h-5" />
                   Yükle
@@ -179,11 +180,12 @@ function App() {
                     setCurrentView('admin');
                     window.scrollTo({ top: 0, behavior: 'smooth' });
                   }}
-                  className={`-mb-px pb-2 px-1 font-medium flex items-center gap-2 cursor-pointer transition-colors border-b-2 focus-visible:outline-none ${
+                  className={`-mb-px pb-2 px-2 font-medium flex items-center gap-2 cursor-pointer transition-colors border-b-2 focus-visible:outline-none rounded-t-m3-sm ${
                     currentView === 'admin'
-                      ? 'text-primary border-primary'
-                      : 'text-on-surface-variant border-transparent hover:text-on-surface'
+                      ? 'border-primary bg-[var(--m3-primary-container)] text-[var(--m3-on-primary-container)] font-semibold'
+                      : 'text-on-surface-variant border-transparent hover:text-on-surface hover:border-primary'
                   }`}
+                  aria-current={currentView === 'admin' ? 'page' : undefined}
                 >
                   <MdSettings className="w-5 h-5" />
                   Yönetim
