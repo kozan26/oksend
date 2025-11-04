@@ -175,10 +175,10 @@ const Dropzone = forwardRef<DropzoneHandle, DropzoneProps>(
           onDragOver={handleDragOver}
           onDragLeave={handleDragLeave}
           onDrop={handleDrop}
-          className={`group relative bg-white rounded-[var(--m3-radius-lg)] text-center transition-all duration-200 ${
-            isDragging ? 'elev-4' : 'elev-1'
+          className={`group relative bg-white rounded-[var(--m3-radius-lg)] text-center transition-all duration-200 border-2 border-dashed ${
+            isDragging ? 'elev-4 border-[var(--m3-primary)]' : 'elev-1 border-[var(--m3-outline)]'
           } ${
-            uploading ? 'cursor-not-allowed opacity-70' : 'cursor-pointer hover:elev-2'
+            uploading ? 'cursor-not-allowed opacity-70' : 'cursor-pointer hover:elev-2 hover:border-[var(--m3-primary)]'
           } ${containerPadding}`}
           style={{
             outline: isDragging ? '2px solid var(--m3-primary)' : 'none',
@@ -190,7 +190,7 @@ const Dropzone = forwardRef<DropzoneHandle, DropzoneProps>(
             className="pointer-events-none absolute inset-0 rounded-[var(--m3-radius-lg)] opacity-0 transition-opacity duration-200 group-hover:opacity-100"
             aria-hidden="true"
             style={{
-              backgroundColor: `rgba(${isDragging ? '57, 96, 143' : '0, 0, 0'}, ${isDragging ? 0.12 : 0.08})`,
+              backgroundColor: 'rgba(57, 96, 143, 0.08)',
             }}
           />
           
