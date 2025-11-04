@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo } from 'react';
 import { getAuthHeaders } from '../lib/auth';
-import { formatBytes } from '../lib/utils';
+import { formatBytes, formatMimeType } from '../lib/utils';
 import { copyToClipboard } from '../lib/copy';
 import {
   MdImage,
@@ -21,7 +21,6 @@ import {
   MdSearch,
   MdShield,
   MdInfo,
-  MdFilterList,
 } from 'react-icons/md';
 
 interface FileItem {
@@ -47,7 +46,6 @@ export default function AdminPanel({ onBackToUpload }: AdminPanelProps) {
   const [deleting, setDeleting] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
-  const [showShortLinksOnly, setShowShortLinksOnly] = useState(false);
 
   useEffect(() => {
     loadFiles();
@@ -156,10 +154,9 @@ export default function AdminPanel({ onBackToUpload }: AdminPanelProps) {
         !term ||
         file.filename.toLowerCase().includes(term) ||
         (file.slug && file.slug.toLowerCase().includes(term));
-      const matchesShortLink = !showShortLinksOnly || Boolean(file.shortUrl);
-      return matchesTerm && matchesShortLink;
+      return matchesTerm;
     });
-  }, [files, searchTerm, showShortLinksOnly]);
+  }, [files, searchTerm]);
 
   return (
     <div className="space-y-8 text-[var(--m3-on-surface)]">
@@ -249,19 +246,6 @@ export default function AdminPanel({ onBackToUpload }: AdminPanelProps) {
 
               {/* Filter and View Toggle */}
               <div className="flex items-center gap-3">
-                <button
-                  type="button"
-                  onClick={() => setShowShortLinksOnly((prev) => !prev)}
-                  className={`inline-flex items-center gap-2 rounded-xl border px-4 py-3 text-caption font-semibold transition-all duration-200 ${
-                    showShortLinksOnly
-                      ? 'border-[var(--m3-primary)] bg-[var(--m3-primary)] text-[var(--m3-on-primary)] shadow-apple-md'
-                      : 'border-[var(--m3-surface-variant)] bg-[var(--m3-surface-container)] text-[var(--m3-on-surface-variant)] hover:border-[var(--m3-primary)] hover:text-[var(--m3-primary)] shadow-apple-sm'
-                  }`}
-                >
-                  <MdFilterList className="h-4 w-4" />
-                  Kısa URL
-                </button>
-
                 <div className="flex rounded-xl bg-[var(--m3-surface-container-low)] border border-[var(--m3-surface-variant)]/50 p-1 shadow-apple-sm">
                   <button
                     type="button"
@@ -411,11 +395,11 @@ export default function AdminPanel({ onBackToUpload }: AdminPanelProps) {
                 <table className="min-w-full">
                   <thead className="bg-[var(--m3-surface-container)] border-b border-[var(--m3-surface-variant)]/50">
                     <tr>
-                      <th className="px-4 py-3 text-left text-xs font-semibold text-[var(--m3-on-surface-variant)]">Dosya</th>
-                      <th className="px-4 py-3 text-left text-xs font-semibold text-[var(--m3-on-surface-variant)]">Boyut</th>
-                      <th className="px-4 py-3 text-left text-xs font-semibold text-[var(--m3-on-surface-variant)]">Tür</th>
-                      <th className="px-4 py-3 text-left text-xs font-semibold text-[var(--m3-on-surface-variant)]">Yüklenme</th>
-                      <th className="px-4 py-3 text-left text-xs font-semibold text-[var(--m3-on-surface-variant)]">İşlemler</th>
+                      <th className="w-[25%] px-4 py-3 text-left text-xs font-semibold text-[var(--m3-on-surface-variant)]">Dosya</th>
+                      <th className="w-[15%] px-4 py-3 text-left text-xs font-semibold text-[var(--m3-on-surface-variant)]">Boyut</th>
+                      <th className="w-[25%] px-4 py-3 text-left text-xs font-semibold text-[var(--m3-on-surface-variant)]">Tür</th>
+                      <th className="w-[15%] px-4 py-3 text-left text-xs font-semibold text-[var(--m3-on-surface-variant)]">Yüklenme</th>
+                      <th className="w-[20%] px-4 py-3 text-left text-xs font-semibold text-[var(--m3-on-surface-variant)]">İşlemler</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-[var(--m3-surface-variant)]/30">
@@ -426,8 +410,8 @@ export default function AdminPanel({ onBackToUpload }: AdminPanelProps) {
                             <div className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg bg-[var(--m3-surface-container)] text-[var(--m3-primary)]">
                               {getFileIcon(file.contentType, 'h-4 w-4')}
                             </div>
-                            <div className="min-w-0">
-                              <p className="truncate text-sm font-semibold text-[var(--m3-on-surface)]">
+                            <div className="min-w-0 flex-1">
+                              <p className="truncate text-sm font-semibold text-[var(--m3-on-surface)]" title={file.filename}>
                                 {file.filename}
                               </p>
                               <p className="truncate text-xs text-[var(--m3-on-surface-variant)]">
@@ -436,12 +420,12 @@ export default function AdminPanel({ onBackToUpload }: AdminPanelProps) {
                             </div>
                           </div>
                         </td>
-                        <td className="px-4 py-3 text-sm text-[var(--m3-on-surface-variant)]">
+                        <td className="px-4 py-3 text-sm text-[var(--m3-on-surface-variant)] whitespace-nowrap">
                           {formatBytes(file.size)}
                         </td>
                         <td className="px-4 py-3 text-sm text-[var(--m3-on-surface-variant)]">
-                          <span className="truncate block max-w-[200px]" title={file.contentType}>
-                            {file.contentType}
+                          <span className="block" title={file.contentType}>
+                            {formatMimeType(file.contentType)}
                           </span>
                         </td>
                         <td className="px-4 py-3 text-sm text-[var(--m3-on-surface-variant)]">
