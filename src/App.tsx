@@ -10,7 +10,7 @@ import {
   MdCloudUpload,
   MdInsights,
   MdLock,
-  MdSettings,
+  MdShield,
   MdSpeed,
 } from 'react-icons/md';
 
@@ -213,7 +213,7 @@ function App() {
                     className="inline-flex min-h-[48px] items-center gap-2 rounded-full border border-[var(--m3-outline)] bg-[var(--m3-surface)] px-6 py-3 text-body font-semibold text-[var(--m3-on-surface)] transition-transform duration-200 hover:scale-[1.01] focus-visible:outline-none"
                     style={{ boxShadow: 'var(--shadow-level1)' }}
                   >
-                    <MdSettings className="h-5 w-5" />
+                    <MdShield className="h-5 w-5" />
                     Yönetim paneli
                   </button>
                 </div>
