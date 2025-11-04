@@ -174,24 +174,26 @@ const Dropzone = forwardRef<DropzoneHandle, DropzoneProps>(
           }}
           onDragOver={handleDragOver}
           onDragLeave={handleDragLeave}
-        onDrop={handleDrop}
-        className={`group relative overflow-hidden rounded-[32px] border border-[var(--m3-surface-variant)]/50 bg-[radial-gradient(circle_at_top,var(--m3-surface-container) 0%,var(--m3-surface) 60%,var(--m3-surface-container-high) 100%)] text-center transition-all duration-200 ease-out ${containerPadding} ${
-          uploading ? 'cursor-not-allowed opacity-70' : 'cursor-pointer'
-        }`}
-        style={{
-          boxShadow: isDragging
-            ? '0 24px 40px rgba(57,96,143,0.18)'
-            : '0 18px 32px rgba(25,28,32,0.08)',
-          outline: isDragging ? '2px solid var(--m3-primary)' : 'none',
-          outlineOffset: '4px',
-        }}
-      >
+          onDrop={handleDrop}
+          className={`group relative bg-[var(--m3-surface-container)] rounded-[var(--m3-radius-lg)] text-center transition-all duration-200 ${
+            isDragging ? 'elev-4' : 'elev-1'
+          } ${
+            uploading ? 'cursor-not-allowed opacity-70' : 'cursor-pointer hover:elev-2'
+          } ${containerPadding}`}
+          style={{
+            outline: isDragging ? '2px solid var(--m3-primary)' : 'none',
+            outlineOffset: '2px',
+          }}
+        >
+          {/* Hover state layer */}
           <div
-            className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-200 group-hover:opacity-100"
+            className="pointer-events-none absolute inset-0 rounded-[var(--m3-radius-lg)] opacity-0 transition-opacity duration-200 group-hover:opacity-100"
             aria-hidden="true"
-          >
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,var(--m3-primary)/10,transparent_65%)]" />
-          </div>
+            style={{
+              backgroundColor: `rgba(${isDragging ? '57, 96, 143' : '0, 0, 0'}, ${isDragging ? 0.12 : 0.08})`,
+            }}
+          />
+          
           <input
             ref={fileInputRef}
             type="file"
@@ -201,31 +203,24 @@ const Dropzone = forwardRef<DropzoneHandle, DropzoneProps>(
             disabled={uploading}
             className="hidden"
           />
-          <div className="relative z-10 flex w-full max-w-3xl flex-col items-center gap-8">
+          
+          <div className="relative z-10 flex w-full max-w-3xl flex-col items-center gap-6 mx-auto">
+            {/* Icon */}
             <div
-              className={`relative flex ${isCompact ? 'h-18 w-18 md:h-20 md:w-20' : 'h-24 w-24'} items-center justify-center rounded-full bg-[var(--m3-primary-container)] shadow-[inset_0_-4px_12px_rgba(57,96,143,0.15)]`}
+              className={`relative flex ${isCompact ? 'h-16 w-16 md:h-18 w-18' : 'h-20 w-20'} items-center justify-center rounded-full bg-[var(--m3-primary-container)]`}
             >
-              <svg
-                className={`relative ${isCompact ? 'h-10 w-10' : 'h-12 w-12'} text-[var(--m3-primary)]`}
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={1.8}
-                  d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
-                />
-              </svg>
+              <MdCloudUpload
+                className={`${isCompact ? 'h-8 w-8 md:h-9 md:w-9' : 'h-10 w-10'} text-[var(--m3-primary)]`}
+              />
               {isDragging && (
-                <span className="absolute inset-0 rounded-[28px] border-2 border-[var(--m3-primary)]/50 bg-[var(--m3-primary)]/10" />
+                <span className="absolute inset-0 rounded-full border-2 border-[var(--m3-primary)]" />
               )}
             </div>
 
-            <div className="space-y-3 px-2">
+            {/* Text content */}
+            <div className="space-y-2 px-2">
               <h3
-                className={`${isCompact ? 'text-xl md:text-2xl' : 'text-2xl md:text-3xl'} font-semibold text-[var(--m3-on-surface)]`}
+                className={`${isCompact ? 'text-xl md:text-2xl' : 'text-2xl md:text-3xl'} font-medium text-[var(--m3-on-surface)]`}
               >
                 {uploading
                   ? 'Dosyalar yükleniyor...'
@@ -240,53 +235,59 @@ const Dropzone = forwardRef<DropzoneHandle, DropzoneProps>(
               </p>
             </div>
 
-            <div className={`flex flex-wrap items-center justify-center gap-2 ${isCompact ? 'md:gap-3' : 'gap-3'}`}>
+            {/* Action button */}
+            <div className="flex flex-wrap items-center justify-center gap-3">
               <button
                 type="button"
                 onClick={() => fileInputRef.current?.click()}
                 disabled={uploading}
-                className="inline-flex items-center gap-2 rounded-full bg-[var(--m3-primary)] px-6 py-3 text-sm font-semibold text-[var(--m3-on-primary)] shadow-[0_12px_24px_rgba(57,96,143,0.24)] transition hover:brightness-105 focus-visible:outline-none disabled:opacity-70"
+                className="inline-flex items-center gap-2 rounded-full bg-[var(--m3-primary)] px-6 py-3 text-sm font-medium text-[var(--m3-on-primary)] shadow-[var(--m3-elev-2)] transition-all hover:shadow-[var(--m3-elev-3)] focus-visible:outline-none focus-visible:outline-2 focus-visible:outline-[var(--m3-primary)] focus-visible:outline-offset-2 disabled:opacity-70"
+                style={{
+                  backgroundColor: uploading ? undefined : 'var(--m3-primary)',
+                }}
               >
                 <MdCloudUpload className="h-5 w-5" />
                 {uploading ? 'Bekleyin' : 'Yükleme Başlat'}
               </button>
             </div>
 
+            {/* Features list */}
             <dl
-              className={`flex w-full flex-wrap items-center justify-center gap-2 text-xs text-[var(--m3-on-surface-variant)]/90 ${isCompact ? 'md:gap-3' : 'gap-3'}`}
+              className={`flex w-full flex-wrap items-center justify-center gap-2 text-xs ${isCompact ? 'md:gap-3' : 'gap-3'}`}
             >
-              <div className="inline-flex items-center gap-2 rounded-full bg-[var(--m3-primary-container)]/70 px-4 py-2 shadow-[inset_0_-2px_4px_rgba(57,96,143,0.12)]">
+              <div className="inline-flex items-center gap-2 rounded-full bg-[var(--m3-primary-container)] px-3 py-1.5">
                 <MdSpeed className="h-4 w-4 text-[var(--m3-primary)]" />
                 <div>
-                  <dt className="font-semibold text-[var(--m3-on-primary-container)]">Hızlı transfer</dt>
+                  <dt className="font-medium text-[var(--m3-on-primary-container)]">Hızlı transfer</dt>
                   <dd className="text-[10px] text-[var(--m3-on-primary-container)]/70">Sunucuya anında ulaşır</dd>
                 </div>
               </div>
-              <div className="inline-flex items-center gap-2 rounded-full bg-[var(--m3-secondary-container)]/70 px-4 py-2 shadow-[inset_0_-2px_4px_rgba(84,95,112,0.12)]">
+              <div className="inline-flex items-center gap-2 rounded-full bg-[var(--m3-secondary-container)] px-3 py-1.5">
                 <MdLock className="h-4 w-4 text-[var(--m3-secondary)]" />
                 <div>
-                  <dt className="font-semibold text-[var(--m3-on-secondary-container)]">Parola korumalı</dt>
+                  <dt className="font-medium text-[var(--m3-on-secondary-container)]">Parola korumalı</dt>
                   <dd className="text-[10px] text-[var(--m3-on-secondary-container)]/70">İzinsiz erişim yok</dd>
                 </div>
               </div>
-              <div className="inline-flex items-center gap-2 rounded-full bg-[var(--m3-surface-variant)]/70 px-4 py-2 shadow-[inset_0_-2px_4px_rgba(67,71,78,0.12)]">
+              <div className="inline-flex items-center gap-2 rounded-full bg-[var(--m3-surface-variant)] px-3 py-1.5">
                 <MdInsights className="h-4 w-4 text-[var(--m3-primary)]" />
                 <div>
-                  <dt className="font-semibold text-[var(--m3-on-surface-variant)]">Anlık linkler</dt>
+                  <dt className="font-medium text-[var(--m3-on-surface-variant)]">Anlık linkler</dt>
                   <dd className="text-[10px] text-[var(--m3-on-surface-variant)]/70">Paylaşım tek dokunuşla</dd>
                 </div>
               </div>
             </dl>
           </div>
 
+          {/* Upload overlay */}
           {uploading && (
-            <div className="absolute inset-0 rounded-[var(--m3-radius-lg)] bg-[color:rgba(15,23,42,0.04)] backdrop-blur-sm">
+            <div className="absolute inset-0 rounded-[var(--m3-radius-lg)] bg-[var(--m3-surface)]/80 backdrop-blur-sm">
               <div className="flex h-full flex-col items-center justify-center space-y-4 text-[var(--m3-on-surface-variant)]">
                 <div className="h-12 w-12 animate-spin rounded-full border-[3px] border-[var(--m3-primary)] border-t-transparent" />
-                <div className="w-full max-w-xs overflow-hidden rounded-full bg-[var(--m3-surface-variant)]/80">
+                <div className="w-full max-w-xs overflow-hidden rounded-full bg-[var(--m3-surface-variant)]">
                   <div className="h-1.5 w-full animate-[progress_1.5s_linear_infinite] bg-[var(--m3-primary)]" />
                 </div>
-                <p className="text-sm font-medium tracking-wide">Yükleme devam ediyor…</p>
+                <p className="text-sm font-medium">Yükleme devam ediyor…</p>
               </div>
             </div>
           )}
