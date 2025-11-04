@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Dropzone, { DropzoneHandle } from './components/Dropzone';
 import FileRow from './components/FileRow';
 import AdminPanel from './components/AdminPanel';
@@ -61,7 +61,10 @@ function App() {
       });
 
       if (!response.ok) {
-        const errorData = await response.json().catch(() => ({}));
+        const errorData = (await response.json().catch(() => ({}))) as {
+          reason?: string;
+          error?: string;
+        };
         setPasswordError(errorData.reason || errorData.error || 'Geçersiz parola');
         return;
       }
@@ -98,16 +101,6 @@ function App() {
     showToast(message, 'error');
   };
 
-  const stats = useMemo(() => {
-    const success = uploadedFiles.filter((file) => file.status === 'success').length;
-    const errors = uploadedFiles.filter((file) => file.status === 'error').length;
-    const pending = uploadedFiles.filter((file) => file.status === 'uploading').length;
-    return { success, errors, pending };
-  }, [uploadedFiles]);
-
-  const handleOpenUpload = () => {
-    dropzoneRef.current?.openFileDialog();
-  };
 
   if (!authenticated) {
     return (
@@ -181,10 +174,10 @@ function App() {
         {currentView === 'upload' ? (
           <div className="space-y-12">
             <section
-              className="grid gap-6 rounded-[var(--m3-radius-lg)] bg-gradient-to-br from-[var(--m3-primary-container)] via-[var(--m3-surface-container)] to-[var(--m3-surface-container-high)] px-6 py-8 md:grid-cols-[minmax(0,1fr)_minmax(260px,1fr)] md:px-10"
+              className="rounded-[var(--m3-radius-lg)] bg-gradient-to-br from-[var(--m3-primary-container)] via-[var(--m3-surface-container)] to-[var(--m3-surface-container-high)] px-6 py-8 md:px-10"
               style={{ boxShadow: 'var(--m3-elev-2)' }}
             >
-              <div className="order-2 space-y-5 md:order-1">
+              <div className="space-y-5">
                 <div className="flex items-center gap-3 text-[var(--m3-on-primary-container)]">
                   <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-[var(--m3-primary)] text-[var(--m3-on-primary)]">
                     <MdAutoAwesome className="h-5 w-5" />
@@ -218,14 +211,6 @@ function App() {
                 <div className="flex flex-wrap gap-2">
                   <button
                     type="button"
-                    onClick={handleOpenUpload}
-                    className="inline-flex items-center gap-2 rounded-full bg-[var(--m3-primary)] px-5 py-2.5 text-sm font-semibold text-[var(--m3-on-primary)] transition hover:bg-[#1d4ed8] focus-visible:outline-none"
-                  >
-                    <MdCloudUpload className="h-5 w-5" />
-                    Yüklemeye başla
-                  </button>
-                  <button
-                    type="button"
                     onClick={() => setCurrentView('admin')}
                     className="inline-flex items-center gap-2 rounded-full border border-[var(--m3-primary)] px-5 py-2.5 text-sm font-semibold text-[var(--m3-primary)] transition hover:bg-[var(--m3-primary)] hover:text-[var(--m3-on-primary)] focus-visible:outline-none"
                   >
@@ -234,35 +219,13 @@ function App() {
                   </button>
                 </div>
               </div>
-              <div className="order-1 md:order-2">
-                <Dropzone
-                  ref={dropzoneRef}
-                  onFilesUploaded={handleFilesUploaded}
-                  onError={handleUploadError}
-                  variant="compact"
-                />
-              </div>
             </section>
 
-            <section className="grid gap-3 rounded-[var(--m3-radius-lg)] bg-[var(--m3-surface-container-low)] p-4 text-sm sm:grid-cols-3"
-              style={{ boxShadow: 'var(--m3-elev-1)' }}
-            >
-              <div className="rounded-[var(--m3-radius-md)] border border-[color:rgba(148,163,184,0.2)] bg-[var(--m3-primary-container)]/60 px-4 py-3 text-center">
-                <p className="text-xs uppercase tracking-[0.3em] text-[var(--m3-on-primary-container)]">Başarılı</p>
-                <p className="mt-1 text-2xl font-semibold text-[var(--m3-on-primary-container)]">{stats.success}</p>
-                <span className="text-[11px] text-[var(--m3-on-primary-container)]/70">Son yüklemeler</span>
-              </div>
-              <div className="rounded-[var(--m3-radius-md)] border border-[color:rgba(148,163,184,0.2)] bg-[var(--m3-surface-variant)]/70 px-4 py-3 text-center">
-                <p className="text-xs uppercase tracking-[0.3em] text-[var(--m3-on-surface-variant)]">Bekleyen</p>
-                <p className="mt-1 text-2xl font-semibold text-[var(--m3-on-surface-variant)]">{stats.pending}</p>
-                <span className="text-[11px] text-[var(--m3-on-surface-variant)]/70">Sıra bekleyenler</span>
-              </div>
-              <div className="rounded-[var(--m3-radius-md)] border border-[color:rgba(148,163,184,0.2)] bg-[var(--m3-error-container)]/70 px-4 py-3 text-center">
-                <p className="text-xs uppercase tracking-[0.3em] text-[var(--m3-on-error-container)]">Hata</p>
-                <p className="mt-1 text-2xl font-semibold text-[var(--m3-on-error-container)]">{stats.errors}</p>
-                <span className="text-[11px] text-[var(--m3-on-error-container)]/70">Dikkat gerektiren</span>
-              </div>
-            </section>
+            <Dropzone
+              ref={dropzoneRef}
+              onFilesUploaded={handleFilesUploaded}
+              onError={handleUploadError}
+            />
 
             {uploadedFiles.length > 0 && (
               <section
