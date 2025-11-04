@@ -186,37 +186,37 @@ export default function AdminPanel({ onBackToUpload }: AdminPanelProps) {
           </div>
 
           {/* Stats Cards */}
-          <div className="grid grid-cols-3 gap-4 lg:w-auto">
-            <div className="rounded-xl bg-[var(--m3-surface-container)] px-4 py-4">
-              <div className="flex items-center gap-3">
-                <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-[var(--m3-primary-container)]/80">
-                  <MdDescription className="h-6 w-6 text-[var(--m3-primary)]" />
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-3 sm:gap-4 lg:w-auto">
+            <div className="rounded-xl bg-[var(--m3-surface-container)] px-4 py-3 sm:px-4 sm:py-4">
+              <div className="flex items-center gap-2 sm:gap-3">
+                <div className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-lg bg-[var(--m3-primary-container)]/80 sm:h-10 sm:w-10">
+                  <MdDescription className="h-5 w-5 text-[var(--m3-primary)] sm:h-6 sm:w-6" />
                 </div>
                 <div className="min-w-0 flex-1">
-                  <div className="text-headline font-bold text-[var(--m3-on-surface)]">{summaries.totalFiles}</div>
-                  <div className="text-caption text-[var(--m3-on-surface-variant)] mt-0.5">Dosya</div>
+                  <div className="text-lg font-bold text-[var(--m3-on-surface)] sm:text-headline">{summaries.totalFiles}</div>
+                  <div className="text-xs text-[var(--m3-on-surface-variant)] mt-0.5 sm:text-caption">Dosya</div>
                 </div>
               </div>
             </div>
-            <div className="rounded-xl bg-[var(--m3-surface-container)] px-4 py-4">
-              <div className="flex items-center gap-3">
-                <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-[var(--m3-primary-container)]/80">
-                  <MdViewAgenda className="h-6 w-6 text-[var(--m3-primary)]" />
+            <div className="rounded-xl bg-[var(--m3-surface-container)] px-4 py-3 sm:px-4 sm:py-4">
+              <div className="flex items-center gap-2 sm:gap-3">
+                <div className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-lg bg-[var(--m3-primary-container)]/80 sm:h-10 sm:w-10">
+                  <MdViewAgenda className="h-5 w-5 text-[var(--m3-primary)] sm:h-6 sm:w-6" />
                 </div>
                 <div className="min-w-0 flex-1">
-                  <div className="text-subhead font-semibold text-[var(--m3-on-surface)]">{formatBytes(summaries.totalSize)}</div>
-                  <div className="text-caption text-[var(--m3-on-surface-variant)] mt-0.5">Toplam</div>
+                  <div className="text-base font-semibold text-[var(--m3-on-surface)] sm:text-subhead">{formatBytes(summaries.totalSize)}</div>
+                  <div className="text-xs text-[var(--m3-on-surface-variant)] mt-0.5 sm:text-caption">Toplam</div>
                 </div>
               </div>
             </div>
-            <div className="rounded-xl bg-[var(--m3-surface-container)] px-4 py-4">
-              <div className="flex items-center gap-3">
-                <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-[var(--m3-primary-container)]/80">
-                  <MdLink className="h-6 w-6 text-[var(--m3-primary)]" />
+            <div className="rounded-xl bg-[var(--m3-surface-container)] px-4 py-3 sm:px-4 sm:py-4">
+              <div className="flex items-center gap-2 sm:gap-3">
+                <div className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-lg bg-[var(--m3-primary-container)]/80 sm:h-10 sm:w-10">
+                  <MdLink className="h-5 w-5 text-[var(--m3-primary)] sm:h-6 sm:w-6" />
                 </div>
                 <div className="min-w-0 flex-1">
-                  <div className="text-headline font-bold text-[var(--m3-on-surface)]">{summaries.withShortLink}</div>
-                  <div className="text-caption text-[var(--m3-on-surface-variant)] mt-0.5">Kısa URL</div>
+                  <div className="text-lg font-bold text-[var(--m3-on-surface)] sm:text-headline">{summaries.withShortLink}</div>
+                  <div className="text-xs text-[var(--m3-on-surface-variant)] mt-0.5 sm:text-caption">Kısa URL</div>
                 </div>
               </div>
             </div>

@@ -180,7 +180,7 @@ const Dropzone = forwardRef<DropzoneHandle, DropzoneProps>(
           className={`group relative overflow-hidden rounded-[32px] border-2 border-dashed ${
             isDragging
               ? 'border-[var(--m3-primary)] bg-[var(--m3-primary-container)]/30'
-              : 'border-[var(--m3-outline)]/40 hover:border-[var(--m3-primary)] hover:bg-[var(--m3-primary-container)]/25'
+              : 'border-[var(--m3-outline)]/40 hover:border-[var(--m3-primary)]'
           } bg-[radial-gradient(circle_at_top,var(--m3-surface-container) 0%,var(--m3-surface) 60%,var(--m3-surface-container-high) 100%)] text-center transition-all duration-300 ease-out ${
             uploading ? 'cursor-not-allowed opacity-70' : 'cursor-pointer'
           } ${containerPadding}`}
@@ -188,8 +188,18 @@ const Dropzone = forwardRef<DropzoneHandle, DropzoneProps>(
             boxShadow: isDragging ? activeShadow : restingShadow,
             outline: isDragging ? '2px solid var(--m3-primary)' : 'none',
             outlineOffset: '4px',
+            backgroundColor: isDragging 
+              ? 'var(--m3-primary-container)' 
+              : undefined,
           }}
         >
+          {/* Hover background overlay */}
+          {!isDragging && !uploading && (
+            <div
+              className="absolute inset-0 z-0 rounded-[32px] bg-[var(--m3-primary-container)] opacity-0 transition-opacity duration-300 ease-out group-hover:opacity-30"
+              aria-hidden="true"
+            />
+          )}
           <input
             ref={fileInputRef}
             type="file"

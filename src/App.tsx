@@ -192,16 +192,16 @@ function App() {
                   Tüm yüklenen dosyalarınızı görüntüleyin, paylaşın ve yönetin. Bağlantıları kopyalayın,
                   dosyaları önizleyin veya silin.
                 </p>
-                <div className="flex flex-wrap gap-2 md:gap-3">
-                  <span className="inline-flex items-center gap-1.5 rounded-full bg-[var(--m3-primary-container)]/70 px-3 py-1.5 text-xs font-medium text-[var(--m3-on-primary-container)] md:gap-2 md:px-4 md:py-2 md:text-subhead">
+                <div className="flex gap-2 md:gap-3">
+                  <span className="inline-flex items-center gap-1.5 rounded-full bg-[var(--m3-primary-container)]/70 px-3 py-1.5 text-xs font-medium text-[var(--m3-on-primary-container)] md:gap-2 md:px-4 md:py-2 md:text-subhead whitespace-nowrap">
                     <MdSpeed className="h-3.5 w-3.5 text-[var(--m3-primary)] md:h-4 md:w-4" />
                     Hızlı aktarım
                   </span>
-                  <span className="inline-flex items-center gap-1.5 rounded-full bg-[var(--m3-secondary-container)]/70 px-3 py-1.5 text-xs font-medium text-[var(--m3-on-secondary-container)] md:gap-2 md:px-4 md:py-2 md:text-subhead">
-                    <MdLock className="h-3.5 w-3.5 text-[var(--m3-secondary)] md:h-4 md:w-4" />
+                  <span className="inline-flex items-center gap-1.5 rounded-full bg-[var(--m3-primary-container)]/70 px-3 py-1.5 text-xs font-medium text-[var(--m3-on-primary-container)] md:gap-2 md:px-4 md:py-2 md:text-subhead whitespace-nowrap">
+                    <MdLock className="h-3.5 w-3.5 text-[var(--m3-primary)] md:h-4 md:w-4" />
                     Parola korumalı
                   </span>
-                  <span className="inline-flex items-center gap-1.5 rounded-full bg-[var(--m3-surface-variant)]/70 px-3 py-1.5 text-xs font-medium text-[var(--m3-on-surface)] md:gap-2 md:px-4 md:py-2 md:text-subhead">
+                  <span className="inline-flex items-center gap-1.5 rounded-full bg-[var(--m3-primary-container)]/70 px-3 py-1.5 text-xs font-medium text-[var(--m3-on-primary-container)] md:gap-2 md:px-4 md:py-2 md:text-subhead whitespace-nowrap">
                     <MdInsights className="h-3.5 w-3.5 text-[var(--m3-primary)] md:h-4 md:w-4" />
                     Anlık linkler
                   </span>
