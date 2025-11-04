@@ -420,14 +420,14 @@ export default function AdminPanel({ onBackToUpload }: AdminPanelProps) {
                           }
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="inline-flex flex-1 items-center justify-center gap-2 rounded-full border border-[var(--m3-primary)] px-4 py-2 text-xs font-semibold text-[var(--m3-primary)] transition hover:bg-[var(--m3-primary)] hover:text-[var(--m3-on-primary)]"
+                          className="inline-flex flex-1 min-w-[140px] items-center justify-center gap-2 rounded-full border border-[var(--m3-primary)] px-4 py-2 text-xs font-semibold text-[var(--m3-primary)] transition hover:bg-[var(--m3-primary)] hover:text-[var(--m3-on-primary)]"
                         >
                           <MdLink className="h-4 w-4" /> Kısa URL'yi aç
                         </a>
                       ) : (
                         <button
                           onClick={() => handleCopyUrl(file)}
-                          className="inline-flex flex-1 items-center justify-center gap-2 rounded-full border border-[var(--m3-primary)] px-4 py-2 text-xs font-semibold text-[var(--m3-primary)] transition hover:bg-[var(--m3-primary)] hover:text-[var(--m3-on-primary)]"
+                          className="inline-flex flex-1 min-w-[140px] items-center justify-center gap-2 rounded-full border border-[var(--m3-primary)] px-4 py-2 text-xs font-semibold text-[var(--m3-primary)] transition hover:bg-[var(--m3-primary)] hover:text-[var(--m3-on-primary)]"
                         >
                           {copiedKey === file.key ? (
                             <>
@@ -444,7 +444,7 @@ export default function AdminPanel({ onBackToUpload }: AdminPanelProps) {
                         href={file.url.startsWith('http') ? file.url : window.location.origin + file.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center justify-center gap-2 rounded-full bg-[var(--m3-secondary)] px-4 py-2 text-xs font-semibold text-[var(--m3-on-secondary)] transition hover:brightness-110"
+                        className="inline-flex flex-1 min-w-[140px] items-center justify-center gap-2 rounded-full bg-[var(--m3-secondary)] px-4 py-2 text-xs font-semibold text-[var(--m3-on-secondary)] transition hover:brightness-110"
                       >
                         <MdOpenInNew className="h-4 w-4" /> Önizle
                       </a>
@@ -452,7 +452,7 @@ export default function AdminPanel({ onBackToUpload }: AdminPanelProps) {
                     <button
                       onClick={() => handleDeleteFile(file.key)}
                       disabled={deleting === file.key}
-                      className="inline-flex items-center justify-center gap-2 rounded-full bg-[var(--m3-error)] px-4 py-2 text-xs font-semibold text-[var(--m3-on-error)] transition hover:brightness-110 disabled:opacity-70"
+                      className="inline-flex flex-1 min-w-[140px] items-center justify-center gap-2 rounded-full bg-[var(--m3-error)] px-4 py-2 text-xs font-semibold text-[var(--m3-on-error)] transition hover:brightness-110 disabled:opacity-70"
                     >
                       <MdDelete className="h-4 w-4" />
                       {deleting === file.key ? 'Siliniyor...' : 'Sil'}
@@ -506,7 +506,7 @@ export default function AdminPanel({ onBackToUpload }: AdminPanelProps) {
                         <div className="flex flex-wrap items-center gap-2">
                           <button
                             onClick={() => handleCopyUrl(file)}
-                            className="inline-flex items-center gap-2 rounded-full border border-[var(--m3-primary)] px-3 py-1.5 text-xs font-semibold text-[var(--m3-primary)] transition hover:bg-[var(--m3-primary)] hover:text-[var(--m3-on-primary)]"
+                            className="inline-flex flex-1 min-w-[140px] items-center justify-center gap-2 rounded-full border border-[var(--m3-primary)] px-3 py-1.5 text-xs font-semibold text-[var(--m3-primary)] transition hover:bg-[var(--m3-primary)] hover:text-[var(--m3-on-primary)]"
                           >
                             {copiedKey === file.key ? (
                               <>
@@ -522,14 +522,14 @@ export default function AdminPanel({ onBackToUpload }: AdminPanelProps) {
                             href={file.url.startsWith('http') ? file.url : window.location.origin + file.url}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="inline-flex items-center gap-2 rounded-full bg-[var(--m3-secondary)] px-3 py-1.5 text-xs font-semibold text-[var(--m3-on-secondary)] transition hover:brightness-110"
+                            className="inline-flex flex-1 min-w-[140px] items-center justify-center gap-2 rounded-full bg-[var(--m3-secondary)] px-3 py-1.5 text-xs font-semibold text-[var(--m3-on-secondary)] transition hover:brightness-110"
                           >
-                            <MdOpenInNew className="h-4 w-4" /> Aç
+                            <MdOpenInNew className="h-4 w-4" /> Önizle
                           </a>
                           <button
                             onClick={() => handleDeleteFile(file.key)}
                             disabled={deleting === file.key}
-                            className="inline-flex items-center gap-2 rounded-full bg-[var(--m3-error)] px-3 py-1.5 text-xs font-semibold text-[var(--m3-on-error)] transition hover:brightness-110 disabled:opacity-70"
+                            className="inline-flex flex-1 min-w-[140px] items-center justify-center gap-2 rounded-full bg-[var(--m3-error)] px-3 py-1.5 text-xs font-semibold text-[var(--m3-on-error)] transition hover:brightness-110 disabled:opacity-70"
                           >
                             <MdDelete className="h-4 w-4" />
                             {deleting === file.key ? '...' : 'Sil'}
