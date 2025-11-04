@@ -210,7 +210,7 @@ function App() {
                   <button
                     type="button"
                     onClick={() => setCurrentView('admin')}
-                    className="inline-flex min-h-[44px] items-center gap-2 rounded-full border border-[var(--m3-outline)] bg-[var(--m3-surface)] px-5 py-2.5 text-sm font-semibold text-[var(--m3-on-surface)] transition-transform duration-200 hover:scale-[1.01] focus-visible:outline-none md:min-h-[48px] md:px-6 md:py-3 md:text-body"
+                    className="inline-flex min-h-[44px] items-center gap-2 rounded-full border border-[var(--m3-outline)] bg-[var(--m3-surface)] px-5 py-2.5 text-sm font-semibold text-[var(--m3-on-surface)] transition-all duration-200 hover:border-[var(--m3-primary)] hover:bg-[var(--m3-primary-container)]/50 hover:text-[var(--m3-primary)] hover:shadow-apple-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--m3-primary)] focus-visible:ring-offset-2 md:min-h-[48px] md:px-6 md:py-3 md:text-body"
                     style={{ boxShadow: 'var(--shadow-level1)' }}
                   >
                     <MdShield className="h-4 w-4 md:h-5 md:w-5" />

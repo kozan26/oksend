@@ -240,8 +240,8 @@ const Dropzone = forwardRef<DropzoneHandle, DropzoneProps>(
                 type="button"
                 onClick={() => fileInputRef.current?.click()}
                 disabled={uploading}
-                className="inline-flex min-h-[48px] items-center gap-2 rounded-full bg-[var(--m3-primary)] px-6 py-3 text-sm font-semibold text-[var(--m3-on-primary)] transition-transform duration-200 hover:scale-[1.01] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--m3-primary)] focus-visible:ring-offset-2 disabled:opacity-70"
-                style={{ boxShadow: '0 12px 24px rgba(30, 99, 213, 0.24)' }}
+                className="inline-flex min-h-[48px] items-center gap-2 rounded-full bg-[var(--m3-primary)] px-6 py-3 text-sm font-semibold text-[var(--m3-on-primary)] transition-all duration-200 hover:bg-[var(--m3-primary-hover)] hover:shadow-apple-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--m3-primary)] focus-visible:ring-offset-2 disabled:opacity-70 disabled:hover:bg-[var(--m3-primary)] disabled:hover:shadow-apple-md"
+                style={{ boxShadow: 'var(--shadow-level2)' }}
               >
                 <MdCloudUpload className="h-5 w-5" />
                 {uploading ? 'Bekleyin' : 'Yükleme Başlat'}
