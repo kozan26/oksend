@@ -223,7 +223,7 @@ export default function AdminPanel() {
                           className="text-blue-600 hover:text-blue-900 px-3 py-1 rounded hover:bg-blue-50 transition-colors flex items-center gap-1 inline-block"
                           title="Kısa URL landing page'ine git"
                         >
-                          <MdLink className="w-4 h-4" /> Kısa URL'i kopyala
+                          <MdLink className="w-4 h-4" /> Kısa URL
                         </a>
                       ) : (
                         <button
