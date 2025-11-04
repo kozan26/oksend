@@ -162,14 +162,20 @@ function App() {
                     setCurrentView('upload');
                     window.scrollTo({ top: 0, behavior: 'smooth' });
                   }}
-                  className={`px-4 py-2 font-medium flex items-center gap-2 cursor-pointer transition-colors focus-visible:outline-none rounded-m3-sm min-h-[40px] ${
+                  className={`group px-4 py-2 font-medium flex items-center gap-2 cursor-pointer transition-colors focus-visible:outline-none rounded-lg min-h-[40px] ${
                     currentView === 'upload'
-                      ? 'bg-[var(--m3-primary-container)] text-[var(--m3-on-primary-container)] font-semibold'
-                      : 'text-on-surface-variant hover:text-accent hover:[&_svg]:text-accent bg-transparent'
+                      ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-md'
+                      : 'text-gray-600 hover:text-blue-600 hover:bg-blue-50'
                   }`}
                   aria-current={currentView === 'upload' ? 'page' : undefined}
                 >
-                  <MdCloudUpload className="w-5 h-5 transition-colors" />
+                  <MdCloudUpload
+                    className={`w-5 h-5 transition-colors ${
+                      currentView === 'upload'
+                        ? 'text-white'
+                        : 'text-gray-500 group-hover:text-blue-600'
+                    }`}
+                  />
                   Yükle
                 </button>
                 <button
@@ -180,14 +186,20 @@ function App() {
                     setCurrentView('admin');
                     window.scrollTo({ top: 0, behavior: 'smooth' });
                   }}
-                  className={`px-4 py-2 font-medium flex items-center gap-2 cursor-pointer transition-colors focus-visible:outline-none rounded-m3-sm min-h-[40px] ${
+                  className={`group px-4 py-2 font-medium flex items-center gap-2 cursor-pointer transition-colors focus-visible:outline-none rounded-lg min-h-[40px] ${
                     currentView === 'admin'
-                      ? 'bg-[var(--m3-primary-container)] text-[var(--m3-on-primary-container)] font-semibold'
-                      : 'text-on-surface-variant hover:text-accent hover:[&_svg]:text-accent bg-transparent'
+                      ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-md'
+                      : 'text-gray-600 hover:text-blue-600 hover:bg-blue-50'
                   }`}
                   aria-current={currentView === 'admin' ? 'page' : undefined}
                 >
-                  <MdSettings className="w-5 h-5 transition-colors" />
+                  <MdSettings
+                    className={`w-5 h-5 transition-colors ${
+                      currentView === 'admin'
+                        ? 'text-white'
+                        : 'text-gray-500 group-hover:text-blue-600'
+                    }`}
+                  />
                   Yönetim
                 </button>
               </div>
