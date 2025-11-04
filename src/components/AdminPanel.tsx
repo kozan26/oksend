@@ -293,18 +293,18 @@ export default function AdminPanel({ onBackToUpload }: AdminPanelProps) {
               {filteredFiles.map((file) => (
                 <article
                   key={file.key}
-                  className="group flex flex-col gap-4 rounded-2xl bg-[var(--m3-surface)] p-6 shadow-apple-sm transition-all duration-200 hover:shadow-apple-md"
+                  className="group flex flex-col gap-4 rounded-2xl bg-[var(--m3-surface)] p-6 shadow-apple-sm transition-all duration-200 hover:shadow-apple-md overflow-hidden"
                 >
                   {/* File Header */}
                   <div className="flex items-start gap-4">
                     <div className="flex h-14 w-14 flex-shrink-0 items-center justify-center rounded-xl bg-[var(--m3-surface-container)] text-[var(--m3-primary)]">
                       {getFileIcon(file.contentType, 'h-7 w-7')}
                     </div>
-                    <div className="min-w-0 flex-1">
-                      <h3 className="truncate text-subhead font-semibold text-[var(--m3-on-surface)]">
+                    <div className="min-w-0 flex-1 overflow-hidden">
+                      <h3 className="truncate text-subhead font-semibold text-[var(--m3-on-surface)]" title={file.filename}>
                         {file.filename}
                       </h3>
-                      <p className="mt-1 text-caption text-[var(--m3-on-surface-variant)]">
+                      <p className="mt-1 text-caption text-[var(--m3-on-surface-variant)] truncate">
                         {file.uploaded
                           ? new Date(file.uploaded).toLocaleDateString('tr-TR', {
                               day: 'numeric',
@@ -395,11 +395,11 @@ export default function AdminPanel({ onBackToUpload }: AdminPanelProps) {
                 <table className="min-w-full">
                   <thead className="bg-[var(--m3-surface-container)] border-b border-[var(--m3-surface-variant)]/50">
                     <tr>
-                      <th className="w-[25%] px-4 py-3 text-left text-xs font-semibold text-[var(--m3-on-surface-variant)]">Dosya</th>
-                      <th className="w-[15%] px-4 py-3 text-left text-xs font-semibold text-[var(--m3-on-surface-variant)]">Boyut</th>
-                      <th className="w-[25%] px-4 py-3 text-left text-xs font-semibold text-[var(--m3-on-surface-variant)]">Tür</th>
+                      <th className="w-[20%] px-4 py-3 text-left text-xs font-semibold text-[var(--m3-on-surface-variant)]">Dosya</th>
+                      <th className="w-[12%] px-4 py-3 text-left text-xs font-semibold text-[var(--m3-on-surface-variant)]">Boyut</th>
+                      <th className="w-[18%] px-4 py-3 text-left text-xs font-semibold text-[var(--m3-on-surface-variant)]">Tür</th>
                       <th className="w-[15%] px-4 py-3 text-left text-xs font-semibold text-[var(--m3-on-surface-variant)]">Yüklenme</th>
-                      <th className="w-[20%] px-4 py-3 text-left text-xs font-semibold text-[var(--m3-on-surface-variant)]">İşlemler</th>
+                      <th className="w-[35%] px-4 py-3 text-left text-xs font-semibold text-[var(--m3-on-surface-variant)]">İşlemler</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-[var(--m3-surface-variant)]/30">

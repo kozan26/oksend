@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
 import { MdCloudDownload, MdContentCopy, MdError, MdSchedule, MdTaskAlt } from 'react-icons/md';
-import { formatBytes, getShareUrl } from '../lib/utils';
+import { formatBytes, formatMimeType, getShareUrl } from '../lib/utils';
 import { copyToClipboard } from '../lib/copy';
 import type { UploadedFile } from '../App';
 
@@ -62,23 +62,23 @@ export default function FileRow({ file, baseUrl }: FileRowProps) {
 
   return (
     <article
-      className="flex flex-col gap-4 rounded-[28px] border border-[var(--m3-outline)]/40 bg-[var(--m3-surface)] px-6 py-5 md:px-7"
+      className="flex flex-col gap-4 rounded-[28px] border border-[var(--m3-outline)]/40 bg-[var(--m3-surface)] px-6 py-5 md:px-7 overflow-hidden"
       style={{ boxShadow: 'var(--shadow-level1)' }}
     >
       <div className="flex items-start justify-between gap-4">
-        <div className="flex items-start gap-4">
+        <div className="flex items-start gap-4 min-w-0 flex-1">
           <span
-            className={`mt-1 inline-flex h-12 w-12 items-center justify-center rounded-[18px] ${statusMeta.iconBg} ${statusMeta.iconColor}`}
+            className={`mt-1 inline-flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-[18px] ${statusMeta.iconBg} ${statusMeta.iconColor}`}
           >
             {statusMeta.icon}
           </span>
-          <div className="space-y-2">
-            <div>
-              <p className="truncate text-headline font-semibold text-[var(--m3-on-surface)]">
+          <div className="space-y-2 min-w-0 flex-1">
+            <div className="min-w-0">
+              <p className="truncate text-headline font-semibold text-[var(--m3-on-surface)]" title={file.filename}>
                 {file.filename}
               </p>
-              <p className="text-body text-[var(--m3-on-surface-variant)]">
-                {formatBytes(file.size)} · {file.contentType || 'Tanımsız tür'}
+              <p className="text-body text-[var(--m3-on-surface-variant)] truncate" title={file.contentType || 'Tanımsız tür'}>
+                {formatBytes(file.size)} · {file.contentType ? formatMimeType(file.contentType) : 'Tanımsız tür'}
               </p>
             </div>
             <div className="flex flex-wrap items-center gap-2 text-caption">
