@@ -410,7 +410,7 @@ export default function AdminPanel({ onBackToUpload }: AdminPanelProps) {
               ))}
             </div>
           ) : (
-            /* List View */}
+            /* List View */
             <div className="overflow-hidden rounded-2xl bg-[var(--m3-surface)] shadow-apple-md">
               <div className="overflow-x-auto md:overflow-x-visible scrollbar-hide">
                 <table className="min-w-full">
