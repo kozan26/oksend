@@ -192,7 +192,7 @@ function App() {
                   Tüm yüklenen dosyalarınızı görüntüleyin, paylaşın ve yönetin. Bağlantıları kopyalayın,
                   dosyaları önizleyin veya silin.
                 </p>
-                <div className="flex flex-wrap gap-3">
+                <div className="flex gap-3">
                   <span className="inline-flex items-center gap-2 rounded-full bg-[var(--m3-primary-container)]/70 px-4 py-2 text-subhead font-medium text-[var(--m3-on-primary-container)]">
                     <MdSpeed className="h-4 w-4 text-[var(--m3-primary)]" />
                     Hızlı aktarım
