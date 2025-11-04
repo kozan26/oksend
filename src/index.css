@@ -7,10 +7,32 @@
 @layer base {
   body {
     @apply antialiased;
-    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', sans-serif;
-    background-color: var(--apple-background);
-    color: var(--apple-label);
+    font-family: 'SF Pro Text', 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
+    background-color: var(--m3-background);
+    color: var(--m3-on-surface);
   }
+
+  .bg-apple-background { background-color: var(--m3-background); }
+  .bg-apple-background-secondary { background-color: var(--m3-surface-container-low); }
+  .bg-apple-primary { background-color: var(--m3-primary); }
+  .bg-apple-primary-hover { background-color: var(--m3-primary-hover); }
+  .bg-apple-error { background-color: var(--m3-error); }
+  .text-apple-primary { color: var(--m3-primary); }
+  .text-apple-label { color: var(--m3-on-surface); }
+  .text-apple-label-secondary { color: var(--m3-on-surface-variant); }
+  .text-apple-error { color: var(--m3-error); }
+  .shadow-apple-sm { box-shadow: var(--shadow-level1); }
+  .shadow-apple-md { box-shadow: var(--shadow-level2); }
+  .shadow-apple-lg { box-shadow: var(--shadow-level3); }
+  .border-apple-primary { border-color: var(--m3-primary); }
+  .hover\:bg-apple-primary-hover:hover { background-color: var(--m3-primary-hover); }
+  .hover\:shadow-apple-md:hover { box-shadow: var(--shadow-level2); }
+  .hover\:shadow-apple-lg:hover { box-shadow: var(--shadow-level3); }
+  .focus\:border-apple-primary:focus { border-color: var(--m3-primary); }
+  .focus\:ring-apple-primary\/30:focus { box-shadow: 0 0 0 2px rgba(30, 99, 213, 0.3); }
+  .focus-visible\:ring-apple-primary:focus-visible { box-shadow: 0 0 0 2px rgba(30, 99, 213, 0.4); }
+  .focus-visible\:ring-apple-error:focus-visible { box-shadow: 0 0 0 2px rgba(209, 47, 47, 0.4); }
+  .focus-visible\:ring-offset-2:focus-visible { outline-offset: 2px; }
 
   /* Apple Typography Scale */
   .text-large-title {

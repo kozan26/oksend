@@ -104,26 +104,25 @@ function App() {
 
   if (!authenticated) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-apple-background text-apple-label px-4">
+      <div className="min-h-screen flex items-center justify-center bg-[var(--m3-background)] text-[var(--m3-on-surface)] px-4">
         <div
-          className="w-full max-w-md bg-white rounded-2xl px-8 py-12 space-y-8 shadow-apple-lg"
+          className="w-full max-w-md rounded-[24px] px-8 py-12 space-y-8 bg-[var(--m3-surface)]"
+          style={{ boxShadow: 'var(--shadow-level2)' }}
         >
           <div className="text-center space-y-3">
-            <span className="inline-flex h-14 w-14 items-center justify-center rounded-full bg-gray-100">
-              <MdCloudUpload className="h-7 w-7 text-apple-primary" />
+            <span className="inline-flex h-14 w-14 items-center justify-center rounded-full bg-[var(--m3-primary-container)]/80">
+              <MdCloudUpload className="h-7 w-7 text-[var(--m3-primary)]" />
             </span>
-            <h1 className="text-title text-apple-label">
-              ozan.cloud
-            </h1>
-            <p className="text-body text-apple-label-secondary">
+            <h1 className="text-title text-[var(--m3-on-surface)]">ozan.cloud</h1>
+            <p className="text-body text-[var(--m3-on-surface-variant)]">
               Yönetim ve yükleme ekranına erişmek için parolanızı girin.
             </p>
           </div>
           <form onSubmit={handlePasswordSubmit} className="space-y-6">
-            <div className="space-y-2">
+            <div className="space-y-2 text-left">
               <label
                 htmlFor="password"
-                className="block text-subhead font-semibold text-apple-label"
+                className="block text-subhead font-semibold text-[var(--m3-on-surface)]"
               >
                 Parolayı Gir
               </label>
@@ -136,12 +135,13 @@ function App() {
                     setPasswordInput(e.target.value);
                     setPasswordError('');
                   }}
-                  className="w-full rounded-xl border border-gray-300 bg-white px-4 py-3 text-body text-apple-label shadow-apple-sm focus:border-apple-primary focus:ring-2 focus:ring-apple-primary/30 focus-visible:outline-none"
+                  className="w-full rounded-[16px] border border-[var(--m3-outline)] bg-[var(--m3-surface)] px-4 py-3 text-body text-[var(--m3-on-surface)] focus-visible:outline-none"
+                  style={{ boxShadow: 'var(--shadow-level1)' }}
                   placeholder="Yükleme parolası"
                   autoFocus
                 />
                 {passwordError && (
-                  <p className="mt-2 text-subhead text-apple-error">
+                  <p className="mt-2 text-subhead text-[var(--m3-error)]">
                     {passwordError}
                   </p>
                 )}
@@ -150,11 +150,12 @@ function App() {
             <button
               type="submit"
               disabled={validating}
-              className="w-full flex items-center justify-center gap-2 rounded-xl bg-apple-primary px-6 py-3 text-body font-semibold text-white shadow-apple-md transition-all duration-200 hover:bg-apple-primary-hover hover:shadow-apple-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-apple-primary disabled:cursor-not-allowed disabled:opacity-60"
+              className="w-full flex min-h-[48px] items-center justify-center gap-2 rounded-full bg-[var(--m3-primary)] px-6 py-3 text-body font-semibold text-[var(--m3-on-primary)] transition-transform duration-200 hover:scale-[1.01] disabled:cursor-not-allowed disabled:opacity-60"
+              style={{ boxShadow: 'var(--shadow-level2)' }}
             >
               {validating ? (
                 <>
-                  <div className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
+                  <div className="h-4 w-4 animate-spin rounded-full border-2 border-[var(--m3-on-primary)] border-t-transparent" />
                   Doğrulanıyor...
                 </>
               ) : (
@@ -168,39 +169,40 @@ function App() {
   }
 
   return (
-    <div className="min-h-screen bg-apple-background text-apple-label">
+    <div className="min-h-screen bg-[var(--m3-background)] text-[var(--m3-on-surface)]">
       <main className="mx-auto max-w-4xl px-4 pb-16 pt-12">
         {currentView === 'upload' ? (
           <div className="space-y-12">
             <section
-              className="grid gap-8 rounded-2xl bg-white px-8 py-12 md:grid-cols-[minmax(0,1fr)_1fr] md:px-12 shadow-apple-md"
+              className="grid gap-8 rounded-[28px] bg-[var(--m3-surface)] px-8 py-12 md:grid-cols-[minmax(0,1fr)_1fr] md:px-12"
+              style={{ boxShadow: 'var(--shadow-level2)' }}
             >
               <div className="space-y-6">
                 <div className="flex items-center gap-4">
-                  <span className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-gray-100">
-                    <MdAutoAwesome className="h-6 w-6 text-apple-primary" />
+                  <span className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-[var(--m3-primary-container)]/80">
+                    <MdAutoAwesome className="h-6 w-6 text-[var(--m3-primary)]" />
                   </span>
                   <div>
-                    <h2 className="text-title text-apple-label">
+                    <h2 className="text-title text-[var(--m3-on-surface)]">
                       Gelişmiş paylaşım deneyimi, tek tıkla hazır
                     </h2>
                   </div>
                 </div>
-                <p className="max-w-xl text-body text-apple-label-secondary">
+                <p className="max-w-xl text-body text-[var(--m3-on-surface-variant)]">
                   Tüm yüklenen dosyalarınızı görüntüleyin, paylaşın ve yönetin. Bağlantıları kopyalayın,
                   dosyaları önizleyin veya silin.
                 </p>
                 <div className="flex flex-wrap gap-3">
-                  <span className="inline-flex items-center gap-2 rounded-xl bg-white border border-gray-200 px-4 py-2 text-subhead font-medium text-apple-label shadow-apple-sm">
-                    <MdSpeed className="h-4 w-4 text-apple-primary" />
+                  <span className="inline-flex items-center gap-2 rounded-full bg-[var(--m3-primary-container)]/70 px-4 py-2 text-subhead font-medium text-[var(--m3-on-primary-container)]">
+                    <MdSpeed className="h-4 w-4 text-[var(--m3-primary)]" />
                     Hızlı aktarım
                   </span>
-                  <span className="inline-flex items-center gap-2 rounded-xl bg-white border border-gray-200 px-4 py-2 text-subhead font-medium text-apple-label shadow-apple-sm">
-                    <MdLock className="h-4 w-4 text-apple-primary" />
+                  <span className="inline-flex items-center gap-2 rounded-full bg-[var(--m3-secondary-container)]/70 px-4 py-2 text-subhead font-medium text-[var(--m3-on-secondary-container)]">
+                    <MdLock className="h-4 w-4 text-[var(--m3-secondary)]" />
                     Parola korumalı
                   </span>
-                  <span className="inline-flex items-center gap-2 rounded-xl bg-white border border-gray-200 px-4 py-2 text-subhead font-medium text-apple-label shadow-apple-sm">
-                    <MdInsights className="h-4 w-4 text-apple-primary" />
+                  <span className="inline-flex items-center gap-2 rounded-full bg-[var(--m3-surface-variant)]/70 px-4 py-2 text-subhead font-medium text-[var(--m3-on-surface)]">
+                    <MdInsights className="h-4 w-4 text-[var(--m3-primary)]" />
                     Anlık linkler
                   </span>
                 </div>
@@ -208,7 +210,8 @@ function App() {
                   <button
                     type="button"
                     onClick={() => setCurrentView('admin')}
-                    className="inline-flex items-center gap-2 rounded-xl border border-gray-300 bg-white px-6 py-3 text-body font-semibold text-apple-label shadow-apple-sm transition-all duration-200 hover:bg-gray-50 hover:shadow-apple-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-apple-primary focus-visible:ring-offset-2"
+                    className="inline-flex min-h-[48px] items-center gap-2 rounded-full border border-[var(--m3-outline)] bg-[var(--m3-surface)] px-6 py-3 text-body font-semibold text-[var(--m3-on-surface)] transition-transform duration-200 hover:scale-[1.01] focus-visible:outline-none"
+                    style={{ boxShadow: 'var(--shadow-level1)' }}
                   >
                     <MdSettings className="h-5 w-5" />
                     Yönetim paneli
@@ -227,14 +230,15 @@ function App() {
 
             {uploadedFiles.length > 0 && (
               <section
-                className="rounded-2xl border border-gray-200 bg-white px-6 py-6 shadow-apple-md"
+                className="rounded-[24px] border border-[var(--m3-outline)]/50 bg-[var(--m3-surface)] px-6 py-6"
+                style={{ boxShadow: 'var(--shadow-level1)' }}
               >
-                <header className="flex flex-col gap-1 border-b border-gray-200 pb-4 mb-4 md:flex-row md:items-center md:justify-between">
+                <header className="mb-4 flex flex-col gap-1 border-b border-[var(--m3-outline)]/40 pb-4 md:flex-row md:items-center md:justify-between">
                   <div>
-                    <h2 className="text-headline font-semibold text-apple-label">
+                    <h2 className="text-headline font-semibold text-[var(--m3-on-surface)]">
                       Son yüklenenler
                     </h2>
-                    <p className="text-caption text-apple-label-secondary mt-1">
+                    <p className="mt-1 text-caption text-[var(--m3-on-surface-variant)]">
                       {uploadedFiles.length} dosya
                     </p>
                   </div>
