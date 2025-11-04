@@ -174,51 +174,51 @@ function App() {
         {currentView === 'upload' ? (
           <div className="space-y-12">
             <section
-              className="grid gap-8 rounded-[28px] bg-[var(--m3-surface)] px-8 py-12 md:grid-cols-[minmax(0,1fr)_1fr] md:px-12"
+              className="grid gap-6 rounded-2xl bg-[var(--m3-surface)] px-4 py-6 md:gap-8 md:rounded-[28px] md:px-8 md:py-12 md:grid-cols-[minmax(0,1fr)_1fr] lg:px-12"
               style={{ boxShadow: 'var(--shadow-level2)' }}
             >
-              <div className="space-y-6">
-                <div className="flex items-center gap-4">
-                  <span className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-[var(--m3-primary-container)]/80">
-                    <MdAutoAwesome className="h-6 w-6 text-[var(--m3-primary)]" />
+              <div className="space-y-4 md:space-y-6">
+                <div className="flex items-start gap-3 md:items-center md:gap-4">
+                  <span className="inline-flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-[var(--m3-primary-container)]/80 md:h-12 md:w-12">
+                    <MdAutoAwesome className="h-5 w-5 text-[var(--m3-primary)] md:h-6 md:w-6" />
                   </span>
-                  <div>
-                    <h2 className="text-title text-[var(--m3-on-surface)]">
+                  <div className="min-w-0 flex-1">
+                    <h2 className="text-headline font-semibold text-[var(--m3-on-surface)] md:text-title">
                       Gelişmiş paylaşım deneyimi, tek tıkla hazır
                     </h2>
                   </div>
                 </div>
-                <p className="max-w-xl text-body text-[var(--m3-on-surface-variant)]">
+                <p className="text-sm text-[var(--m3-on-surface-variant)] md:text-body md:max-w-xl">
                   Tüm yüklenen dosyalarınızı görüntüleyin, paylaşın ve yönetin. Bağlantıları kopyalayın,
                   dosyaları önizleyin veya silin.
                 </p>
-                <div className="flex gap-3">
-                  <span className="inline-flex items-center gap-2 rounded-full bg-[var(--m3-primary-container)]/70 px-4 py-2 text-subhead font-medium text-[var(--m3-on-primary-container)]">
-                    <MdSpeed className="h-4 w-4 text-[var(--m3-primary)]" />
+                <div className="flex flex-wrap gap-2 md:gap-3">
+                  <span className="inline-flex items-center gap-1.5 rounded-full bg-[var(--m3-primary-container)]/70 px-3 py-1.5 text-xs font-medium text-[var(--m3-on-primary-container)] md:gap-2 md:px-4 md:py-2 md:text-subhead">
+                    <MdSpeed className="h-3.5 w-3.5 text-[var(--m3-primary)] md:h-4 md:w-4" />
                     Hızlı aktarım
                   </span>
-                  <span className="inline-flex items-center gap-2 rounded-full bg-[var(--m3-secondary-container)]/70 px-4 py-2 text-subhead font-medium text-[var(--m3-on-secondary-container)]">
-                    <MdLock className="h-4 w-4 text-[var(--m3-secondary)]" />
+                  <span className="inline-flex items-center gap-1.5 rounded-full bg-[var(--m3-secondary-container)]/70 px-3 py-1.5 text-xs font-medium text-[var(--m3-on-secondary-container)] md:gap-2 md:px-4 md:py-2 md:text-subhead">
+                    <MdLock className="h-3.5 w-3.5 text-[var(--m3-secondary)] md:h-4 md:w-4" />
                     Parola korumalı
                   </span>
-                  <span className="inline-flex items-center gap-2 rounded-full bg-[var(--m3-surface-variant)]/70 px-4 py-2 text-subhead font-medium text-[var(--m3-on-surface)]">
-                    <MdInsights className="h-4 w-4 text-[var(--m3-primary)]" />
+                  <span className="inline-flex items-center gap-1.5 rounded-full bg-[var(--m3-surface-variant)]/70 px-3 py-1.5 text-xs font-medium text-[var(--m3-on-surface)] md:gap-2 md:px-4 md:py-2 md:text-subhead">
+                    <MdInsights className="h-3.5 w-3.5 text-[var(--m3-primary)] md:h-4 md:w-4" />
                     Anlık linkler
                   </span>
                 </div>
-                <div className="flex flex-wrap gap-2 justify-center">
+                <div className="flex flex-wrap gap-2 justify-center md:justify-start">
                   <button
                     type="button"
                     onClick={() => setCurrentView('admin')}
-                    className="inline-flex min-h-[48px] items-center gap-2 rounded-full border border-[var(--m3-outline)] bg-[var(--m3-surface)] px-6 py-3 text-body font-semibold text-[var(--m3-on-surface)] transition-transform duration-200 hover:scale-[1.01] focus-visible:outline-none"
+                    className="inline-flex min-h-[44px] items-center gap-2 rounded-full border border-[var(--m3-outline)] bg-[var(--m3-surface)] px-5 py-2.5 text-sm font-semibold text-[var(--m3-on-surface)] transition-transform duration-200 hover:scale-[1.01] focus-visible:outline-none md:min-h-[48px] md:px-6 md:py-3 md:text-body"
                     style={{ boxShadow: 'var(--shadow-level1)' }}
                   >
-                    <MdShield className="h-5 w-5" />
+                    <MdShield className="h-4 w-4 md:h-5 md:w-5" />
                     Yönetim paneli
                   </button>
                 </div>
               </div>
-              <div className="self-center">
+              <div className="self-center w-full md:w-auto">
                 <Dropzone
                   ref={dropzoneRef}
                   onFilesUploaded={handleFilesUploaded}

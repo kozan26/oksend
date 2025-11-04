@@ -187,17 +187,38 @@ export default function AdminPanel({ onBackToUpload }: AdminPanelProps) {
 
           {/* Stats Cards */}
           <div className="grid grid-cols-3 gap-4 lg:w-auto">
-            <div className="rounded-xl bg-[var(--m3-surface-container)] px-4 py-4 text-center">
-              <div className="text-headline font-bold text-[var(--m3-on-surface)]">{summaries.totalFiles}</div>
-              <div className="text-caption text-[var(--m3-on-surface-variant)] mt-1">Dosya</div>
+            <div className="rounded-xl bg-[var(--m3-surface-container)] px-4 py-4">
+              <div className="flex items-center gap-3">
+                <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-[var(--m3-primary-container)]/80">
+                  <MdDescription className="h-6 w-6 text-[var(--m3-primary)]" />
+                </div>
+                <div className="min-w-0 flex-1">
+                  <div className="text-headline font-bold text-[var(--m3-on-surface)]">{summaries.totalFiles}</div>
+                  <div className="text-caption text-[var(--m3-on-surface-variant)] mt-0.5">Dosya</div>
+                </div>
+              </div>
             </div>
-            <div className="rounded-xl bg-[var(--m3-surface-container)] px-4 py-4 text-center">
-              <div className="text-subhead font-semibold text-[var(--m3-on-surface)]">{formatBytes(summaries.totalSize)}</div>
-              <div className="text-caption text-[var(--m3-on-surface-variant)] mt-1">Toplam</div>
+            <div className="rounded-xl bg-[var(--m3-surface-container)] px-4 py-4">
+              <div className="flex items-center gap-3">
+                <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-[var(--m3-primary-container)]/80">
+                  <MdViewAgenda className="h-6 w-6 text-[var(--m3-primary)]" />
+                </div>
+                <div className="min-w-0 flex-1">
+                  <div className="text-subhead font-semibold text-[var(--m3-on-surface)]">{formatBytes(summaries.totalSize)}</div>
+                  <div className="text-caption text-[var(--m3-on-surface-variant)] mt-0.5">Toplam</div>
+                </div>
+              </div>
             </div>
-            <div className="rounded-xl bg-[var(--m3-surface-container)] px-4 py-4 text-center">
-              <div className="text-headline font-bold text-[var(--m3-on-surface)]">{summaries.withShortLink}</div>
-              <div className="text-caption text-[var(--m3-on-surface-variant)] mt-1">Kısa URL</div>
+            <div className="rounded-xl bg-[var(--m3-surface-container)] px-4 py-4">
+              <div className="flex items-center gap-3">
+                <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-[var(--m3-primary-container)]/80">
+                  <MdLink className="h-6 w-6 text-[var(--m3-primary)]" />
+                </div>
+                <div className="min-w-0 flex-1">
+                  <div className="text-headline font-bold text-[var(--m3-on-surface)]">{summaries.withShortLink}</div>
+                  <div className="text-caption text-[var(--m3-on-surface-variant)] mt-0.5">Kısa URL</div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
