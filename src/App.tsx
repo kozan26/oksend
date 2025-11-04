@@ -142,7 +142,7 @@ function App() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
       <header className="bg-white shadow-sm border-b sticky top-0 z-10">
-        <div className="max-w-7xl mx-auto px-4 py-4">
+        <div className="max-w-7xl mx-auto px-4 py-3 md:py-4">
           <div className="flex items-center justify-between">
             <div>
               <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
@@ -152,8 +152,8 @@ function App() {
                 Sürükle-bırak ile basit dosya paylaşımı
               </p>
             </div>
-            <nav className="w-full max-w-md">
-              <div className="flex items-center justify-end gap-2">
+            <nav className="w-full max-w-md -mb-px">
+              <div className="flex items-end justify-end gap-2">
                 <button
                   type="button"
                   role="tab"
@@ -162,19 +162,15 @@ function App() {
                     setCurrentView('upload');
                     window.scrollTo({ top: 0, behavior: 'smooth' });
                   }}
-                  className={`group px-4 py-2 font-medium flex items-center gap-2 cursor-pointer transition-colors focus-visible:outline-none rounded-lg min-h-[40px] ${
+                  className={`group relative px-3 py-2 font-medium flex items-center gap-2 cursor-pointer transition-colors focus-visible:outline-none rounded-t-lg border-b-2 border-transparent ${
                     currentView === 'upload'
-                      ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-md'
-                      : 'text-gray-600 hover:text-blue-600 hover:bg-blue-50'
+                      ? 'text-blue-600 border-blue-500 font-semibold bg-white shadow-[0_1px_0_rgba(0,0,0,0.05)]'
+                      : 'text-gray-600 hover:text-blue-600 hover:border-blue-400'
                   }`}
                   aria-current={currentView === 'upload' ? 'page' : undefined}
                 >
                   <MdCloudUpload
-                    className={`w-5 h-5 transition-colors ${
-                      currentView === 'upload'
-                        ? 'text-white'
-                        : 'text-gray-500 group-hover:text-blue-600'
-                    }`}
+                    className="w-5 h-5 transition-colors text-current"
                   />
                   Yükle
                 </button>
@@ -186,19 +182,15 @@ function App() {
                     setCurrentView('admin');
                     window.scrollTo({ top: 0, behavior: 'smooth' });
                   }}
-                  className={`group px-4 py-2 font-medium flex items-center gap-2 cursor-pointer transition-colors focus-visible:outline-none rounded-lg min-h-[40px] ${
+                  className={`group relative px-3 py-2 font-medium flex items-center gap-2 cursor-pointer transition-colors focus-visible:outline-none rounded-t-lg border-b-2 border-transparent ${
                     currentView === 'admin'
-                      ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-md'
-                      : 'text-gray-600 hover:text-blue-600 hover:bg-blue-50'
+                      ? 'text-blue-600 border-blue-500 font-semibold bg-white shadow-[0_1px_0_rgba(0,0,0,0.05)]'
+                      : 'text-gray-600 hover:text-blue-600 hover:border-blue-400'
                   }`}
                   aria-current={currentView === 'admin' ? 'page' : undefined}
                 >
                   <MdSettings
-                    className={`w-5 h-5 transition-colors ${
-                      currentView === 'admin'
-                        ? 'text-white'
-                        : 'text-gray-500 group-hover:text-blue-600'
-                    }`}
+                    className="w-5 h-5 transition-colors text-current"
                   />
                   Yönetim
                 </button>
