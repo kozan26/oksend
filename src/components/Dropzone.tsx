@@ -5,6 +5,7 @@ import type { UploadedFile } from '../App';
 interface DropzoneProps {
   onFilesUploaded: (files: UploadedFile[]) => void;
   onError: (message: string) => void;
+  variant?: 'default' | 'compact';
 }
 
 export interface DropzoneHandle {
@@ -12,10 +13,12 @@ export interface DropzoneHandle {
 }
 
 const Dropzone = forwardRef<DropzoneHandle, DropzoneProps>(
-  ({ onFilesUploaded, onError }, ref) => {
+  ({ onFilesUploaded, onError, variant = 'default' }, ref) => {
     const [isDragging, setIsDragging] = useState(false);
     const [uploading, setUploading] = useState(false);
     const fileInputRef = useRef<HTMLInputElement | null>(null);
+    const isCompact = variant === 'compact';
+    const containerPadding = isCompact ? 'px-5 py-10 md:px-6 md:py-12' : 'px-6 py-16';
 
     useImperativeHandle(
       ref,
@@ -170,16 +173,16 @@ const Dropzone = forwardRef<DropzoneHandle, DropzoneProps>(
           }}
           onDragOver={handleDragOver}
           onDragLeave={handleDragLeave}
-          onDrop={handleDrop}
-        className={`group relative overflow-hidden rounded-[var(--m3-radius-lg)] border border-[color:rgba(148,163,184,0.2)] bg-gradient-to-br from-[var(--m3-surface-container)] via-[var(--m3-surface)] to-[color:rgba(57,96,143,0.12)] px-6 py-16 text-center transition-all duration-200 ease-out ${
-            uploading ? 'cursor-not-allowed opacity-70' : 'cursor-pointer'
-          }`}
-          style={{
-            boxShadow: isDragging ? 'var(--m3-elev-4)' : 'var(--m3-elev-2)',
-            outline: isDragging ? '2px solid var(--m3-primary)' : 'none',
-            outlineOffset: '4px',
-          }}
-        >
+        onDrop={handleDrop}
+        className={`group relative overflow-hidden rounded-[var(--m3-radius-lg)] border border-[color:rgba(148,163,184,0.2)] bg-gradient-to-br from-[var(--m3-surface-container)] via-[var(--m3-surface)] to-[color:rgba(57,96,143,0.12)] text-center transition-all duration-200 ease-out ${containerPadding} ${
+          uploading ? 'cursor-not-allowed opacity-70' : 'cursor-pointer'
+        }`}
+        style={{
+          boxShadow: isDragging ? 'var(--m3-elev-4)' : 'var(--m3-elev-2)',
+          outline: isDragging ? '2px solid var(--m3-primary)' : 'none',
+          outlineOffset: '4px',
+        }}
+      >
           <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-200 group-hover:opacity-100"
             aria-hidden="true"
           >
@@ -195,11 +198,11 @@ const Dropzone = forwardRef<DropzoneHandle, DropzoneProps>(
             className="hidden"
           />
           <div className="relative z-10 flex w-full max-w-3xl flex-col items-center space-y-8">
-            <div className="relative flex h-24 w-24 items-center justify-center">
+            <div className={`relative flex ${isCompact ? 'h-20 w-20' : 'h-24 w-24'} items-center justify-center`}>
               <div className="absolute inset-0 rounded-[28px] bg-[var(--m3-primary-container)]" />
               <div className="absolute inset-3 rounded-[24px] bg-[var(--m3-primary)]/12" />
               <svg
-                className="relative h-12 w-12 text-[var(--m3-primary)]"
+                className={`relative ${isCompact ? 'h-10 w-10' : 'h-12 w-12'} text-[var(--m3-primary)]`}
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -217,21 +220,21 @@ const Dropzone = forwardRef<DropzoneHandle, DropzoneProps>(
             </div>
 
             <div className="space-y-3">
-              <h3 className="text-2xl font-semibold text-[var(--m3-on-surface)] md:text-3xl">
+              <h3 className={`${isCompact ? 'text-xl md:text-2xl' : 'text-2xl md:text-3xl'} font-semibold text-[var(--m3-on-surface)]`}>
                 {uploading
                   ? 'Dosyalar yükleniyor...'
                   : isDragging
                     ? 'Bırakın, biz hallederiz'
                     : 'Dosyalarınızı buraya bırakın'}
               </h3>
-              <p className="text-sm text-[var(--m3-on-surface-variant)] md:text-base">
+              <p className={`${isCompact ? 'text-sm md:text-base' : 'text-sm md:text-base'} text-[var(--m3-on-surface-variant)]`}>
                 {uploading
                   ? 'Dosyalarınız güvenli bir şekilde aktarılıyor. Bu pencereyi kapatmayın.'
                   : 'Sürükleyip bırakın veya bilgisayarınızdaki dosyalara göz atmak için dokunun. Şifre korumalı paylaşımınız saniyeler içinde hazır.'}
               </p>
             </div>
 
-            <dl className="grid w-full gap-3 text-xs text-[var(--m3-on-surface-variant)]/90 md:grid-cols-3">
+            <dl className={`grid w-full gap-3 text-xs text-[var(--m3-on-surface-variant)]/90 ${isCompact ? 'sm:grid-cols-3' : 'md:grid-cols-3'}`}>
               <div className="rounded-full bg-[var(--m3-primary-container)]/60 px-4 py-2">
                 <dt className="font-semibold text-[var(--m3-on-primary-container)]">Çoklu seçim</dt>
                 <dd className="mt-1 text-[color:rgba(15,23,42,0.55)]">

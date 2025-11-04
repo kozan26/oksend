@@ -181,10 +181,10 @@ function App() {
         {currentView === 'upload' ? (
           <div className="space-y-12">
             <section
-              className="grid gap-6 rounded-[var(--m3-radius-lg)] bg-gradient-to-br from-[var(--m3-primary-container)] via-[var(--m3-surface-container)] to-[var(--m3-surface-container-high)] px-6 py-8 md:grid-cols-[minmax(0,1fr)_280px] md:px-10"
+              className="grid gap-6 rounded-[var(--m3-radius-lg)] bg-gradient-to-br from-[var(--m3-primary-container)] via-[var(--m3-surface-container)] to-[var(--m3-surface-container-high)] px-6 py-8 md:grid-cols-[minmax(0,1fr)_minmax(260px,1fr)] md:px-10"
               style={{ boxShadow: 'var(--m3-elev-2)' }}
             >
-              <div className="space-y-5">
+              <div className="order-2 space-y-5 md:order-1">
                 <div className="flex items-center gap-3 text-[var(--m3-on-primary-container)]">
                   <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-[var(--m3-primary)] text-[var(--m3-on-primary)]">
                     <MdAutoAwesome className="h-5 w-5" />
@@ -234,35 +234,35 @@ function App() {
                   </button>
                 </div>
               </div>
-              <div className="grid gap-3 self-start rounded-[var(--m3-radius-lg)] bg-[var(--m3-surface-container-low)] p-4 text-sm"
-                style={{ boxShadow: 'var(--m3-elev-2)' }}
-              >
-                <h3 className="text-sm font-semibold text-[var(--m3-on-surface)]">Upload içgörüleri</h3>
-                <p className="text-xs text-[var(--m3-on-surface-variant)]">
-                  Aktivite artık anlık raporlanıyor. Linkleriniz ve hatalarınız tek bakışta.
-                </p>
-                <dl className="grid gap-3">
-                  <div className="flex items-center justify-between rounded-[var(--m3-radius-md)] bg-[var(--m3-primary-container)]/50 px-3 py-2">
-                    <dt className="text-xs uppercase tracking-[0.2em] text-[var(--m3-on-primary-container)]">Başarılı</dt>
-                    <dd className="text-lg font-semibold text-[var(--m3-on-primary-container)]">{stats.success}</dd>
-                  </div>
-                  <div className="flex items-center justify-between rounded-[var(--m3-radius-md)] bg-[var(--m3-surface-variant)]/80 px-3 py-2">
-                    <dt className="text-xs uppercase tracking-[0.2em] text-[var(--m3-on-surface-variant)]">Bekleyen</dt>
-                    <dd className="text-lg font-semibold text-[var(--m3-on-surface-variant)]">{stats.pending}</dd>
-                  </div>
-                  <div className="flex items-center justify-between rounded-[var(--m3-radius-md)] bg-[var(--m3-error-container)]/70 px-3 py-2">
-                    <dt className="text-xs uppercase tracking-[0.2em] text-[var(--m3-on-error-container)]">Hata</dt>
-                    <dd className="text-lg font-semibold text-[var(--m3-on-error-container)]">{stats.errors}</dd>
-                  </div>
-                </dl>
+              <div className="order-1 md:order-2">
+                <Dropzone
+                  ref={dropzoneRef}
+                  onFilesUploaded={handleFilesUploaded}
+                  onError={handleUploadError}
+                  variant="compact"
+                />
               </div>
             </section>
 
-            <Dropzone
-              ref={dropzoneRef}
-              onFilesUploaded={handleFilesUploaded}
-              onError={handleUploadError}
-            />
+            <section className="grid gap-3 rounded-[var(--m3-radius-lg)] bg-[var(--m3-surface-container-low)] p-4 text-sm sm:grid-cols-3"
+              style={{ boxShadow: 'var(--m3-elev-1)' }}
+            >
+              <div className="rounded-[var(--m3-radius-md)] border border-[color:rgba(148,163,184,0.2)] bg-[var(--m3-primary-container)]/60 px-4 py-3 text-center">
+                <p className="text-xs uppercase tracking-[0.3em] text-[var(--m3-on-primary-container)]">Başarılı</p>
+                <p className="mt-1 text-2xl font-semibold text-[var(--m3-on-primary-container)]">{stats.success}</p>
+                <span className="text-[11px] text-[var(--m3-on-primary-container)]/70">Son yüklemeler</span>
+              </div>
+              <div className="rounded-[var(--m3-radius-md)] border border-[color:rgba(148,163,184,0.2)] bg-[var(--m3-surface-variant)]/70 px-4 py-3 text-center">
+                <p className="text-xs uppercase tracking-[0.3em] text-[var(--m3-on-surface-variant)]">Bekleyen</p>
+                <p className="mt-1 text-2xl font-semibold text-[var(--m3-on-surface-variant)]">{stats.pending}</p>
+                <span className="text-[11px] text-[var(--m3-on-surface-variant)]/70">Sıra bekleyenler</span>
+              </div>
+              <div className="rounded-[var(--m3-radius-md)] border border-[color:rgba(148,163,184,0.2)] bg-[var(--m3-error-container)]/70 px-4 py-3 text-center">
+                <p className="text-xs uppercase tracking-[0.3em] text-[var(--m3-on-error-container)]">Hata</p>
+                <p className="mt-1 text-2xl font-semibold text-[var(--m3-on-error-container)]">{stats.errors}</p>
+                <span className="text-[11px] text-[var(--m3-on-error-container)]/70">Dikkat gerektiren</span>
+              </div>
+            </section>
 
             {uploadedFiles.length > 0 && (
               <section
