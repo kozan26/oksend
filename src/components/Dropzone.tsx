@@ -179,8 +179,8 @@ const Dropzone = forwardRef<DropzoneHandle, DropzoneProps>(
           onDrop={handleDrop}
           className={`group relative overflow-hidden rounded-[32px] border-2 border-dashed ${
             isDragging
-              ? 'border-[var(--m3-primary)] bg-[var(--m3-primary-container)]/20'
-              : 'border-[var(--m3-outline)]/40 hover:border-[var(--m3-primary)]/60 hover:bg-[var(--m3-primary-container)]/10'
+              ? 'border-[var(--m3-primary)] bg-[var(--m3-primary-container)]/30'
+              : 'border-[var(--m3-outline)]/40 hover:border-[var(--m3-primary)] hover:bg-[var(--m3-primary-container)]/25'
           } bg-[radial-gradient(circle_at_top,var(--m3-surface-container) 0%,var(--m3-surface) 60%,var(--m3-surface-container-high) 100%)] text-center transition-all duration-300 ease-out ${
             uploading ? 'cursor-not-allowed opacity-70' : 'cursor-pointer'
           } ${containerPadding}`}
