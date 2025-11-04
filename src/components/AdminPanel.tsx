@@ -417,10 +417,10 @@ export default function AdminPanel({ onBackToUpload }: AdminPanelProps) {
                   <thead className="bg-[var(--m3-surface-container)] border-b border-[var(--m3-surface-variant)]/50">
                     <tr>
                       <th className="w-[15%] px-4 py-3 text-left text-xs font-semibold text-[var(--m3-on-surface-variant)]">Dosya</th>
+                      <th className="px-2 py-3 text-left text-xs font-semibold text-[var(--m3-on-surface-variant)] w-[140px]">İşlemler</th>
                       <th className="px-4 py-3 text-left text-xs font-semibold text-[var(--m3-on-surface-variant)] whitespace-nowrap">Boyut</th>
                       <th className="px-4 py-3 text-left text-xs font-semibold text-[var(--m3-on-surface-variant)]">Tür</th>
                       <th className="px-4 py-3 text-left text-xs font-semibold text-[var(--m3-on-surface-variant)] whitespace-nowrap">Yüklenme</th>
-                      <th className="px-2 py-3 text-left text-xs font-semibold text-[var(--m3-on-surface-variant)] w-[140px]">İşlemler</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-[var(--m3-surface-variant)]/30">
@@ -440,23 +440,6 @@ export default function AdminPanel({ onBackToUpload }: AdminPanelProps) {
                               </p>
                             </div>
                           </div>
-                        </td>
-                        <td className="px-4 py-3 text-sm text-[var(--m3-on-surface-variant)] whitespace-nowrap">
-                          {formatBytes(file.size)}
-                        </td>
-                        <td className="px-4 py-3 text-sm text-[var(--m3-on-surface-variant)]">
-                          <span className="block" title={file.contentType}>
-                            {formatMimeType(file.contentType)}
-                          </span>
-                        </td>
-                        <td className="px-4 py-3 text-sm text-[var(--m3-on-surface-variant)]">
-                          {file.uploaded
-                            ? new Date(file.uploaded).toLocaleDateString('tr-TR', {
-                                day: 'numeric',
-                                month: 'short',
-                                year: 'numeric',
-                              })
-                            : 'Bilinmiyor'}
                         </td>
                         <td className="px-2 py-3">
                           <div className="flex items-center gap-1">
@@ -505,6 +488,23 @@ export default function AdminPanel({ onBackToUpload }: AdminPanelProps) {
                               <MdDelete className="h-3.5 w-3.5" />
                             </button>
                           </div>
+                        </td>
+                        <td className="px-4 py-3 text-sm text-[var(--m3-on-surface-variant)] whitespace-nowrap">
+                          {formatBytes(file.size)}
+                        </td>
+                        <td className="px-4 py-3 text-sm text-[var(--m3-on-surface-variant)]">
+                          <span className="block" title={file.contentType}>
+                            {formatMimeType(file.contentType)}
+                          </span>
+                        </td>
+                        <td className="px-4 py-3 text-sm text-[var(--m3-on-surface-variant)]">
+                          {file.uploaded
+                            ? new Date(file.uploaded).toLocaleDateString('tr-TR', {
+                                day: 'numeric',
+                                month: 'short',
+                                year: 'numeric',
+                              })
+                            : 'Bilinmiyor'}
                         </td>
                       </tr>
                     ))}
