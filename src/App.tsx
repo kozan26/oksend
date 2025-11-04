@@ -153,7 +153,7 @@ function App() {
               </p>
             </div>
             <nav className="w-full max-w-md">
-              <div className="flex items-end justify-end gap-6 border-b border-outline">
+              <div className="flex items-center justify-end gap-2">
                 <button
                   type="button"
                   role="tab"
@@ -162,10 +162,10 @@ function App() {
                     setCurrentView('upload');
                     window.scrollTo({ top: 0, behavior: 'smooth' });
                   }}
-                  className={`-mb-px pb-2 px-2 font-medium flex items-center gap-2 cursor-pointer transition-colors border-b-2 focus-visible:outline-none rounded-t-m3-sm ${
+                  className={`px-4 py-2 font-medium flex items-center gap-2 cursor-pointer transition-all border-2 focus-visible:outline-none rounded-m3-sm min-h-[40px] ${
                     currentView === 'upload'
-                      ? 'border-primary bg-[var(--m3-primary-container)] text-[var(--m3-on-primary-container)] font-semibold'
-                      : 'text-on-surface-variant border-transparent hover:text-on-surface hover:border-primary'
+                      ? 'border-primary bg-[var(--m3-primary-container)] text-[var(--m3-on-primary-container)] font-semibold shadow-e1'
+                      : 'text-on-surface-variant border-outline hover:text-on-surface hover:border-primary bg-transparent'
                   }`}
                   aria-current={currentView === 'upload' ? 'page' : undefined}
                 >
@@ -180,10 +180,10 @@ function App() {
                     setCurrentView('admin');
                     window.scrollTo({ top: 0, behavior: 'smooth' });
                   }}
-                  className={`-mb-px pb-2 px-2 font-medium flex items-center gap-2 cursor-pointer transition-colors border-b-2 focus-visible:outline-none rounded-t-m3-sm ${
+                  className={`px-4 py-2 font-medium flex items-center gap-2 cursor-pointer transition-all border-2 focus-visible:outline-none rounded-m3-sm min-h-[40px] ${
                     currentView === 'admin'
-                      ? 'border-primary bg-[var(--m3-primary-container)] text-[var(--m3-on-primary-container)] font-semibold'
-                      : 'text-on-surface-variant border-transparent hover:text-on-surface hover:border-primary'
+                      ? 'border-primary bg-[var(--m3-primary-container)] text-[var(--m3-on-primary-container)] font-semibold shadow-e1'
+                      : 'text-on-surface-variant border-outline hover:text-on-surface hover:border-primary bg-transparent'
                   }`}
                   aria-current={currentView === 'admin' ? 'page' : undefined}
                 >
