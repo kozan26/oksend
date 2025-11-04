@@ -14,6 +14,7 @@ import {
   MdCheckCircle,
   MdLink,
   MdDelete,
+  MdOpenInNew,
 } from 'react-icons/md';
 
 interface FileItem {
@@ -214,52 +215,54 @@ export default function AdminPanel() {
                           new Date(file.uploaded).toLocaleTimeString()
                         : 'Bilinmiyor'}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium space-x-2">
-                      {file.shortUrl ? (
+                    <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                      <div className="flex items-center justify-end gap-2">
+                        {file.shortUrl ? (
+                          <a
+                            href={file.shortUrl.startsWith('http') ? file.shortUrl : window.location.origin + file.shortUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-blue-600 hover:text-blue-900 px-3 py-1 rounded hover:bg-blue-50 transition-colors flex items-center gap-1"
+                            title="Kısa URL landing page'ine git"
+                          >
+                            <MdLink className="w-4 h-4" /> Kısa URL
+                          </a>
+                        ) : (
+                          <button
+                            onClick={() => handleCopyUrl(file)}
+                            className="text-blue-600 hover:text-blue-900 px-3 py-1 rounded hover:bg-blue-50 transition-colors flex items-center gap-1"
+                            title="URL'i kopyala"
+                          >
+                            {copiedKey === file.key ? (
+                              <>
+                                <MdCheckCircle className="w-4 h-4" /> Kopyalandı
+                              </>
+                            ) : (
+                              <>
+                                <MdLink className="w-4 h-4" /> URL'i kopyala
+                              </>
+                            )}
+                          </button>
+                        )}
                         <a
-                          href={file.shortUrl.startsWith('http') ? file.shortUrl : window.location.origin + file.shortUrl}
+                          href={file.url.startsWith('http') ? file.url : window.location.origin + file.url}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="text-blue-600 hover:text-blue-900 px-3 py-1 rounded hover:bg-blue-50 transition-colors flex items-center gap-1 inline-block"
-                          title="Kısa URL landing page'ine git"
+                          className="text-green-600 hover:text-green-900 px-3 py-1 rounded hover:bg-green-50 transition-colors flex items-center gap-1"
+                          title="Dosyayı aç"
                         >
-                          <MdLink className="w-4 h-4" /> Kısa URL
+                          <MdOpenInNew className="w-4 h-4" /> Aç
                         </a>
-                      ) : (
                         <button
-                          onClick={() => handleCopyUrl(file)}
-                          className="text-blue-600 hover:text-blue-900 px-3 py-1 rounded hover:bg-blue-50 transition-colors flex items-center gap-1"
-                          title="URL'i kopyala"
+                          onClick={() => handleDeleteFile(file.key)}
+                          disabled={deleting === file.key}
+                          className="text-red-600 hover:text-red-900 px-3 py-1 rounded hover:bg-red-50 disabled:opacity-50 transition-colors flex items-center gap-1"
+                          title="Dosyayı sil"
                         >
-                          {copiedKey === file.key ? (
-                            <>
-                              <MdCheckCircle className="w-4 h-4" /> Kopyalandı
-                            </>
-                          ) : (
-                            <>
-                              <MdLink className="w-4 h-4" /> URL'i kopyala
-                            </>
-                          )}
+                          <MdDelete className="w-4 h-4" />
+                          {deleting === file.key ? 'Siliniyor...' : 'Sil'}
                         </button>
-                      )}
-                      <a
-                        href={file.url.startsWith('http') ? file.url : window.location.origin + file.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-green-600 hover:text-green-900 px-3 py-1 rounded hover:bg-green-50 transition-colors inline-block"
-                        title="Dosyayı aç"
-                      >
-                        Aç
-                      </a>
-                      <button
-                        onClick={() => handleDeleteFile(file.key)}
-                        disabled={deleting === file.key}
-                        className="text-red-600 hover:text-red-900 px-3 py-1 rounded hover:bg-red-50 disabled:opacity-50 transition-colors flex items-center gap-1"
-                        title="Dosyayı sil"
-                      >
-                        <MdDelete className="w-4 h-4" />
-                        {deleting === file.key ? 'Siliniyor...' : 'Sil'}
-                      </button>
+                      </div>
                     </td>
                   </tr>
                 ))}
