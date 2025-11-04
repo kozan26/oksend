@@ -45,7 +45,7 @@ export default function AdminPanel({ onBackToUpload }: AdminPanelProps) {
   const [copiedKey, setCopiedKey] = useState<string | null>(null);
   const [deleting, setDeleting] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
-  const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
+  const [viewMode, setViewMode] = useState<'grid' | 'list'>('list');
 
   useEffect(() => {
     loadFiles();
@@ -270,18 +270,6 @@ export default function AdminPanel({ onBackToUpload }: AdminPanelProps) {
                 <div className="flex rounded-xl bg-[var(--m3-surface-container-low)] border border-[var(--m3-surface-variant)]/50 p-1 shadow-apple-sm">
                   <button
                     type="button"
-                    onClick={() => setViewMode('grid')}
-                    className={`inline-flex items-center gap-2 rounded-lg px-4 py-2 text-caption font-semibold transition-all duration-200 ${
-                      viewMode === 'grid'
-                        ? 'bg-[var(--m3-surface-container)] text-[var(--m3-primary)] shadow-apple-sm'
-                        : 'text-[var(--m3-on-surface-variant)] hover:text-[var(--m3-primary)]'
-                    }`}
-                  >
-                    <MdViewModule className="h-4 w-4" />
-                    Kart
-                  </button>
-                  <button
-                    type="button"
                     onClick={() => setViewMode('list')}
                     className={`inline-flex items-center gap-2 rounded-lg px-4 py-2 text-caption font-semibold transition-all duration-200 ${
                       viewMode === 'list'
@@ -291,6 +279,18 @@ export default function AdminPanel({ onBackToUpload }: AdminPanelProps) {
                   >
                     <MdViewAgenda className="h-4 w-4" />
                     Liste
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setViewMode('grid')}
+                    className={`inline-flex items-center gap-2 rounded-lg px-4 py-2 text-caption font-semibold transition-all duration-200 ${
+                      viewMode === 'grid'
+                        ? 'bg-[var(--m3-surface-container)] text-[var(--m3-primary)] shadow-apple-sm'
+                        : 'text-[var(--m3-on-surface-variant)] hover:text-[var(--m3-primary)]'
+                    }`}
+                  >
+                    <MdViewModule className="h-4 w-4" />
+                    Kart
                   </button>
                 </div>
               </div>
