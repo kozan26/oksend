@@ -92,41 +92,58 @@ function App() {
 
   if (!authenticated) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-100">
-        <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
-          <h1 className="text-2xl font-bold mb-6 text-center">ozan.cloud</h1>
-          <form onSubmit={handlePasswordSubmit}>
-            <div className="mb-4">
+      <div className="min-h-screen flex items-center justify-center bg-[var(--m3-surface)] text-[var(--m3-on-surface)] px-4">
+        <div
+          className="w-full max-w-md bg-[var(--m3-surface-container)] rounded-[var(--m3-radius-lg)] px-8 py-10 space-y-8"
+          style={{ boxShadow: 'var(--m3-elev-3)' }}
+        >
+          <div className="text-center space-y-2">
+            <span className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-[var(--m3-primary-container)] text-[var(--m3-on-primary-container)]">
+              <MdCloudUpload className="h-6 w-6" />
+            </span>
+            <h1 className="text-3xl font-semibold tracking-tight text-[var(--m3-on-surface)]">
+              ozan.cloud
+            </h1>
+            <p className="text-sm text-[var(--m3-on-surface-variant)]">
+              Yönetim ve yükleme ekranına erişmek için parolanızı girin.
+            </p>
+          </div>
+          <form onSubmit={handlePasswordSubmit} className="space-y-6">
+            <div className="space-y-2">
               <label
                 htmlFor="password"
-                className="block text-sm font-medium text-gray-700 mb-2"
+                className="block text-sm font-medium text-[var(--m3-on-surface)]"
               >
                 Parolayı Gir
               </label>
-              <input
-                type="password"
-                id="password"
-                value={password}
-                onChange={(e) => {
-                  setPasswordInput(e.target.value);
-                  setPasswordError('');
-                }}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                placeholder="Yükleme parolası"
-                autoFocus
-              />
-              {passwordError && (
-                <p className="mt-1 text-sm text-red-600">{passwordError}</p>
-              )}
+              <div className="relative">
+                <input
+                  type="password"
+                  id="password"
+                  value={password}
+                  onChange={(e) => {
+                    setPasswordInput(e.target.value);
+                    setPasswordError('');
+                  }}
+                  className="w-full rounded-xl border border-transparent bg-[var(--m3-surface)] px-4 py-3 text-[var(--m3-on-surface)] shadow-inner focus:border-[var(--m3-primary)] focus:ring-2 focus:ring-[color:rgba(37,99,235,0.3)]"
+                  placeholder="Yükleme parolası"
+                  autoFocus
+                />
+                {passwordError && (
+                  <p className="mt-2 text-sm text-[var(--m3-error)]">
+                    {passwordError}
+                  </p>
+                )}
+              </div>
             </div>
             <button
               type="submit"
               disabled={validating}
-              className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+              className="w-full flex items-center justify-center gap-2 rounded-full bg-[var(--m3-primary)] px-6 py-3 text-sm font-semibold text-[var(--m3-on-primary)] transition-colors hover:bg-[#1d4ed8] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[var(--m3-primary)] disabled:cursor-not-allowed disabled:bg-[#1d4ed8]/60"
             >
               {validating ? (
                 <>
-                  <div className="animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent"></div>
+                  <div className="h-4 w-4 animate-spin rounded-full border-2 border-[var(--m3-on-primary)] border-t-transparent" />
                   Doğrulanıyor...
                 </>
               ) : (
@@ -140,20 +157,27 @@ function App() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
-      <header className="bg-white shadow-sm border-b sticky top-0 z-10">
-        <div className="max-w-7xl mx-auto px-4 py-3 md:py-4">
-          <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+    <div className="min-h-screen bg-[var(--m3-surface)] text-[var(--m3-on-surface)]">
+      <header className="sticky top-0 z-20 bg-[var(--m3-surface-container)]/95 backdrop-blur">
+        <div
+          className="border-b border-[color:rgba(148,163,184,0.2)]"
+          style={{ boxShadow: 'var(--m3-elev-2)' }}
+        >
+          <div className="mx-auto flex max-w-6xl flex-col gap-4 px-4 py-4 lg:flex-row lg:items-center lg:justify-between">
+            <div className="space-y-1">
+              <p className="text-xs uppercase tracking-[0.3em] text-[var(--m3-on-surface-variant)]">
                 ozan.cloud
+              </p>
+              <h1 className="text-3xl font-semibold leading-tight text-[var(--m3-on-surface)]">
+                Dosyalarınızı ışık hızında paylaşın
               </h1>
-              <p className="text-sm text-gray-600 mt-1">
-                Sürükle-bırak ile basit dosya paylaşımı
+              <p className="max-w-xl text-sm text-[var(--m3-on-surface-variant)]">
+                Material You ilhamlı yeni arayüzle sürükle-bırak yüklemeleri yönetin,
+                bağlantıları paylaşın ve dosyaları kolayca kontrol edin.
               </p>
             </div>
-            <nav className="w-full max-w-md -mb-px">
-              <div className="flex items-end justify-end gap-4 border-b border-gray-200 pb-1">
+            <nav aria-label="Ana görünüm" className="flex justify-end">
+              <div className="flex gap-2 rounded-full bg-[var(--m3-surface-variant)]/60 p-1">
                 <button
                   type="button"
                   role="tab"
@@ -162,24 +186,15 @@ function App() {
                     setCurrentView('upload');
                     window.scrollTo({ top: 0, behavior: 'smooth' });
                   }}
-                  className={`group relative px-2 pb-2 pt-1 font-medium flex items-center gap-2 cursor-pointer transition-colors focus-visible:outline-none text-sm md:text-base ${
+                  className={`flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium transition-colors focus-visible:outline-none ${
                     currentView === 'upload'
-                      ? 'text-blue-600 font-semibold'
-                      : 'text-gray-600 hover:text-blue-600'
+                      ? 'bg-[var(--m3-primary)] text-[var(--m3-on-primary)]'
+                      : 'text-[var(--m3-on-surface-variant)] hover:bg-[var(--m3-primary-container)] hover:text-[var(--m3-on-primary-container)]'
                   }`}
                   aria-current={currentView === 'upload' ? 'page' : undefined}
                 >
-                  <MdCloudUpload
-                    className="w-5 h-5 transition-colors text-current"
-                  />
+                  <MdCloudUpload className="h-5 w-5" />
                   Yükle
-                  <span
-                    className={`absolute bottom-[-1px] left-0 h-0.5 w-full origin-left transform transition-transform duration-200 ease-out ${
-                      currentView === 'upload'
-                        ? 'scale-x-100 bg-blue-600'
-                        : 'scale-x-0 bg-blue-500 group-hover:scale-x-100'
-                    }`}
-                  ></span>
                 </button>
                 <button
                   type="button"
@@ -189,24 +204,15 @@ function App() {
                     setCurrentView('admin');
                     window.scrollTo({ top: 0, behavior: 'smooth' });
                   }}
-                  className={`group relative px-2 pb-2 pt-1 font-medium flex items-center gap-2 cursor-pointer transition-colors focus-visible:outline-none text-sm md:text-base ${
+                  className={`flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium transition-colors focus-visible:outline-none ${
                     currentView === 'admin'
-                      ? 'text-blue-600 font-semibold'
-                      : 'text-gray-600 hover:text-blue-600'
+                      ? 'bg-[var(--m3-primary)] text-[var(--m3-on-primary)]'
+                      : 'text-[var(--m3-on-surface-variant)] hover:bg-[var(--m3-primary-container)] hover:text-[var(--m3-on-primary-container)]'
                   }`}
                   aria-current={currentView === 'admin' ? 'page' : undefined}
                 >
-                  <MdSettings
-                    className="w-5 h-5 transition-colors text-current"
-                  />
+                  <MdSettings className="h-5 w-5" />
                   Yönetim
-                  <span
-                    className={`absolute bottom-[-1px] left-0 h-0.5 w-full origin-left transform transition-transform duration-200 ease-out ${
-                      currentView === 'admin'
-                        ? 'scale-x-100 bg-blue-600'
-                        : 'scale-x-0 bg-blue-500 group-hover:scale-x-100'
-                    }`}
-                  ></span>
                 </button>
               </div>
             </nav>
@@ -214,33 +220,43 @@ function App() {
         </div>
       </header>
 
-      <main className="max-w-7xl mx-auto px-4 py-8">
+      <main className="mx-auto max-w-6xl px-4 pb-16 pt-8 lg:pt-12">
         {currentView === 'upload' ? (
-          <>
+          <div className="space-y-10">
             <Dropzone
               onFilesUploaded={handleFilesUploaded}
               onError={handleUploadError}
             />
 
             {uploadedFiles.length > 0 && (
-              <div className="mt-8">
-                <div className="bg-white rounded-xl shadow-lg overflow-hidden">
-                  <div className="bg-gradient-to-r from-blue-500 to-purple-600 px-6 py-4">
-                    <h2 className="text-xl font-bold text-white">
-                      Son Yüklenenler ({uploadedFiles.length})
+              <section
+                className="rounded-[var(--m3-radius-lg)] border border-[color:rgba(148,163,184,0.15)] bg-[var(--m3-surface-container)]/70 backdrop-blur"
+                style={{ boxShadow: 'var(--m3-elev-2)' }}
+              >
+                <header className="flex flex-col gap-1 border-b border-[color:rgba(148,163,184,0.15)] px-6 py-4 md:flex-row md:items-center md:justify-between">
+                  <div>
+                    <h2 className="text-lg font-semibold text-[var(--m3-on-surface)]">
+                      Son yüklenenler
                     </h2>
+                    <p className="text-xs uppercase tracking-[0.2em] text-[var(--m3-on-surface-variant)]">
+                      {uploadedFiles.length} dosya
+                    </p>
                   </div>
-                  <div className="divide-y divide-gray-200">
-                    {uploadedFiles.map((file) => (
-                      <FileRow key={file.key} file={file} />
-                    ))}
-                  </div>
+                </header>
+                <div className="grid gap-4 p-4 md:p-6">
+                  {uploadedFiles.map((file) => (
+                    <FileRow key={file.key} file={file} />
+                  ))}
                 </div>
-              </div>
+              </section>
             )}
-          </>
+          </div>
         ) : (
-          <AdminPanel />
+          <div className="rounded-[var(--m3-radius-lg)] border border-[color:rgba(148,163,184,0.15)] bg-[var(--m3-surface-container)]/80 p-4 md:p-6"
+            style={{ boxShadow: 'var(--m3-elev-2)' }}
+          >
+            <AdminPanel />
+          </div>
         )}
       </main>
 

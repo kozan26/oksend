@@ -44,7 +44,6 @@ export default function Dropzone({ onFilesUploaded, onError }: DropzoneProps) {
       if (files.length > 0) {
         handleFiles(files);
       }
-      // Reset input
       e.target.value = '';
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -58,7 +57,6 @@ export default function Dropzone({ onFilesUploaded, onError }: DropzoneProps) {
     const uploadedFiles: UploadedFile[] = [];
 
     try {
-      // Upload files sequentially to avoid overwhelming the server
       for (const file of files) {
         try {
           const result = await uploadFile(file);
@@ -91,7 +89,6 @@ export default function Dropzone({ onFilesUploaded, onError }: DropzoneProps) {
 
     const authHeaders = getAuthHeaders();
 
-    // For progress tracking, we'll use XMLHttpRequest as fetch doesn't support progress
     return new Promise((resolve, reject) => {
       const xhr = new XMLHttpRequest();
 
@@ -104,11 +101,12 @@ export default function Dropzone({ onFilesUploaded, onError }: DropzoneProps) {
               status: 'success',
               progress: 100,
             });
-          } catch (error) {
+          } catch {
             reject(new Error('Sunucudan geçersiz yanıt alındı'));
           }
         } else {
-          let errorMessage = xhr.responseText || `Yükleme başarısız: ${xhr.statusText}`;
+          let errorMessage =
+            xhr.responseText || `Yükleme başarısız: ${xhr.statusText}`;
           try {
             const errorJson = JSON.parse(xhr.responseText);
             if (errorJson.reason) {
@@ -117,7 +115,7 @@ export default function Dropzone({ onFilesUploaded, onError }: DropzoneProps) {
               errorMessage = errorJson.error;
             }
           } catch {
-            // Use the raw error text if JSON parsing fails
+            // ignore parse errors
           }
           reject(new Error(errorMessage));
         }
@@ -141,16 +139,19 @@ export default function Dropzone({ onFilesUploaded, onError }: DropzoneProps) {
   };
 
   return (
-    <div className="mb-8">
+    <section>
       <div
         onDragOver={handleDragOver}
         onDragLeave={handleDragLeave}
         onDrop={handleDrop}
-        className={`relative border-2 border-dashed rounded-xl p-16 text-center transition-all duration-200 ${
-          isDragging
-            ? 'border-blue-500 bg-gradient-to-br from-blue-50 to-purple-50 scale-[1.02] shadow-lg'
-            : 'border-gray-300 bg-white hover:border-blue-400 hover:bg-blue-50'
-        } ${uploading ? 'opacity-60 cursor-not-allowed' : 'cursor-pointer'}`}
+        className={`relative flex flex-col items-center justify-center rounded-[var(--m3-radius-lg)] border border-[color:rgba(148,163,184,0.2)] bg-[var(--m3-surface-container)] px-6 py-16 text-center transition-all duration-200 ease-out ${
+          uploading ? 'cursor-not-allowed opacity-70' : 'cursor-pointer'
+        }`}
+        style={{
+          boxShadow: isDragging ? 'var(--m3-elev-4)' : 'var(--m3-elev-2)',
+          outline: isDragging ? '2px solid var(--m3-primary)' : 'none',
+          outlineOffset: '4px',
+        }}
       >
         <input
           type="file"
@@ -162,58 +163,59 @@ export default function Dropzone({ onFilesUploaded, onError }: DropzoneProps) {
         />
         <label
           htmlFor="file-input"
-          className="cursor-pointer flex flex-col items-center"
+          className="flex w-full max-w-2xl flex-col items-center space-y-4"
         >
-          {uploading ? (
-            <div className="mb-6">
-              <div className="inline-block animate-spin rounded-full h-16 w-16 border-4 border-blue-500 border-t-transparent"></div>
-            </div>
-          ) : (
-            <div className="mb-6 relative">
-              <div className="w-20 h-20 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center shadow-lg transform transition-transform hover:scale-110">
-                <svg
-                  className="w-10 h-10 text-white"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
-                  />
-                </svg>
-              </div>
-              {isDragging && (
-                <div className="absolute inset-0 rounded-full bg-blue-400 opacity-20 animate-ping"></div>
-              )}
-            </div>
-          )}
-          <h3 className="text-2xl font-bold text-gray-900 mb-2">
-            {uploading ? 'Dosyalar yükleniyor...' : isDragging ? 'Dosyaları buraya bırakın' : 'Dosya Yükle'}
-          </h3>
-          <p className="text-base text-gray-600 mb-1">
-            {uploading 
-              ? 'Dosyalarınız yüklenirken lütfen bekleyin'
-              : 'Dosyalarınızı buraya sürükleyip bırakın ya da gözatmak için tıklayın'}
-          </p>
-          {!uploading && (
-            <p className="text-sm text-gray-500 mt-2">
-              Birden fazla dosya desteklenir • Dosya boyutu sınırı yok
+          <div className="relative flex h-24 w-24 items-center justify-center">
+            <div className="absolute inset-0 rounded-full bg-[var(--m3-primary-container)]" />
+            <div className="absolute inset-2 rounded-full bg-[var(--m3-primary)]/10" />
+            <svg
+              className="relative h-12 w-12 text-[var(--m3-primary)]"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={1.8}
+                d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
+              />
+            </svg>
+            {isDragging && (
+              <span className="absolute inset-0 rounded-full bg-[var(--m3-primary)]/20" />
+            )}
+          </div>
+
+          <div className="space-y-2">
+            <h3 className="text-2xl font-semibold text-[var(--m3-on-surface)]">
+              {uploading
+                ? 'Dosyalar yükleniyor...'
+                : isDragging
+                  ? 'Dosyaları bırakın'
+                  : 'Dosya yükle'}
+            </h3>
+            <p className="text-sm text-[var(--m3-on-surface-variant)]">
+              {uploading
+                ? 'Dosyalarınız işlenirken lütfen bekleyin.'
+                : 'Sürükleyip bırakın veya bilgisayarınızdaki dosyalara göz atmak için dokunun.'}
             </p>
-          )}
+            {!uploading && (
+              <p className="text-xs uppercase tracking-[0.2em] text-[var(--m3-on-surface-variant)]/80">
+                Çoklu seçim · Sınır yok · %100 şifre korumalı
+              </p>
+            )}
+          </div>
         </label>
+
         {uploading && (
-          <div className="absolute inset-0 flex items-center justify-center bg-white bg-opacity-80 rounded-xl">
-            <div className="text-center">
-              <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mb-2"></div>
-              <p className="text-sm text-gray-600">İşleniyor...</p>
+          <div className="absolute inset-0 rounded-[var(--m3-radius-lg)] bg-[color:rgba(15,23,42,0.04)] backdrop-blur-sm">
+            <div className="flex h-full flex-col items-center justify-center space-y-3 text-[var(--m3-on-surface-variant)]">
+              <div className="h-10 w-10 animate-spin rounded-full border-[3px] border-[var(--m3-primary)] border-t-transparent" />
+              <p className="text-sm font-medium">Yükleme devam ediyor…</p>
             </div>
           </div>
         )}
       </div>
-    </div>
+    </section>
   );
 }
-
