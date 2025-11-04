@@ -231,11 +231,11 @@ export default function AdminPanel() {
                         )}
                       </button>
                       <a
-                        href={file.shortUrl || file.url}
+                        href={file.url.startsWith('http') ? file.url : window.location.origin + file.url}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="text-green-600 hover:text-green-900 px-3 py-1 rounded hover:bg-green-50 transition-colors inline-block"
-                        title={file.shortUrl ? 'Kısa URL\'i aç' : 'Dosyayı aç'}
+                        title="Dosyayı aç"
                       >
                         Aç
                       </a>
