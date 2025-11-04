@@ -153,7 +153,7 @@ function App() {
               </p>
             </div>
             <nav className="w-full max-w-md -mb-px">
-              <div className="flex items-end justify-end gap-2">
+              <div className="flex items-end justify-end gap-4 border-b border-gray-200 pb-1">
                 <button
                   type="button"
                   role="tab"
@@ -162,10 +162,10 @@ function App() {
                     setCurrentView('upload');
                     window.scrollTo({ top: 0, behavior: 'smooth' });
                   }}
-                  className={`group relative px-3 py-2 font-medium flex items-center gap-2 cursor-pointer transition-colors focus-visible:outline-none rounded-t-lg border-b-2 border-transparent ${
+                  className={`group relative px-2 pb-2 pt-1 font-medium flex items-center gap-2 cursor-pointer transition-colors focus-visible:outline-none text-sm md:text-base ${
                     currentView === 'upload'
-                      ? 'text-[var(--m3-on-surface-variant)] border-primary font-semibold bg-[var(--m3-surface-variant)]'
-                      : 'text-on-surface-variant hover:text-accent hover:border-accent'
+                      ? 'text-blue-600 font-semibold'
+                      : 'text-gray-600 hover:text-blue-600'
                   }`}
                   aria-current={currentView === 'upload' ? 'page' : undefined}
                 >
@@ -173,6 +173,13 @@ function App() {
                     className="w-5 h-5 transition-colors text-current"
                   />
                   Yükle
+                  <span
+                    className={`absolute bottom-[-1px] left-0 h-0.5 w-full origin-left transform transition-transform duration-200 ease-out ${
+                      currentView === 'upload'
+                        ? 'scale-x-100 bg-blue-600'
+                        : 'scale-x-0 bg-blue-500 group-hover:scale-x-100'
+                    }`}
+                  ></span>
                 </button>
                 <button
                   type="button"
@@ -182,10 +189,10 @@ function App() {
                     setCurrentView('admin');
                     window.scrollTo({ top: 0, behavior: 'smooth' });
                   }}
-                  className={`group relative px-3 py-2 font-medium flex items-center gap-2 cursor-pointer transition-colors focus-visible:outline-none rounded-t-lg border-b-2 border-transparent ${
+                  className={`group relative px-2 pb-2 pt-1 font-medium flex items-center gap-2 cursor-pointer transition-colors focus-visible:outline-none text-sm md:text-base ${
                     currentView === 'admin'
-                      ? 'text-[var(--m3-on-surface-variant)] border-primary font-semibold bg-[var(--m3-surface-variant)]'
-                      : 'text-on-surface-variant hover:text-accent hover:border-accent'
+                      ? 'text-blue-600 font-semibold'
+                      : 'text-gray-600 hover:text-blue-600'
                   }`}
                   aria-current={currentView === 'admin' ? 'page' : undefined}
                 >
@@ -193,6 +200,13 @@ function App() {
                     className="w-5 h-5 transition-colors text-current"
                   />
                   Yönetim
+                  <span
+                    className={`absolute bottom-[-1px] left-0 h-0.5 w-full origin-left transform transition-transform duration-200 ease-out ${
+                      currentView === 'admin'
+                        ? 'scale-x-100 bg-blue-600'
+                        : 'scale-x-0 bg-blue-500 group-hover:scale-x-100'
+                    }`}
+                  ></span>
                 </button>
               </div>
             </nav>
