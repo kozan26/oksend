@@ -152,37 +152,43 @@ function App() {
                 Sürükle-bırak ile basit dosya paylaşımı
               </p>
             </div>
-            <nav className="flex gap-2">
-              <button
-                type="button"
-                onClick={() => {
-                  setCurrentView('upload');
-                  window.scrollTo({ top: 0, behavior: 'smooth' });
-                }}
-                className={`px-4 py-2 rounded-lg font-medium transition-colors flex items-center gap-2 cursor-pointer ${
-                  currentView === 'upload'
-                    ? 'bg-blue-600 text-white shadow-md hover:bg-blue-700'
-                    : 'text-gray-600 hover:bg-gray-100'
-                }`}
-              >
-                <MdCloudUpload className="w-5 h-5" />
-                Yükle
-              </button>
-              <button
-                type="button"
-                onClick={() => {
-                  setCurrentView('admin');
-                  window.scrollTo({ top: 0, behavior: 'smooth' });
-                }}
-                className={`px-4 py-2 rounded-lg font-medium transition-colors flex items-center gap-2 cursor-pointer ${
-                  currentView === 'admin'
-                    ? 'bg-blue-600 text-white shadow-md hover:bg-blue-700'
-                    : 'text-gray-600 hover:bg-gray-100'
-                }`}
-              >
-                <MdSettings className="w-5 h-5" />
-                Yönetim
-              </button>
+            <nav className="w-full max-w-md">
+              <div className="flex items-end gap-6 border-b">
+                <button
+                  type="button"
+                  role="tab"
+                  aria-selected={currentView === 'upload'}
+                  onClick={() => {
+                    setCurrentView('upload');
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                  }}
+                  className={`-mb-px pb-2 px-1 font-medium flex items-center gap-2 cursor-pointer transition-colors border-b-2 ${
+                    currentView === 'upload'
+                      ? 'text-blue-600 border-blue-600'
+                      : 'text-gray-600 border-transparent hover:text-gray-800'
+                  }`}
+                >
+                  <MdCloudUpload className="w-5 h-5" />
+                  Yükle
+                </button>
+                <button
+                  type="button"
+                  role="tab"
+                  aria-selected={currentView === 'admin'}
+                  onClick={() => {
+                    setCurrentView('admin');
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                  }}
+                  className={`-mb-px pb-2 px-1 font-medium flex items-center gap-2 cursor-pointer transition-colors border-b-2 ${
+                    currentView === 'admin'
+                      ? 'text-blue-600 border-blue-600'
+                      : 'text-gray-600 border-transparent hover:text-gray-800'
+                  }`}
+                >
+                  <MdSettings className="w-5 h-5" />
+                  Yönetim
+                </button>
+              </div>
             </nav>
           </div>
         </div>
