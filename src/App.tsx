@@ -165,7 +165,7 @@ function App() {
                   className={`px-4 py-2 font-medium flex items-center gap-2 cursor-pointer transition-colors focus-visible:outline-none rounded-m3-sm min-h-[40px] ${
                     currentView === 'upload'
                       ? 'bg-[var(--m3-primary-container)] text-[var(--m3-on-primary-container)] font-semibold'
-                      : 'text-on-surface-variant hover:text-primary hover:[&_svg]:text-primary bg-transparent'
+                      : 'text-on-surface-variant hover:text-accent hover:[&_svg]:text-accent bg-transparent'
                   }`}
                   aria-current={currentView === 'upload' ? 'page' : undefined}
                 >
@@ -183,7 +183,7 @@ function App() {
                   className={`px-4 py-2 font-medium flex items-center gap-2 cursor-pointer transition-colors focus-visible:outline-none rounded-m3-sm min-h-[40px] ${
                     currentView === 'admin'
                       ? 'bg-[var(--m3-primary-container)] text-[var(--m3-on-primary-container)] font-semibold'
-                      : 'text-on-surface-variant hover:text-primary hover:[&_svg]:text-primary bg-transparent'
+                      : 'text-on-surface-variant hover:text-accent hover:[&_svg]:text-accent bg-transparent'
                   }`}
                   aria-current={currentView === 'admin' ? 'page' : undefined}
                 >

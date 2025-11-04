@@ -19,7 +19,10 @@ export default {
         error: 'var(--m3-error)',
         'on-error': 'var(--m3-on-error)',
         'error-container': 'var(--m3-error-container)',
-        'on-error-container': 'var(--m3-on-error-container)'
+        'on-error-container': 'var(--m3-on-error-container)',
+        
+        accent: 'var(--m3-accent)',
+        'on-accent': 'var(--m3-on-accent)'
       },
       boxShadow: {
         'e1': 'var(--m3-elev-1)',
