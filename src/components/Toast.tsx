@@ -17,17 +17,16 @@ export default function Toast({ toasts, onRemove }: ToastProps) {
       {toasts.map((toast) => (
         <div
           key={toast.id}
-          className={`min-w-[320px] rounded-[var(--m3-radius-lg)] px-5 py-4 shadow-lg flex items-center gap-4 ${
+          className={`min-w-[320px] rounded-2xl px-5 py-4 shadow-apple-lg flex items-center gap-4 border ${
             toast.type === 'success'
-              ? 'bg-[var(--m3-primary-container)] text-[var(--m3-on-primary-container)]'
-              : 'bg-[var(--m3-error-container)] text-[var(--m3-on-error-container)]'
+              ? 'bg-white border-gray-200 text-apple-label'
+              : 'bg-red-50 border-red-200 text-apple-error'
           }`}
-          style={{ boxShadow: 'var(--m3-elev-3)' }}
         >
-          <p className="text-sm font-medium flex-1">{toast.message}</p>
+          <p className="text-body font-medium flex-1">{toast.message}</p>
           <button
             onClick={() => onRemove(toast.id)}
-            className="ml-4 text-[color:rgba(15,23,42,0.45)] hover:text-[color:rgba(15,23,42,0.75)]"
+            className="ml-4 text-apple-label-secondary hover:text-apple-label transition-colors duration-200"
             aria-label="Kapat"
           >
             <svg
@@ -49,4 +48,3 @@ export default function Toast({ toasts, onRemove }: ToastProps) {
     </div>
   );
 }
-

@@ -1,111 +1,133 @@
-/* Material Design 3 tokens (source seed: #0060A8) */
+/* Apple Human Interface Guidelines Color System */
 :root {
-  /* Colors */
-  --m3-primary: #39608f;
-  --m3-on-primary: #ffffff;
-  --m3-primary-container: #d3e4ff;
-  --m3-on-primary-container: #1d4875;
-
-  --m3-secondary: #545f70;
-  --m3-on-secondary: #ffffff;
-  --m3-secondary-container: #d7e3f8;
-  --m3-on-secondary-container: #3c4858;
-
-  --m3-tertiary: #6c5677;
-  --m3-on-tertiary: #ffffff;
-  --m3-tertiary-container: #f4d9ff;
-  --m3-on-tertiary-container: #533f5e;
-
-  --m3-error: #ba1a1a;
-  --m3-on-error: #ffffff;
-  --m3-error-container: #ffdada;
-  --m3-on-error-container: #93000a;
-
-  --m3-surface: #f8f9ff;
-  --m3-on-surface: #191c20;
-  --m3-surface-variant: #dfe2eb;
-  --m3-on-surface-variant: #43474e;
-  --m3-surface-container-low: #f2f3fa;
-  --m3-surface-container: #ecedf4;
-  --m3-surface-container-high: #e7e8ee;
-  --m3-outline: #73777f;
-
-  /* Accent helper */
-  --m3-accent: #6c5677;
-  --m3-on-accent: #ffffff;
-
-  /* Shape */
-  --m3-radius-sm: 8px;
-  --m3-radius-md: 12px;
-  --m3-radius-lg: 18px;
-
-  /* Elevation (shadow) */
-  --m3-elev-1: 0 1px 2px rgba(0,0,0,0.08), 0 1px 3px rgba(0,0,0,0.06);
-  --m3-elev-2: 0 2px 6px rgba(0,0,0,0.08), 0 2px 4px rgba(0,0,0,0.06);
-  --m3-elev-3: 0 6px 12px rgba(0,0,0,0.1);
-  --m3-elev-4: 0 8px 16px rgba(0,0,0,0.12);
-  --m3-elev-5: 0 12px 20px rgba(0,0,0,0.16);
-
-  /* State layers */
-  --m3-state-hover: 0.08;
-  --m3-state-pressed: 0.12;
-  --m3-state-focus: 0.12;
+  /* Primary Colors - iOS Blue */
+  --apple-primary: #007AFF;
+  --apple-primary-hover: #0051D5;
+  --apple-primary-dark: #0A84FF;
+  
+  /* System Grays */
+  --apple-gray-1: #F2F2F7;
+  --apple-gray-2: #E5E5EA;
+  --apple-gray-3: #D1D1D6;
+  --apple-gray-4: #C7C7CC;
+  --apple-gray-5: #AEAEB2;
+  --apple-gray-6: #8E8E93;
+  
+  /* Backgrounds */
+  --apple-background: #FFFFFF;
+  --apple-background-secondary: #F2F2F7;
+  --apple-background-tertiary: #FFFFFF;
+  
+  /* Text Colors */
+  --apple-label: #000000;
+  --apple-label-secondary: #3C3C43;
+  --apple-label-tertiary: #3C3C43;
+  --apple-label-quaternary: #3C3C43;
+  
+  /* Separators */
+  --apple-separator: #C6C6C8;
+  --apple-separator-opaque: #38383A;
+  
+  /* Fill Colors */
+  --apple-fill: #787880;
+  --apple-fill-secondary: #787880;
+  --apple-fill-tertiary: #767680;
+  --apple-fill-quaternary: #747480;
+  
+  /* Error */
+  --apple-error: #FF3B30;
+  --apple-error-background: #FFEBEE;
+  
+  /* Success */
+  --apple-success: #34C759;
+  
+  /* Shadows - Apple's subtle multi-layered shadows */
+  --apple-shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+  --apple-shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.06);
+  --apple-shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.05);
+  --apple-shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.1), 0 10px 10px rgba(0, 0, 0, 0.04);
+  
+  /* Glassmorphism */
+  --apple-glass-bg: rgba(255, 255, 255, 0.8);
+  --apple-glass-border: rgba(255, 255, 255, 0.18);
+  --apple-glass-blur: blur(20px);
+  
+  /* Border Radius */
+  --apple-radius-sm: 8px;
+  --apple-radius-md: 12px;
+  --apple-radius-lg: 16px;
+  --apple-radius-xl: 20px;
+  
+  /* Spacing */
+  --apple-spacing-xs: 4px;
+  --apple-spacing-sm: 8px;
+  --apple-spacing-md: 16px;
+  --apple-spacing-lg: 24px;
+  --apple-spacing-xl: 32px;
+  --apple-spacing-2xl: 48px;
 }
 
-/* Dark mode */
+/* Dark Mode */
 .dark {
-  --m3-primary: #a3c9fe;
-  --m3-on-primary: #00315b;
-  --m3-primary-container: #1d4875;
-  --m3-on-primary-container: #d3e4ff;
-
-  --m3-secondary: #bbc7db;
-  --m3-on-secondary: #263141;
-  --m3-secondary-container: #3c4858;
-  --m3-on-secondary-container: #d7e3f8;
-
-  --m3-tertiary: #d8bde3;
-  --m3-on-tertiary: #3c2947;
-  --m3-tertiary-container: #533f5e;
-  --m3-on-tertiary-container: #f4d9ff;
-
-  --m3-error: #ffb4ab;
-  --m3-on-error: #690005;
-  --m3-error-container: #93000a;
-  --m3-on-error-container: #ffdada;
-
-  --m3-surface: #111418;
-  --m3-on-surface: #e1e2e8;
-  --m3-surface-variant: #43474e;
-  --m3-on-surface-variant: #c3c6cf;
-  --m3-surface-container-low: #1b1e22;
-  --m3-surface-container: #1d2024;
-  --m3-surface-container-high: #272a2f;
-  --m3-outline: #8d9199;
-
-  --m3-accent: #d8bde3;
-  --m3-on-accent: #3c2947;
+  /* Primary Colors */
+  --apple-primary: #0A84FF;
+  --apple-primary-hover: #409CFF;
+  --apple-primary-dark: #0051D5;
+  
+  /* System Grays */
+  --apple-gray-1: #1C1C1E;
+  --apple-gray-2: #2C2C2E;
+  --apple-gray-3: #3A3A3C;
+  --apple-gray-4: #48484A;
+  --apple-gray-5: #636366;
+  --apple-gray-6: #8E8E93;
+  
+  /* Backgrounds */
+  --apple-background: #000000;
+  --apple-background-secondary: #1C1C1E;
+  --apple-background-tertiary: #2C2C2E;
+  
+  /* Text Colors */
+  --apple-label: #FFFFFF;
+  --apple-label-secondary: #EBEBF5;
+  --apple-label-tertiary: #EBEBF5;
+  --apple-label-quaternary: #EBEBF5;
+  
+  /* Separators */
+  --apple-separator: #38383A;
+  --apple-separator-opaque: #C6C6C8;
+  
+  /* Fill Colors */
+  --apple-fill: #787880;
+  --apple-fill-secondary: #787880;
+  --apple-fill-tertiary: #767680;
+  --apple-fill-quaternary: #747480;
+  
+  /* Error */
+  --apple-error: #FF453A;
+  --apple-error-background: #3D1F1F;
+  
+  /* Glassmorphism - Dark */
+  --apple-glass-bg: rgba(28, 28, 30, 0.8);
+  --apple-glass-border: rgba(255, 255, 255, 0.1);
 }
 
-/* Helper classes */
-.elev-1 { box-shadow: var(--m3-elev-1); }
-.elev-2 { box-shadow: var(--m3-elev-2); }
-.elev-3 { box-shadow: var(--m3-elev-3); }
-.elev-4 { box-shadow: var(--m3-elev-4); }
-.elev-5 { box-shadow: var(--m3-elev-5); }
+/* Helper Classes */
+.apple-shadow-sm { box-shadow: var(--apple-shadow-sm); }
+.apple-shadow-md { box-shadow: var(--apple-shadow-md); }
+.apple-shadow-lg { box-shadow: var(--apple-shadow-lg); }
+.apple-shadow-xl { box-shadow: var(--apple-shadow-xl); }
 
-.surface { background-color: var(--m3-surface); color: var(--m3-on-surface); }
-.surface-container { background-color: var(--m3-surface-container); }
-.surface-variant { background-color: var(--m3-surface-variant); color: var(--m3-on-surface-variant); }
+.apple-glass {
+  background: var(--apple-glass-bg);
+  backdrop-filter: var(--apple-glass-blur);
+  -webkit-backdrop-filter: var(--apple-glass-blur);
+  border: 1px solid var(--apple-glass-border);
+}
 
-.btn-primary { background-color: var(--m3-primary); color: var(--m3-on-primary); }
-.btn-tonal { background-color: var(--m3-primary-container); color: var(--m3-on-primary-container); }
-.btn-text { color: var(--m3-primary); background-color: transparent; }
-
-/* Focus ring for accessibility */
+/* Focus Ring */
 :where(button, a, input, select, textarea):focus-visible {
-  outline: 2px solid var(--m3-primary);
+  outline: 2px solid var(--apple-primary);
   outline-offset: 2px;
-  border-radius: var(--m3-radius-sm);
+  border-radius: var(--apple-radius-md);
 }
-

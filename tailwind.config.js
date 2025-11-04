@@ -4,40 +4,44 @@ export default {
   theme: {
     extend: {
       colors: {
-        primary: 'var(--m3-primary)',
-        'on-primary': 'var(--m3-on-primary)',
-        'primary-container': 'var(--m3-primary-container)',
-        'on-primary-container': 'var(--m3-on-primary-container)',
-
-        surface: 'var(--m3-surface)',
-        'on-surface': 'var(--m3-on-surface)',
-        'surface-variant': 'var(--m3-surface-variant)',
-        'on-surface-variant': 'var(--m3-on-surface-variant)',
-        'surface-container': 'var(--m3-surface-container)',
-        outline: 'var(--m3-outline)',
-
-        error: 'var(--m3-error)',
-        'on-error': 'var(--m3-on-error)',
-        'error-container': 'var(--m3-error-container)',
-        'on-error-container': 'var(--m3-on-error-container)',
-        
-        accent: 'var(--m3-accent)',
-        'on-accent': 'var(--m3-on-accent)'
+        'apple-primary': 'var(--apple-primary)',
+        'apple-primary-hover': 'var(--apple-primary-hover)',
+        'apple-gray-1': 'var(--apple-gray-1)',
+        'apple-gray-2': 'var(--apple-gray-2)',
+        'apple-gray-3': 'var(--apple-gray-3)',
+        'apple-gray-4': 'var(--apple-gray-4)',
+        'apple-gray-5': 'var(--apple-gray-5)',
+        'apple-gray-6': 'var(--apple-gray-6)',
+        'apple-background': 'var(--apple-background)',
+        'apple-background-secondary': 'var(--apple-background-secondary)',
+        'apple-label': 'var(--apple-label)',
+        'apple-label-secondary': 'var(--apple-label-secondary)',
+        'apple-label-tertiary': 'var(--apple-label-tertiary)',
+        'apple-separator': 'var(--apple-separator)',
+        'apple-error': 'var(--apple-error)',
+        'apple-success': 'var(--apple-success)',
       },
       boxShadow: {
-        'e1': 'var(--m3-elev-1)',
-        'e2': 'var(--m3-elev-2)',
-        'e3': 'var(--m3-elev-3)',
-        'e4': 'var(--m3-elev-4)',
-        'e5': 'var(--m3-elev-5)'
+        'apple-sm': 'var(--apple-shadow-sm)',
+        'apple-md': 'var(--apple-shadow-md)',
+        'apple-lg': 'var(--apple-shadow-lg)',
+        'apple-xl': 'var(--apple-shadow-xl)',
       },
       borderRadius: {
-        'm3-sm': 'var(--m3-radius-sm)',
-        'm3-md': 'var(--m3-radius-md)',
-        'm3-lg': 'var(--m3-radius-lg)'
-      }
+        'apple-sm': 'var(--apple-radius-sm)',
+        'apple-md': 'var(--apple-radius-md)',
+        'apple-lg': 'var(--apple-radius-lg)',
+        'apple-xl': 'var(--apple-radius-xl)',
+      },
+      spacing: {
+        'apple-xs': 'var(--apple-spacing-xs)',
+        'apple-sm': 'var(--apple-spacing-sm)',
+        'apple-md': 'var(--apple-spacing-md)',
+        'apple-lg': 'var(--apple-spacing-lg)',
+        'apple-xl': 'var(--apple-spacing-xl)',
+        'apple-2xl': 'var(--apple-spacing-2xl)',
+      },
     },
   },
   plugins: [],
 };
-

@@ -38,23 +38,23 @@ export default function FileRow({ file, baseUrl }: FileRowProps) {
   const statusMeta = useMemo(() => {
     if (file.status === 'success') {
       return {
-        iconBg: 'bg-[var(--m3-primary-container)]',
-        iconColor: 'text-[var(--m3-primary)]',
+        iconBg: 'bg-gray-100',
+        iconColor: 'text-apple-primary',
         icon: <MdTaskAlt className="h-5 w-5" />,
         label: 'Yüklendi',
       };
     }
     if (file.status === 'error') {
       return {
-        iconBg: 'bg-[var(--m3-error-container)]',
-        iconColor: 'text-[var(--m3-on-error-container)]',
+        iconBg: 'bg-red-50',
+        iconColor: 'text-apple-error',
         icon: <MdError className="h-5 w-5" />,
         label: 'Hata',
       };
     }
     return {
-      iconBg: 'bg-[var(--m3-secondary-container)]',
-      iconColor: 'text-[var(--m3-secondary)]',
+      iconBg: 'bg-gray-100',
+      iconColor: 'text-apple-gray-6',
       icon: <MdSchedule className="h-5 w-5" />,
       label: 'Yükleniyor',
     };
@@ -62,28 +62,28 @@ export default function FileRow({ file, baseUrl }: FileRowProps) {
 
   return (
     <article
-      className="flex flex-col gap-4 rounded-[28px] border border-[var(--m3-surface-variant)]/60 bg-[var(--m3-surface)] px-6 py-5 shadow-[0_18px_32px_rgba(25,28,32,0.08)] md:px-7"
+      className="flex flex-col gap-4 rounded-2xl border border-gray-200 bg-white px-6 py-5 shadow-apple-sm md:px-7"
     >
       <div className="flex items-start justify-between gap-4">
         <div className="flex items-start gap-4">
-          <span className={`mt-1 inline-flex h-12 w-12 items-center justify-center rounded-2xl ${statusMeta.iconBg} ${statusMeta.iconColor}`}>
+          <span className={`mt-1 inline-flex h-12 w-12 items-center justify-center rounded-xl ${statusMeta.iconBg} ${statusMeta.iconColor}`}>
             {statusMeta.icon}
           </span>
           <div className="space-y-2">
             <div>
-              <p className="truncate text-base font-semibold text-[var(--m3-on-surface)]">
+              <p className="truncate text-headline font-semibold text-apple-label">
                 {file.filename}
               </p>
-              <p className="text-sm text-[var(--m3-on-surface-variant)]">
+              <p className="text-body text-apple-label-secondary">
                 {formatBytes(file.size)} · {file.contentType || 'Tanımsız tür'}
               </p>
             </div>
-            <div className="flex flex-wrap items-center gap-2 text-xs text-[var(--m3-on-surface-variant)]">
-              <span className="inline-flex items-center gap-1 rounded-full bg-[var(--m3-surface-variant)]/60 px-3 py-1">
-                Durum: <span className="font-semibold text-[var(--m3-on-surface)]">{statusMeta.label}</span>
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="inline-flex items-center gap-1 rounded-xl bg-gray-100 border border-gray-200 px-3 py-1 text-caption text-apple-label-secondary">
+                Durum: <span className="font-semibold text-apple-label">{statusMeta.label}</span>
               </span>
               {file.slug && (
-                <span className="inline-flex items-center gap-1 rounded-full bg-[var(--m3-primary-container)]/70 px-3 py-1 text-[var(--m3-on-primary-container)]">
+                <span className="inline-flex items-center gap-1 rounded-xl bg-gray-100 border border-gray-200 px-3 py-1 text-caption text-apple-label">
                   slug · {file.slug}
                 </span>
               )}
@@ -93,30 +93,30 @@ export default function FileRow({ file, baseUrl }: FileRowProps) {
       </div>
 
       {file.status === 'error' && file.error && (
-        <p className="rounded-2xl bg-[var(--m3-error-container)]/60 px-4 py-3 text-sm text-[var(--m3-on-error-container)]">
+        <p className="rounded-xl bg-red-50 border border-red-200 px-4 py-3 text-body text-apple-error">
           {file.error}
         </p>
       )}
 
       {file.status === 'success' && (
         <div className="space-y-3">
-          <div className="rounded-2xl bg-[var(--m3-surface-variant)]/60 px-4 py-3 text-xs text-[var(--m3-on-surface-variant)]">
-            <p className="font-semibold text-[var(--m3-on-surface)]">Paylaşım Bağlantısı</p>
-            <p className="mt-1 break-all font-mono text-[var(--m3-on-surface)]">{fullDisplayUrl}</p>
+          <div className="rounded-xl bg-gray-50 border border-gray-200 px-4 py-3 text-caption text-apple-label-secondary">
+            <p className="font-semibold text-apple-label">Paylaşım Bağlantısı</p>
+            <p className="mt-1 break-all font-mono text-apple-label text-subhead">{fullDisplayUrl}</p>
           </div>
           <div className="flex flex-col gap-2 sm:flex-row">
             <a
               href={openUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex flex-1 items-center justify-center gap-2 rounded-full bg-[var(--m3-primary)] px-5 py-3 text-sm font-semibold text-[var(--m3-on-primary)] shadow-[0_12px_24px_rgba(57,96,143,0.2)] transition hover:brightness-110 focus-visible:outline-none"
+              className="inline-flex flex-1 items-center justify-center gap-2 rounded-xl bg-apple-primary px-6 py-3 text-body font-semibold text-white shadow-apple-md transition-all duration-200 hover:bg-apple-primary-hover hover:shadow-apple-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-apple-primary focus-visible:ring-offset-2"
             >
               <MdCloudDownload className="h-5 w-5" />
               Dosyayı Aç
             </a>
             <button
               onClick={handleCopyLink}
-              className="inline-flex flex-1 items-center justify-center gap-2 rounded-full border border-[var(--m3-primary)] bg-[var(--m3-primary-container)] px-5 py-3 text-sm font-semibold text-[var(--m3-on-primary-container)] transition hover:bg-[var(--m3-primary)] hover:text-[var(--m3-on-primary)] focus-visible:outline-none"
+              className="inline-flex flex-1 items-center justify-center gap-2 rounded-xl border border-gray-300 bg-white px-6 py-3 text-body font-semibold text-apple-label shadow-apple-sm transition-all duration-200 hover:bg-gray-50 hover:shadow-apple-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-apple-primary focus-visible:ring-offset-2"
             >
               <MdContentCopy className="h-5 w-5" />
               {copied ? 'Kopyalandı' : 'Bağlantıyı Kopyala'}
@@ -126,9 +126,9 @@ export default function FileRow({ file, baseUrl }: FileRowProps) {
       )}
 
       {file.status === 'uploading' && file.progress !== undefined && (
-        <div className="overflow-hidden rounded-full bg-[var(--m3-surface-variant)]/80">
+        <div className="overflow-hidden rounded-full bg-gray-200">
           <div
-            className="h-2 rounded-full bg-[var(--m3-primary)] transition-all duration-300"
+            className="h-2 rounded-full bg-apple-primary transition-all duration-300"
             style={{ width: `${file.progress}%` }}
           />
         </div>

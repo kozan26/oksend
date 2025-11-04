@@ -7,8 +7,52 @@
 @layer base {
   body {
     @apply antialiased;
-    background-color: var(--m3-surface);
-    color: var(--m3-on-surface);
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', sans-serif;
+    background-color: var(--apple-background);
+    color: var(--apple-label);
+  }
+
+  /* Apple Typography Scale */
+  .text-large-title {
+    font-size: 34px;
+    font-weight: 700;
+    line-height: 41px;
+    letter-spacing: 0.37px;
+  }
+
+  .text-title {
+    font-size: 28px;
+    font-weight: 700;
+    line-height: 34px;
+    letter-spacing: 0.36px;
+  }
+
+  .text-headline {
+    font-size: 22px;
+    font-weight: 600;
+    line-height: 28px;
+    letter-spacing: 0.35px;
+  }
+
+  .text-body {
+    font-size: 17px;
+    font-weight: 400;
+    line-height: 22px;
+    letter-spacing: -0.41px;
+  }
+
+  .text-subhead {
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 20px;
+    letter-spacing: -0.24px;
+  }
+
+  .text-caption {
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 18px;
+    letter-spacing: -0.08px;
   }
 
   @keyframes progress {

@@ -19,7 +19,7 @@ const Dropzone = forwardRef<DropzoneHandle, DropzoneProps>(
     const [uploading, setUploading] = useState(false);
     const fileInputRef = useRef<HTMLInputElement | null>(null);
     const isCompact = variant === 'compact';
-    const containerPadding = isCompact ? 'px-5 py-10 md:px-6 md:py-12' : 'px-6 py-16';
+    const containerPadding = isCompact ? 'px-8 py-12 md:px-10 md:py-14' : 'px-8 py-16 md:px-12 md:py-20';
 
     useImperativeHandle(
       ref,
@@ -175,25 +175,18 @@ const Dropzone = forwardRef<DropzoneHandle, DropzoneProps>(
           onDragOver={handleDragOver}
           onDragLeave={handleDragLeave}
           onDrop={handleDrop}
-          className={`group relative bg-white rounded-[var(--m3-radius-lg)] text-center transition-all duration-200 border-2 border-dashed ${
-            isDragging ? 'elev-4 border-[var(--m3-primary)]' : 'elev-1 border-[var(--m3-outline)]'
+          className={`group relative bg-white/90 backdrop-blur-xl border border-gray-300 rounded-2xl text-center transition-all duration-300 ease-out ${
+            isDragging
+              ? 'scale-[1.02] shadow-apple-lg border-apple-primary'
+              : 'shadow-apple-sm hover:shadow-apple-md hover:scale-[1.01]'
           } ${
-            uploading ? 'cursor-not-allowed opacity-70' : 'cursor-pointer hover:elev-2 hover:border-[var(--m3-primary)]'
+            uploading ? 'cursor-not-allowed opacity-70' : 'cursor-pointer'
           } ${containerPadding}`}
           style={{
-            outline: isDragging ? '2px solid var(--m3-primary)' : 'none',
+            outline: isDragging ? '2px solid var(--apple-primary)' : 'none',
             outlineOffset: '2px',
           }}
         >
-          {/* Hover state layer */}
-          <div
-            className="pointer-events-none absolute inset-0 rounded-[var(--m3-radius-lg)] opacity-0 transition-opacity duration-200 group-hover:opacity-100"
-            aria-hidden="true"
-            style={{
-              backgroundColor: 'rgba(57, 96, 143, 0.08)',
-            }}
-          />
-          
           <input
             ref={fileInputRef}
             type="file"
@@ -203,32 +196,29 @@ const Dropzone = forwardRef<DropzoneHandle, DropzoneProps>(
             disabled={uploading}
             className="hidden"
           />
-          
-          <div className="relative z-10 flex w-full max-w-3xl flex-col items-center gap-6 mx-auto">
+
+          <div className="relative z-10 flex w-full max-w-3xl flex-col items-center gap-8 mx-auto">
             {/* Icon */}
             <div
-              className={`relative flex ${isCompact ? 'h-16 w-16 md:h-18 w-18' : 'h-20 w-20'} items-center justify-center rounded-full bg-[var(--m3-primary-container)]`}
+              className={`relative flex ${isCompact ? 'h-16 w-16 md:h-20 md:w-20' : 'h-24 w-24'} items-center justify-center rounded-full bg-gray-100 transition-all duration-300 ${
+                isDragging ? 'scale-110 bg-gray-200' : ''
+              }`}
             >
               <MdCloudUpload
-                className={`${isCompact ? 'h-8 w-8 md:h-9 md:w-9' : 'h-10 w-10'} text-[var(--m3-primary)]`}
+                className={`${isCompact ? 'h-8 w-8 md:h-10 md:w-10' : 'h-12 w-12'} text-apple-primary`}
               />
-              {isDragging && (
-                <span className="absolute inset-0 rounded-full border-2 border-[var(--m3-primary)]" />
-              )}
             </div>
 
             {/* Text content */}
-            <div className="space-y-2 px-2">
-              <h3
-                className={`${isCompact ? 'text-xl md:text-2xl' : 'text-2xl md:text-3xl'} font-medium text-[var(--m3-on-surface)]`}
-              >
+            <div className="space-y-3 px-2">
+              <h3 className={`${isCompact ? 'text-headline' : 'text-title'} text-apple-label`}>
                 {uploading
                   ? 'Dosyalar yükleniyor...'
                   : isDragging
                     ? 'Bırakın, biz hallederiz'
                     : 'Dosyalarınızı buraya bırakın'}
               </h3>
-              <p className="text-sm text-[var(--m3-on-surface-variant)] md:text-base">
+              <p className="text-body text-apple-label-secondary max-w-xl">
                 {uploading
                   ? 'Dosyalarınız güvenli bir şekilde aktarılıyor. Bu pencereyi kapatmayın.'
                   : 'Sürükleyip bırakın veya bilgisayarınızdaki dosyalara göz atmak için dokunun. Şifre korumalı paylaşımınız saniyeler içinde hazır.'}
@@ -241,10 +231,7 @@ const Dropzone = forwardRef<DropzoneHandle, DropzoneProps>(
                 type="button"
                 onClick={() => fileInputRef.current?.click()}
                 disabled={uploading}
-                className="inline-flex items-center gap-2 rounded-full bg-[var(--m3-primary)] px-6 py-3 text-sm font-medium text-[var(--m3-on-primary)] shadow-[var(--m3-elev-2)] transition-all hover:shadow-[var(--m3-elev-3)] focus-visible:outline-none focus-visible:outline-2 focus-visible:outline-[var(--m3-primary)] focus-visible:outline-offset-2 disabled:opacity-70"
-                style={{
-                  backgroundColor: uploading ? undefined : 'var(--m3-primary)',
-                }}
+                className="inline-flex items-center gap-2 rounded-xl bg-apple-primary px-6 py-3 text-body font-semibold text-white shadow-apple-md transition-all duration-200 hover:bg-apple-primary-hover hover:shadow-apple-lg disabled:opacity-70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-apple-primary focus-visible:ring-offset-2"
               >
                 <MdCloudUpload className="h-5 w-5" />
                 {uploading ? 'Bekleyin' : 'Yükleme Başlat'}
@@ -252,28 +239,26 @@ const Dropzone = forwardRef<DropzoneHandle, DropzoneProps>(
             </div>
 
             {/* Features list */}
-            <dl
-              className={`flex w-full flex-wrap items-center justify-center gap-2 text-xs ${isCompact ? 'md:gap-3' : 'gap-3'}`}
-            >
-              <div className="inline-flex items-center gap-2 rounded-full bg-[var(--m3-primary-container)] px-3 py-1.5">
-                <MdSpeed className="h-4 w-4 text-[var(--m3-primary)]" />
+            <dl className={`flex w-full flex-wrap items-center justify-center gap-3 ${isCompact ? 'md:gap-4' : 'gap-4'}`}>
+              <div className="inline-flex items-center gap-2 rounded-xl bg-white border border-gray-200 px-4 py-2 shadow-apple-sm">
+                <MdSpeed className="h-4 w-4 text-apple-primary" />
                 <div>
-                  <dt className="font-medium text-[var(--m3-on-primary-container)]">Hızlı transfer</dt>
-                  <dd className="text-[10px] text-[var(--m3-on-primary-container)]/70">Sunucuya anında ulaşır</dd>
+                  <dt className="text-subhead font-semibold text-apple-label">Hızlı transfer</dt>
+                  <dd className="text-caption text-apple-label-secondary">Sunucuya anında ulaşır</dd>
                 </div>
               </div>
-              <div className="inline-flex items-center gap-2 rounded-full bg-[var(--m3-secondary-container)] px-3 py-1.5">
-                <MdLock className="h-4 w-4 text-[var(--m3-secondary)]" />
+              <div className="inline-flex items-center gap-2 rounded-xl bg-white border border-gray-200 px-4 py-2 shadow-apple-sm">
+                <MdLock className="h-4 w-4 text-apple-primary" />
                 <div>
-                  <dt className="font-medium text-[var(--m3-on-secondary-container)]">Parola korumalı</dt>
-                  <dd className="text-[10px] text-[var(--m3-on-secondary-container)]/70">İzinsiz erişim yok</dd>
+                  <dt className="text-subhead font-semibold text-apple-label">Parola korumalı</dt>
+                  <dd className="text-caption text-apple-label-secondary">İzinsiz erişim yok</dd>
                 </div>
               </div>
-              <div className="inline-flex items-center gap-2 rounded-full bg-[var(--m3-primary-container)] px-3 py-1.5">
-                <MdInsights className="h-4 w-4 text-[var(--m3-primary)]" />
+              <div className="inline-flex items-center gap-2 rounded-xl bg-white border border-gray-200 px-4 py-2 shadow-apple-sm">
+                <MdInsights className="h-4 w-4 text-apple-primary" />
                 <div>
-                  <dt className="font-medium text-[var(--m3-on-primary-container)]">Anlık linkler</dt>
-                  <dd className="text-[10px] text-[var(--m3-on-primary-container)]/70">Paylaşım tek dokunuşla</dd>
+                  <dt className="text-subhead font-semibold text-apple-label">Anlık linkler</dt>
+                  <dd className="text-caption text-apple-label-secondary">Paylaşım tek dokunuşla</dd>
                 </div>
               </div>
             </dl>
@@ -281,13 +266,13 @@ const Dropzone = forwardRef<DropzoneHandle, DropzoneProps>(
 
           {/* Upload overlay */}
           {uploading && (
-            <div className="absolute inset-0 rounded-[var(--m3-radius-lg)] bg-[var(--m3-surface)]/80 backdrop-blur-sm">
-              <div className="flex h-full flex-col items-center justify-center space-y-4 text-[var(--m3-on-surface-variant)]">
-                <div className="h-12 w-12 animate-spin rounded-full border-[3px] border-[var(--m3-primary)] border-t-transparent" />
-                <div className="w-full max-w-xs overflow-hidden rounded-full bg-[var(--m3-surface-variant)]">
-                  <div className="h-1.5 w-full animate-[progress_1.5s_linear_infinite] bg-[var(--m3-primary)]" />
+            <div className="absolute inset-0 rounded-2xl bg-white/90 backdrop-blur-md">
+              <div className="flex h-full flex-col items-center justify-center space-y-6 text-apple-label-secondary">
+                <div className="h-12 w-12 animate-spin rounded-full border-[3px] border-apple-primary border-t-transparent" />
+                <div className="w-full max-w-xs overflow-hidden rounded-full bg-gray-200">
+                  <div className="h-1.5 w-full animate-[progress_1.5s_linear_infinite] bg-apple-primary" />
                 </div>
-                <p className="text-sm font-medium">Yükleme devam ediyor…</p>
+                <p className="text-body font-medium">Yükleme devam ediyor…</p>
               </div>
             </div>
           )}

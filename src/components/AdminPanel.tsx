@@ -160,25 +160,23 @@ export default function AdminPanel({ onBackToUpload }: AdminPanelProps) {
   }, [files, searchTerm, showShortLinksOnly]);
 
   return (
-    <div className="space-y-10 text-[var(--m3-on-surface)]">
+    <div className="space-y-10 text-apple-label">
       <section
-        className="rounded-[var(--m3-radius-lg)] bg-gradient-to-br from-[var(--m3-primary-container)] via-[var(--m3-surface-container)] to-[var(--m3-surface-container-high)] px-6 py-8 md:px-10"
-        style={{ boxShadow: 'var(--m3-elev-2)' }}
+        className="rounded-2xl bg-white px-8 py-12 md:px-12 shadow-apple-md"
       >
-        <div className="flex items-start justify-between gap-6">
-          <div className="space-y-5">
-            <div className="flex items-center gap-3 text-[var(--m3-on-primary-container)]">
-              <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-[var(--m3-primary)] text-[var(--m3-on-primary)]">
-                <MdShield className="h-5 w-5" />
+        <div className="flex items-start justify-between gap-8">
+          <div className="space-y-6">
+            <div className="flex items-center gap-4">
+              <span className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-gray-100">
+                <MdShield className="h-6 w-6 text-apple-primary" />
               </span>
               <div>
-                <p className="text-xs uppercase tracking-[0.3em] opacity-80">Yönetim alanı</p>
-                <h2 className="text-2xl font-semibold md:text-3xl">
+                <h2 className="text-title text-apple-label">
                   Dosyalarınızı yönetin
                 </h2>
               </div>
             </div>
-            <p className="max-w-xl text-sm text-[var(--m3-on-surface-variant)]">
+            <p className="max-w-xl text-body text-apple-label-secondary">
               Tüm yüklenen dosyalarınızı görüntüleyin, paylaşın ve yönetin. Bağlantıları kopyalayın,
               dosyaları önizleyin veya silin.
             </p>
@@ -186,38 +184,36 @@ export default function AdminPanel({ onBackToUpload }: AdminPanelProps) {
               <button
                 type="button"
                 onClick={onBackToUpload}
-                className="inline-flex items-center gap-2 rounded-full border border-[var(--m3-primary)] px-5 py-2.5 text-sm font-semibold text-[var(--m3-primary)] transition hover:bg-[var(--m3-primary)] hover:text-[var(--m3-on-primary)] focus-visible:outline-none"
+                className="inline-flex items-center gap-2 rounded-xl border border-gray-300 bg-white px-6 py-3 text-body font-semibold text-apple-label shadow-apple-sm transition-all duration-200 hover:bg-gray-50 hover:shadow-apple-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-apple-primary focus-visible:ring-offset-2"
               >
                 <MdArrowBack className="h-5 w-5" />
                 Yüklemeye dön
               </button>
             </div>
           </div>
-          <div className="grid gap-3 self-start rounded-[var(--m3-radius-lg)] bg-white p-4"
-            style={{ boxShadow: 'var(--m3-elev-2)' }}
-          >
-            <dl className="grid gap-2 text-sm">
-              <div className="flex items-center justify-between rounded-[var(--m3-radius-md)] bg-[var(--m3-primary-container)] px-4 py-2">
-                <dt className="text-xs uppercase tracking-[0.2em] text-[var(--m3-on-primary-container)]">
+          <div className="grid gap-3 self-start rounded-2xl bg-white border border-gray-200 p-6 shadow-apple-md">
+            <dl className="grid gap-3">
+              <div className="flex items-center justify-between rounded-xl bg-gray-100 border border-gray-200 px-4 py-3">
+                <dt className="text-caption font-semibold text-apple-label-secondary">
                   Dosya
                 </dt>
-                <dd className="text-lg font-semibold text-[var(--m3-on-primary-container)]">
+                <dd className="text-headline font-semibold text-apple-label">
                   {summaries.totalFiles}
                 </dd>
               </div>
-              <div className="flex items-center justify-between rounded-[var(--m3-radius-md)] bg-[var(--m3-secondary-container)] px-4 py-2">
-                <dt className="text-xs uppercase tracking-[0.2em] text-[var(--m3-on-secondary-container)]">
+              <div className="flex items-center justify-between rounded-xl bg-gray-100 border border-gray-200 px-4 py-3">
+                <dt className="text-caption font-semibold text-apple-label-secondary">
                   Boyut
                 </dt>
-                <dd className="text-lg font-semibold text-[var(--m3-on-secondary-container)]">
+                <dd className="text-headline font-semibold text-apple-label">
                   {formatBytes(summaries.totalSize)}
                 </dd>
               </div>
-              <div className="flex items-center justify-between rounded-[var(--m3-radius-md)] bg-[var(--m3-primary-container)] px-4 py-2">
-                <dt className="text-xs uppercase tracking-[0.2em] text-[var(--m3-on-primary-container)]">
+              <div className="flex items-center justify-between rounded-xl bg-gray-100 border border-gray-200 px-4 py-3">
+                <dt className="text-caption font-semibold text-apple-label-secondary">
                   Kısa URL
                 </dt>
-                <dd className="text-lg font-semibold text-[var(--m3-on-primary-container)]">
+                <dd className="text-headline font-semibold text-apple-label">
                   {summaries.withShortLink}
                 </dd>
               </div>
@@ -228,8 +224,7 @@ export default function AdminPanel({ onBackToUpload }: AdminPanelProps) {
 
       {error && (
         <div
-          className="rounded-[var(--m3-radius-md)] border border-transparent bg-[var(--m3-error-container)] px-4 py-3 text-[var(--m3-on-error-container)]"
-          style={{ boxShadow: 'var(--m3-elev-1)' }}
+          className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-body text-apple-error shadow-apple-sm"
         >
           {error}
         </div>
@@ -237,59 +232,56 @@ export default function AdminPanel({ onBackToUpload }: AdminPanelProps) {
 
       {loading && files.length === 0 ? (
         <div
-          className="flex flex-col items-center justify-center rounded-[var(--m3-radius-lg)] bg-[var(--m3-surface)]/50 py-12 text-center"
-          style={{ boxShadow: 'var(--m3-elev-1)' }}
+          className="flex flex-col items-center justify-center rounded-2xl bg-white border border-gray-200 py-16 text-center shadow-apple-sm"
         >
-          <div className="h-10 w-10 animate-spin rounded-full border-[3px] border-[var(--m3-primary)] border-t-transparent" />
-          <p className="mt-4 text-sm text-[var(--m3-on-surface-variant)]">Dosyalar yükleniyor…</p>
+          <div className="h-10 w-10 animate-spin rounded-full border-[3px] border-apple-primary border-t-transparent" />
+          <p className="mt-4 text-body text-apple-label-secondary">Dosyalar yükleniyor…</p>
         </div>
       ) : files.length === 0 ? (
         <div
-          className="flex flex-col items-center justify-center rounded-[var(--m3-radius-lg)] bg-[var(--m3-surface)]/50 py-12 text-center"
-          style={{ boxShadow: 'var(--m3-elev-1)' }}
+          className="flex flex-col items-center justify-center rounded-2xl bg-white border border-gray-200 py-16 text-center shadow-apple-sm"
         >
-          <p className="text-sm font-medium text-[var(--m3-on-surface)]">Henüz dosya yüklenmedi</p>
-          <p className="mt-1 text-xs uppercase tracking-[0.2em] text-[var(--m3-on-surface-variant)]">
+          <p className="text-body font-medium text-apple-label">Henüz dosya yüklenmedi</p>
+          <p className="mt-1 text-caption text-apple-label-secondary">
             Dosya geldiğinde burada görünecek
           </p>
         </div>
       ) : (
         <section className="space-y-6">
           <div
-            className="flex flex-col gap-4 rounded-[var(--m3-radius-lg)] bg-white p-4 md:flex-row md:items-center md:justify-between md:p-6"
-            style={{ boxShadow: 'var(--m3-elev-2)' }}
+            className="flex flex-col gap-4 rounded-2xl bg-white border border-gray-200 p-6 md:flex-row md:items-center md:justify-between shadow-apple-md"
           >
             <div className="relative flex-1">
-              <MdSearch className="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-[var(--m3-on-surface-variant)]/70" />
+              <MdSearch className="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-apple-label-secondary/70" />
               <input
                 type="search"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 placeholder="Dosya ismi veya slug ara"
-                className="w-full rounded-full border border-[var(--m3-outline)]/30 bg-[var(--m3-surface-variant)]/60 px-10 py-2.5 text-sm text-[var(--m3-on-surface)] focus:border-[var(--m3-primary)] focus:ring-2 focus:ring-[var(--m3-primary)]/30 focus-visible:outline-none"
+                className="w-full rounded-xl border border-gray-300 bg-white px-10 py-3 text-body text-apple-label shadow-apple-sm focus:border-apple-primary focus:ring-2 focus:ring-apple-primary/30 focus-visible:outline-none"
               />
             </div>
             <div className="flex items-center gap-2">
               <button
                 type="button"
                 onClick={() => setShowShortLinksOnly((prev) => !prev)}
-                className={`inline-flex items-center gap-2 rounded-full border px-4 py-2 text-xs font-semibold transition ${
+                className={`inline-flex items-center gap-2 rounded-xl border px-4 py-2 text-caption font-semibold transition-all duration-200 ${
                   showShortLinksOnly
-                    ? 'border-[var(--m3-primary)] bg-[var(--m3-primary)] text-[var(--m3-on-primary)]'
-                    : 'border-[var(--m3-outline)]/30 text-[var(--m3-on-surface-variant)] hover:border-[var(--m3-primary)] hover:text-[var(--m3-primary)]'
+                    ? 'border-apple-primary bg-apple-primary text-white shadow-apple-md'
+                    : 'border-gray-300 bg-white text-apple-label-secondary hover:border-apple-primary hover:text-apple-primary shadow-apple-sm'
                 }`}
               >
                 <MdLink className="h-4 w-4" />
                 Kısa URL olanlar
               </button>
-              <div className="flex rounded-full bg-[var(--m3-surface-variant)]/80 p-1">
+              <div className="flex rounded-xl bg-gray-100 border border-gray-200 p-1 shadow-apple-sm">
                 <button
                   type="button"
                   onClick={() => setViewMode('grid')}
-                  className={`inline-flex items-center gap-1 rounded-full px-3 py-1.5 text-xs font-semibold transition ${
+                  className={`inline-flex items-center gap-1 rounded-lg px-3 py-1.5 text-caption font-semibold transition-all duration-200 ${
                     viewMode === 'grid'
-                      ? 'bg-[var(--m3-primary)] text-[var(--m3-on-primary)]'
-                      : 'text-[var(--m3-on-surface-variant)] hover:text-[var(--m3-primary)]'
+                      ? 'bg-apple-primary text-white shadow-apple-sm'
+                      : 'text-apple-label-secondary hover:text-apple-primary'
                   }`}
                 >
                   <MdViewModule className="h-4 w-4" /> Kart
@@ -297,10 +289,10 @@ export default function AdminPanel({ onBackToUpload }: AdminPanelProps) {
                 <button
                   type="button"
                   onClick={() => setViewMode('list')}
-                  className={`inline-flex items-center gap-1 rounded-full px-3 py-1.5 text-xs font-semibold transition ${
+                  className={`inline-flex items-center gap-1 rounded-lg px-3 py-1.5 text-caption font-semibold transition-all duration-200 ${
                     viewMode === 'list'
-                      ? 'bg-[var(--m3-primary)] text-[var(--m3-on-primary)]'
-                      : 'text-[var(--m3-on-surface-variant)] hover:text-[var(--m3-primary)]'
+                      ? 'bg-apple-primary text-white shadow-apple-sm'
+                      : 'text-apple-label-secondary hover:text-apple-primary'
                   }`}
                 >
                   <MdViewAgenda className="h-4 w-4" /> Liste
@@ -311,11 +303,10 @@ export default function AdminPanel({ onBackToUpload }: AdminPanelProps) {
 
           {filteredFiles.length === 0 ? (
             <div
-              className="flex flex-col items-center justify-center rounded-[var(--m3-radius-lg)] border border-[color:rgba(148,163,184,0.15)] bg-[var(--m3-surface)]/60 py-16 text-center"
-              style={{ boxShadow: 'var(--m3-elev-1)' }}
+              className="flex flex-col items-center justify-center rounded-2xl border border-gray-200 bg-white py-16 text-center shadow-apple-sm"
             >
-              <p className="text-sm font-medium text-[var(--m3-on-surface)]">Kriterlere uygun sonuç bulunamadı.</p>
-              <p className="mt-1 text-xs uppercase tracking-[0.2em] text-[var(--m3-on-surface-variant)]">
+              <p className="text-body font-medium text-apple-label">Kriterlere uygun sonuç bulunamadı.</p>
+              <p className="mt-1 text-caption text-apple-label-secondary">
                 Filtreden çıkıp tekrar deneyin
               </p>
             </div>
@@ -324,18 +315,17 @@ export default function AdminPanel({ onBackToUpload }: AdminPanelProps) {
               {filteredFiles.map((file) => (
                 <article
                   key={file.key}
-                  className="flex h-full flex-col gap-4 rounded-[var(--m3-radius-lg)] border border-[color:rgba(148,163,184,0.2)] bg-[var(--m3-surface-container)] p-5"
-                  style={{ boxShadow: 'var(--m3-elev-2)' }}
+                  className="flex h-full flex-col gap-4 rounded-2xl border border-gray-200 bg-white p-5 shadow-apple-md"
                 >
                   <div className="flex items-start gap-3">
-                    <span className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-2xl bg-[var(--m3-secondary-container)] text-[var(--m3-on-secondary-container)]">
+                    <span className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl bg-gray-100 text-apple-primary">
                       {getFileIcon(file.contentType)}
                     </span>
                     <div className="min-w-0 space-y-1">
-                      <p className="truncate text-sm font-semibold text-[var(--m3-on-surface)]">
+                      <p className="truncate text-subhead font-semibold text-apple-label">
                         {file.filename}
                       </p>
-                      <p className="text-xs text-[var(--m3-on-surface-variant)]">
+                      <p className="text-caption text-apple-label-secondary">
                         {file.uploaded
                           ? new Date(file.uploaded).toLocaleString()
                           : 'Tarih bilgisi yok'}
@@ -343,17 +333,17 @@ export default function AdminPanel({ onBackToUpload }: AdminPanelProps) {
                     </div>
                   </div>
 
-                  <dl className="grid gap-2 text-xs text-[var(--m3-on-surface-variant)]">
-                    <div className="flex items-center justify-between rounded-[var(--m3-radius-sm)] bg-[var(--m3-surface-variant)]/60 px-3 py-2 font-medium">
+                  <dl className="grid gap-2 text-caption text-apple-label-secondary">
+                    <div className="flex items-center justify-between rounded-xl bg-gray-100 border border-gray-200 px-3 py-2 font-medium">
                       <dt>Boyut</dt>
                       <dd>{formatBytes(file.size)}</dd>
                     </div>
-                    <div className="flex items-center justify-between rounded-[var(--m3-radius-sm)] bg-[var(--m3-surface-variant)]/40 px-3 py-2 font-medium">
+                    <div className="flex items-center justify-between rounded-xl bg-gray-100 border border-gray-200 px-3 py-2 font-medium">
                       <dt>Tür</dt>
                       <dd className="truncate">{file.contentType}</dd>
                     </div>
                     {file.slug && (
-                      <div className="flex items-center justify-between rounded-[var(--m3-radius-sm)] bg-[var(--m3-primary-container)]/60 px-3 py-2 font-medium text-[var(--m3-on-primary-container)]">
+                      <div className="flex items-center justify-between rounded-xl bg-gray-100 border border-gray-200 px-3 py-2 font-medium text-apple-label">
                         <dt>Slug</dt>
                         <dd className="truncate">{file.slug}</dd>
                       </div>
@@ -370,14 +360,14 @@ export default function AdminPanel({ onBackToUpload }: AdminPanelProps) {
                         }
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex w-full items-center justify-center gap-2 rounded-full border border-[var(--m3-primary)] bg-[var(--m3-primary-container)] px-4 py-2 text-xs font-semibold text-[var(--m3-on-primary-container)] transition hover:bg-[var(--m3-primary)] hover:text-[var(--m3-on-primary)] focus-visible:outline-none"
+                        className="inline-flex w-full items-center justify-center gap-2 rounded-xl border border-gray-300 bg-white px-4 py-2 text-caption font-semibold text-apple-label shadow-apple-sm transition-all duration-200 hover:bg-gray-50 hover:shadow-apple-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-apple-primary focus-visible:ring-offset-2"
                       >
                         <MdLink className="h-4 w-4" /> Kısa URL'yi aç
                       </a>
                     ) : (
                       <button
                         onClick={() => handleCopyUrl(file)}
-                        className="inline-flex w-full items-center justify-center gap-2 rounded-full border border-[var(--m3-primary)] bg-[var(--m3-primary-container)] px-4 py-2 text-xs font-semibold text-[var(--m3-on-primary-container)] transition hover:bg-[var(--m3-primary)] hover:text-[var(--m3-on-primary)] focus-visible:outline-none"
+                        className="inline-flex w-full items-center justify-center gap-2 rounded-xl border border-gray-300 bg-white px-4 py-2 text-caption font-semibold text-apple-label shadow-apple-sm transition-all duration-200 hover:bg-gray-50 hover:shadow-apple-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-apple-primary focus-visible:ring-offset-2"
                       >
                         {copiedKey === file.key ? (
                           <>
@@ -394,14 +384,14 @@ export default function AdminPanel({ onBackToUpload }: AdminPanelProps) {
                       href={file.url.startsWith('http') ? file.url : window.location.origin + file.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-[var(--m3-secondary)] px-4 py-2 text-xs font-semibold text-[var(--m3-on-secondary)] transition hover:brightness-110 focus-visible:outline-none"
+                      className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-apple-primary px-4 py-2 text-caption font-semibold text-white shadow-apple-md transition-all duration-200 hover:bg-apple-primary-hover hover:shadow-apple-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-apple-primary focus-visible:ring-offset-2"
                     >
                       <MdOpenInNew className="h-4 w-4" /> Önizle
                     </a>
                     <button
                       onClick={() => handleDeleteFile(file.key)}
                       disabled={deleting === file.key}
-                      className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-[var(--m3-error)] px-4 py-2 text-xs font-semibold text-[var(--m3-on-error)] transition hover:brightness-110 disabled:opacity-70 focus-visible:outline-none"
+                      className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-apple-error px-4 py-2 text-caption font-semibold text-white shadow-apple-md transition-all duration-200 hover:opacity-90 disabled:opacity-70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-apple-error focus-visible:ring-offset-2"
                     >
                       <MdDelete className="h-4 w-4" />
                       {deleting === file.key ? 'Siliniyor...' : 'Sil'}
@@ -411,11 +401,9 @@ export default function AdminPanel({ onBackToUpload }: AdminPanelProps) {
               ))}
             </div>
           ) : (
-            <div className="overflow-hidden rounded-[var(--m3-radius-lg)] border border-[color:rgba(148,163,184,0.15)] bg-[var(--m3-surface-container)]"
-              style={{ boxShadow: 'var(--m3-elev-2)' }}
-            >
-              <table className="min-w-full border-separate border-spacing-y-2 text-sm">
-                <thead className="text-left text-xs font-semibold uppercase tracking-[0.25em] text-[var(--m3-on-surface-variant)]">
+            <div className="overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-apple-md">
+              <table className="min-w-full border-separate border-spacing-y-2 text-body">
+                <thead className="text-left text-caption font-semibold text-apple-label-secondary">
                   <tr>
                     <th className="px-5 py-3">Dosya</th>
                     <th className="px-5 py-3">Boyut</th>
@@ -428,34 +416,32 @@ export default function AdminPanel({ onBackToUpload }: AdminPanelProps) {
                   {filteredFiles.map((file) => (
                     <tr key={file.key} className="align-top">
                       <td className="px-4">
-                        <div className="flex items-start gap-3 rounded-[var(--m3-radius-md)] bg-[var(--m3-surface)]/80 px-4 py-3"
-                          style={{ boxShadow: 'var(--m3-elev-1)' }}
-                        >
-                          <span className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-xl bg-[var(--m3-secondary-container)] text-[var(--m3-on-secondary-container)]">
+                        <div className="flex items-start gap-3 rounded-xl bg-gray-50 border border-gray-200 px-4 py-3 shadow-apple-sm">
+                          <span className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-xl bg-gray-100 text-apple-primary">
                             {getFileIcon(file.contentType)}
                           </span>
                           <div className="min-w-0">
-                            <p className="truncate text-sm font-semibold text-[var(--m3-on-surface)]">
+                            <p className="truncate text-subhead font-semibold text-apple-label">
                               {file.filename}
                             </p>
-                            <p className="truncate text-xs text-[var(--m3-on-surface-variant)]">
+                            <p className="truncate text-caption text-apple-label-secondary">
                               {(file.shortUrl || file.url).replace(window.location.origin, '')}
                             </p>
                           </div>
                         </div>
                       </td>
-                      <td className="px-4 py-2 text-[var(--m3-on-surface-variant)]">
+                      <td className="px-4 py-2 text-apple-label-secondary">
                         {formatBytes(file.size)}
                       </td>
-                      <td className="px-4 py-2 text-[var(--m3-on-surface-variant)]">{file.contentType}</td>
-                      <td className="px-4 py-2 text-[var(--m3-on-surface-variant)]">
+                      <td className="px-4 py-2 text-apple-label-secondary">{file.contentType}</td>
+                      <td className="px-4 py-2 text-apple-label-secondary">
                         {file.uploaded ? new Date(file.uploaded).toLocaleString() : 'Bilinmiyor'}
                       </td>
                       <td className="px-4 py-2">
                         <div className="flex flex-wrap items-center gap-2">
                           <button
                             onClick={() => handleCopyUrl(file)}
-                            className="inline-flex items-center gap-2 rounded-full border border-[var(--m3-primary)] bg-[var(--m3-primary-container)] px-3 py-1.5 text-xs font-semibold text-[var(--m3-on-primary-container)] transition hover:bg-[var(--m3-primary)] hover:text-[var(--m3-on-primary)] focus-visible:outline-none"
+                            className="inline-flex items-center gap-2 rounded-xl border border-gray-300 bg-white px-3 py-1.5 text-caption font-semibold text-apple-label shadow-apple-sm transition-all duration-200 hover:bg-gray-50 hover:shadow-apple-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-apple-primary focus-visible:ring-offset-2"
                           >
                             {copiedKey === file.key ? (
                               <>
@@ -471,14 +457,14 @@ export default function AdminPanel({ onBackToUpload }: AdminPanelProps) {
                             href={file.url.startsWith('http') ? file.url : window.location.origin + file.url}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="inline-flex items-center gap-2 rounded-full bg-[var(--m3-secondary)] px-3 py-1.5 text-xs font-semibold text-[var(--m3-on-secondary)] transition hover:brightness-110 focus-visible:outline-none"
+                            className="inline-flex items-center gap-2 rounded-xl bg-apple-primary px-3 py-1.5 text-caption font-semibold text-white shadow-apple-md transition-all duration-200 hover:bg-apple-primary-hover hover:shadow-apple-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-apple-primary focus-visible:ring-offset-2"
                           >
                             <MdOpenInNew className="h-4 w-4" /> Önizle
                           </a>
                           <button
                             onClick={() => handleDeleteFile(file.key)}
                             disabled={deleting === file.key}
-                            className="inline-flex items-center gap-2 rounded-full bg-[var(--m3-error)] px-3 py-1.5 text-xs font-semibold text-[var(--m3-on-error)] transition hover:brightness-110 disabled:opacity-70 focus-visible:outline-none"
+                            className="inline-flex items-center gap-2 rounded-xl bg-apple-error px-3 py-1.5 text-caption font-semibold text-white shadow-apple-md transition-all duration-200 hover:opacity-90 disabled:opacity-70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-apple-error focus-visible:ring-offset-2"
                           >
                             <MdDelete className="h-4 w-4" />
                             {deleting === file.key ? '...' : 'Sil'}
@@ -492,10 +478,8 @@ export default function AdminPanel({ onBackToUpload }: AdminPanelProps) {
             </div>
           )}
 
-          <footer className="rounded-[var(--m3-radius-lg)] bg-[var(--m3-surface)]/60 px-6 py-4 text-sm text-[var(--m3-on-surface-variant)]"
-            style={{ boxShadow: 'var(--m3-elev-1)' }}
-          >
-            <span className="font-semibold text-[var(--m3-on-surface)]">{filteredFiles.length}</span> dosya
+          <footer className="rounded-2xl bg-white border border-gray-200 px-6 py-4 text-body text-apple-label-secondary shadow-apple-sm">
+            <span className="font-semibold text-apple-label">{filteredFiles.length}</span> dosya
             listeleniyor — toplam {files.length}.
           </footer>
         </section>
