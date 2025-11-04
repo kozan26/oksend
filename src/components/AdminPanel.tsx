@@ -159,9 +159,9 @@ export default function AdminPanel({ onBackToUpload }: AdminPanelProps) {
   }, [files, searchTerm]);
 
   return (
-    <div className="space-y-8 text-[var(--m3-on-surface)]">
+    <div className="space-y-8 text-[var(--m3-on-surface)] overflow-x-hidden">
       {/* Header Section */}
-      <section className="rounded-2xl bg-[var(--m3-surface)] px-8 py-10 shadow-apple-md">
+      <section className="rounded-2xl bg-[var(--m3-surface)] px-4 py-6 md:px-6 md:py-8 lg:px-8 lg:py-10 shadow-apple-md">
         <div className="flex flex-col gap-8 lg:flex-row lg:items-start lg:justify-between">
           <div className="space-y-4">
             <div className="flex items-center gap-4">
@@ -249,9 +249,9 @@ export default function AdminPanel({ onBackToUpload }: AdminPanelProps) {
           </p>
         </div>
       ) : (
-        <section className="space-y-6">
+        <section className="space-y-6 overflow-x-hidden">
           {/* Search and Filter Bar */}
-          <div className="rounded-2xl bg-[var(--m3-surface)] p-6 shadow-apple-md">
+          <div className="rounded-2xl bg-[var(--m3-surface)] px-4 py-4 md:p-6 shadow-apple-md">
             <div className="flex flex-col gap-4 lg:flex-row lg:items-center">
               {/* Search Input */}
               <div className="relative flex-1">
@@ -310,7 +310,7 @@ export default function AdminPanel({ onBackToUpload }: AdminPanelProps) {
             </div>
           ) : viewMode === 'grid' ? (
             /* Grid View */
-            <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+            <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3 overflow-x-hidden">
               {filteredFiles.map((file) => (
                 <article
                   key={file.key}
@@ -412,8 +412,8 @@ export default function AdminPanel({ onBackToUpload }: AdminPanelProps) {
           ) : (
             /* List View */
             <div className="overflow-hidden rounded-2xl bg-[var(--m3-surface)] shadow-apple-md">
-              <div className="overflow-x-auto">
-                <table className="min-w-full">
+              <div className="overflow-x-auto md:overflow-x-visible">
+                <table className="min-w-full table-fixed">
                   <thead className="bg-[var(--m3-surface-container)] border-b border-[var(--m3-surface-variant)]/50">
                     <tr>
                       <th className="w-[20%] px-4 py-3 text-left text-xs font-semibold text-[var(--m3-on-surface-variant)]">Dosya</th>
@@ -515,7 +515,7 @@ export default function AdminPanel({ onBackToUpload }: AdminPanelProps) {
           )}
 
           {/* Footer */}
-          <div className="rounded-2xl bg-[var(--m3-surface)] px-6 py-4 text-body text-[var(--m3-on-surface-variant)] shadow-apple-sm">
+          <div className="rounded-2xl bg-[var(--m3-surface)] px-4 py-4 md:px-6 text-body text-[var(--m3-on-surface-variant)] shadow-apple-sm overflow-x-hidden">
             <span className="font-semibold text-[var(--m3-on-surface)]">{filteredFiles.length}</span> dosya
             listeleniyor — toplam <span className="font-semibold text-[var(--m3-on-surface)]">{files.length}</span>
           </div>

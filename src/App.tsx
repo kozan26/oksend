@@ -174,10 +174,10 @@ function App() {
         {currentView === 'upload' ? (
           <div className="space-y-12">
             <section
-              className="grid gap-6 rounded-2xl bg-[var(--m3-surface)] px-4 py-6 md:gap-8 md:rounded-[28px] md:px-8 md:py-12 md:grid-cols-[minmax(0,1fr)_1fr] lg:px-12"
+              className="grid gap-6 rounded-2xl bg-[var(--m3-surface)] px-3 py-6 md:gap-8 md:rounded-[28px] md:px-6 md:py-12 md:grid-cols-[minmax(0,1fr)_1fr] lg:px-8"
               style={{ boxShadow: 'var(--shadow-level2)' }}
             >
-              <div className="space-y-4 md:space-y-6">
+              <div className="space-y-4 md:space-y-6 min-w-0">
                 <div className="flex items-start gap-3 md:items-center md:gap-4">
                   <span className="inline-flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-[var(--m3-primary-container)]/80 md:h-12 md:w-12">
                     <MdAutoAwesome className="h-5 w-5 text-[var(--m3-primary)] md:h-6 md:w-6" />
@@ -192,21 +192,21 @@ function App() {
                   Tüm yüklenen dosyalarınızı görüntüleyin, paylaşın ve yönetin. Bağlantıları kopyalayın,
                   dosyaları önizleyin veya silin.
                 </p>
-                <div className="flex gap-2 md:gap-3">
-                  <span className="inline-flex items-center gap-1.5 rounded-full bg-[var(--m3-primary-container)]/70 px-3 py-1.5 text-xs font-medium text-[var(--m3-on-primary-container)] md:gap-2 md:px-4 md:py-2 md:text-subhead whitespace-nowrap">
+                <div className="flex gap-1.5 md:gap-3 overflow-x-auto min-w-0">
+                  <span className="inline-flex items-center gap-1.5 rounded-full bg-[var(--m3-primary-container)]/70 px-2.5 py-1.5 text-xs font-medium text-[var(--m3-on-primary-container)] md:gap-2 md:px-4 md:py-2 md:text-subhead whitespace-nowrap flex-shrink-0">
                     <MdSpeed className="h-3.5 w-3.5 text-[var(--m3-primary)] md:h-4 md:w-4" />
                     Hızlı aktarım
                   </span>
-                  <span className="inline-flex items-center gap-1.5 rounded-full bg-[var(--m3-primary-container)]/70 px-3 py-1.5 text-xs font-medium text-[var(--m3-on-primary-container)] md:gap-2 md:px-4 md:py-2 md:text-subhead whitespace-nowrap">
+                  <span className="inline-flex items-center gap-1.5 rounded-full bg-[var(--m3-primary-container)]/70 px-2.5 py-1.5 text-xs font-medium text-[var(--m3-on-primary-container)] md:gap-2 md:px-4 md:py-2 md:text-subhead whitespace-nowrap flex-shrink-0">
                     <MdLock className="h-3.5 w-3.5 text-[var(--m3-primary)] md:h-4 md:w-4" />
                     Parola korumalı
                   </span>
-                  <span className="inline-flex items-center gap-1.5 rounded-full bg-[var(--m3-primary-container)]/70 px-3 py-1.5 text-xs font-medium text-[var(--m3-on-primary-container)] md:gap-2 md:px-4 md:py-2 md:text-subhead whitespace-nowrap">
+                  <span className="inline-flex items-center gap-1.5 rounded-full bg-[var(--m3-primary-container)]/70 px-2.5 py-1.5 text-xs font-medium text-[var(--m3-on-primary-container)] md:gap-2 md:px-4 md:py-2 md:text-subhead whitespace-nowrap flex-shrink-0">
                     <MdInsights className="h-3.5 w-3.5 text-[var(--m3-primary)] md:h-4 md:w-4" />
                     Anlık linkler
                   </span>
                 </div>
-                <div className="flex flex-wrap gap-2 justify-center md:justify-start">
+                <div className="flex gap-2 justify-center">
                   <button
                     type="button"
                     onClick={() => setCurrentView('admin')}
