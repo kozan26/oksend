@@ -1,11 +1,18 @@
-import { useState, useEffect } from 'react';
-import Dropzone from './components/Dropzone';
+import { useState, useEffect, useMemo, useRef } from 'react';
+import Dropzone, { DropzoneHandle } from './components/Dropzone';
 import FileRow from './components/FileRow';
 import AdminPanel from './components/AdminPanel';
 import Toast from './components/Toast';
 import { hasPassword, setPassword } from './lib/auth';
 import type { ToastMessage } from './components/Toast';
-import { MdCloudUpload, MdSettings } from 'react-icons/md';
+import {
+  MdAutoAwesome,
+  MdCloudUpload,
+  MdInsights,
+  MdLock,
+  MdSettings,
+  MdSpeed,
+} from 'react-icons/md';
 
 export interface UploadedFile {
   key: string;
@@ -29,6 +36,7 @@ function App() {
   const [uploadedFiles, setUploadedFiles] = useState<UploadedFile[]>([]);
   const [toasts, setToasts] = useState<ToastMessage[]>([]);
   const [currentView, setCurrentView] = useState<'upload' | 'admin'>('upload');
+  const dropzoneRef = useRef<DropzoneHandle | null>(null);
 
   useEffect(() => {
     setAuthenticated(hasPassword());
@@ -88,6 +96,17 @@ function App() {
 
   const handleUploadError = (message: string) => {
     showToast(message, 'error');
+  };
+
+  const stats = useMemo(() => {
+    const success = uploadedFiles.filter((file) => file.status === 'success').length;
+    const errors = uploadedFiles.filter((file) => file.status === 'error').length;
+    const pending = uploadedFiles.filter((file) => file.status === 'uploading').length;
+    return { success, errors, pending };
+  }, [uploadedFiles]);
+
+  const handleOpenUpload = () => {
+    dropzoneRef.current?.openFileDialog();
   };
 
   if (!authenticated) {
@@ -158,23 +177,18 @@ function App() {
 
   return (
     <div className="min-h-screen bg-[var(--m3-surface)] text-[var(--m3-on-surface)]">
-      <header className="sticky top-0 z-20 bg-[var(--m3-surface-container)]/95 backdrop-blur">
-        <div
-          className="border-b border-[color:rgba(148,163,184,0.2)]"
+      <header className="sticky top-0 z-20 bg-[var(--m3-surface-container)]/90 backdrop-blur">
+        <div className="border-b border-[color:rgba(148,163,184,0.18)] px-4"
           style={{ boxShadow: 'var(--m3-elev-2)' }}
         >
-          <div className="mx-auto flex max-w-6xl flex-col gap-4 px-4 py-4 lg:flex-row lg:items-center lg:justify-between">
-            <div className="space-y-1">
+          <div className="mx-auto flex max-w-6xl flex-col gap-4 py-4 lg:flex-row lg:items-center lg:justify-between">
+            <div>
               <p className="text-xs uppercase tracking-[0.3em] text-[var(--m3-on-surface-variant)]">
                 ozan.cloud
               </p>
-              <h1 className="text-3xl font-semibold leading-tight text-[var(--m3-on-surface)]">
-                Dosyalarınızı ışık hızında paylaşın
+              <h1 className="text-2xl font-semibold leading-tight text-[var(--m3-on-surface)] md:text-3xl">
+                Tonal Material 3 yüzeyler ile daha rafine yükleme deneyimi
               </h1>
-              <p className="max-w-xl text-sm text-[var(--m3-on-surface-variant)]">
-                Material You ilhamlı yeni arayüzle sürükle-bırak yüklemeleri yönetin,
-                bağlantıları paylaşın ve dosyaları kolayca kontrol edin.
-              </p>
             </div>
             <nav aria-label="Ana görünüm" className="flex justify-end">
               <div className="flex gap-2 rounded-full bg-[var(--m3-surface-variant)]/60 p-1">
@@ -222,8 +236,87 @@ function App() {
 
       <main className="mx-auto max-w-6xl px-4 pb-16 pt-8 lg:pt-12">
         {currentView === 'upload' ? (
-          <div className="space-y-10">
+          <div className="space-y-12">
+            <section
+              className="grid gap-6 rounded-[var(--m3-radius-lg)] bg-gradient-to-br from-[var(--m3-primary-container)] via-[var(--m3-surface-container)] to-[color:rgba(37,99,235,0.08)] px-6 py-8 md:grid-cols-[minmax(0,1fr)_280px] md:px-10"
+              style={{ boxShadow: 'var(--m3-elev-2)' }}
+            >
+              <div className="space-y-5">
+                <div className="flex items-center gap-3 text-[var(--m3-on-primary-container)]">
+                  <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-[var(--m3-primary)] text-[var(--m3-on-primary)]">
+                    <MdAutoAwesome className="h-5 w-5" />
+                  </span>
+                  <div>
+                    <p className="text-xs uppercase tracking-[0.3em] opacity-80">Akışta kalın</p>
+                    <h2 className="text-2xl font-semibold md:text-3xl">
+                      Gelişmiş paylaşım deneyimi, tek tıkla hazır
+                    </h2>
+                  </div>
+                </div>
+                <p className="max-w-xl text-sm text-[var(--m3-on-surface-variant)]">
+                  Material 3 prensipleriyle yeniden tasarlanan yüzeyler; daha okunabilir tipografi,
+                  rafine boşluklar ve güven veren renk hiyerarşisi ile yükleme sürecinizi bir üst
+                  seviyeye taşıyor.
+                </p>
+                <div className="flex flex-wrap gap-3 text-sm font-medium">
+                  <span className="inline-flex items-center gap-2 rounded-full bg-[var(--m3-primary)]/15 px-4 py-2 text-[var(--m3-on-primary-container)]">
+                    <MdSpeed className="h-4 w-4" />
+                    Hızlı aktarım
+                  </span>
+                  <span className="inline-flex items-center gap-2 rounded-full bg-[var(--m3-secondary)]/25 px-4 py-2 text-[var(--m3-on-secondary-container)]">
+                    <MdLock className="h-4 w-4" />
+                    Parola korumalı
+                  </span>
+                  <span className="inline-flex items-center gap-2 rounded-full bg-[var(--m3-surface-variant)]/70 px-4 py-2 text-[var(--m3-on-surface-variant)]">
+                    <MdInsights className="h-4 w-4" />
+                    Anlık linkler
+                  </span>
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  <button
+                    type="button"
+                    onClick={handleOpenUpload}
+                    className="inline-flex items-center gap-2 rounded-full bg-[var(--m3-primary)] px-5 py-2.5 text-sm font-semibold text-[var(--m3-on-primary)] transition hover:bg-[#1d4ed8] focus-visible:outline-none"
+                  >
+                    <MdCloudUpload className="h-5 w-5" />
+                    Yüklemeye başla
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setCurrentView('admin')}
+                    className="inline-flex items-center gap-2 rounded-full border border-[var(--m3-primary)] px-5 py-2.5 text-sm font-semibold text-[var(--m3-primary)] transition hover:bg-[var(--m3-primary)] hover:text-[var(--m3-on-primary)] focus-visible:outline-none"
+                  >
+                    <MdSettings className="h-5 w-5" />
+                    Yönetim paneli
+                  </button>
+                </div>
+              </div>
+              <div className="grid gap-3 self-start rounded-[var(--m3-radius-lg)] bg-[var(--m3-surface)]/70 p-4 text-sm"
+                style={{ boxShadow: 'var(--m3-elev-2)' }}
+              >
+                <h3 className="text-sm font-semibold text-[var(--m3-on-surface)]">Upload içgörüleri</h3>
+                <p className="text-xs text-[var(--m3-on-surface-variant)]">
+                  Aktivite artık anlık raporlanıyor. Linkleriniz ve hatalarınız tek bakışta.
+                </p>
+                <dl className="grid gap-3">
+                  <div className="flex items-center justify-between rounded-[var(--m3-radius-md)] bg-[var(--m3-primary-container)]/50 px-3 py-2">
+                    <dt className="text-xs uppercase tracking-[0.2em] text-[var(--m3-on-primary-container)]">Başarılı</dt>
+                    <dd className="text-lg font-semibold text-[var(--m3-on-primary-container)]">{stats.success}</dd>
+                  </div>
+                  <div className="flex items-center justify-between rounded-[var(--m3-radius-md)] bg-[var(--m3-surface-variant)]/80 px-3 py-2">
+                    <dt className="text-xs uppercase tracking-[0.2em] text-[var(--m3-on-surface-variant)]">Bekleyen</dt>
+                    <dd className="text-lg font-semibold text-[var(--m3-on-surface-variant)]">{stats.pending}</dd>
+                  </div>
+                  <div className="flex items-center justify-between rounded-[var(--m3-radius-md)] bg-[var(--m3-error-container)]/70 px-3 py-2">
+                    <dt className="text-xs uppercase tracking-[0.2em] text-[var(--m3-on-error-container)]">Hata</dt>
+                    <dd className="text-lg font-semibold text-[var(--m3-on-error-container)]">{stats.errors}</dd>
+                  </div>
+                </dl>
+              </div>
+            </section>
+
             <Dropzone
+              ref={dropzoneRef}
               onFilesUploaded={handleFilesUploaded}
               onError={handleUploadError}
             />
