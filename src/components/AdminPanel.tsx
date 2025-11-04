@@ -1,5 +1,4 @@
 import { useState, useEffect, useMemo } from 'react';
-import type { ReactNode } from 'react';
 import { getAuthHeaders } from '../lib/auth';
 import { formatBytes } from '../lib/utils';
 import { copyToClipboard } from '../lib/copy';
@@ -21,8 +20,6 @@ import {
   MdViewModule,
   MdSearch,
   MdShield,
-  MdFlashOn,
-  MdTimeline,
 } from 'react-icons/md';
 
 interface FileItem {
@@ -162,109 +159,70 @@ export default function AdminPanel({ onBackToUpload }: AdminPanelProps) {
     });
   }, [files, searchTerm, showShortLinksOnly]);
 
-  const SectionTitle = ({
-    icon,
-    title,
-    description,
-  }: {
-    icon: ReactNode;
-    title: string;
-    description: string;
-  }) => (
-    <div className="flex items-start gap-3">
-      <span className="inline-flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-[var(--m3-primary)]/10 text-[var(--m3-primary)]">
-        {icon}
-      </span>
-      <div>
-        <h3 className="text-base font-semibold text-[var(--m3-on-surface)]">{title}</h3>
-        <p className="text-sm text-[var(--m3-on-surface-variant)]">{description}</p>
-      </div>
-    </div>
-  );
-
   return (
     <div className="space-y-10 text-[var(--m3-on-surface)]">
       <section
-        className="grid gap-6 rounded-[var(--m3-radius-lg)] bg-gradient-to-br from-[var(--m3-surface-container)] via-[var(--m3-surface)] to-[color:rgba(148,163,184,0.15)] px-6 py-8 shadow-lg md:grid-cols-3 md:px-10"
+        className="rounded-[var(--m3-radius-lg)] bg-gradient-to-br from-[var(--m3-primary-container)] via-[var(--m3-surface-container)] to-[var(--m3-surface-container-high)] px-6 py-8 md:px-10"
         style={{ boxShadow: 'var(--m3-elev-2)' }}
       >
-        <div className="md:col-span-2 md:pr-6">
-          <p className="text-xs uppercase tracking-[0.3em] text-[var(--m3-on-surface-variant)]">
-            yönetim alanı
-          </p>
-          <h2 className="mt-2 text-3xl font-semibold text-[var(--m3-on-surface)]">
-            Dosyalarınızı kurumsal düzeyde yönetin
-          </h2>
-          <p className="mt-4 max-w-xl text-sm text-[var(--m3-on-surface-variant)]">
-            Analitikle, gelişmiş filtrelerle ve sezgisel aksiyonlarla güncellenen panel; paylaşılan
-            varlıklarınızı düzenli ve güvenli tutmanıza yardımcı olur. Bağlantıları yönetin,
-            kilitlenmiş dosyaları takip edin ve operasyonu hızlandırın.
-          </p>
-          <div className="mt-6 flex flex-wrap gap-3">
-            <button
-              type="button"
-              onClick={onBackToUpload}
-              className="inline-flex items-center gap-2 rounded-full bg-[var(--m3-primary)] px-5 py-2.5 text-sm font-semibold text-[var(--m3-on-primary)] transition hover:bg-[#1d4ed8] focus-visible:outline-none"
-            >
-              <MdArrowBack className="h-5 w-5" />
-              Yüklemeye dön
-            </button>
-            <button
-              type="button"
-              onClick={loadFiles}
-              disabled={loading}
-              className="inline-flex items-center gap-2 rounded-full border border-[var(--m3-primary)] px-5 py-2.5 text-sm font-semibold text-[var(--m3-primary)] transition hover:bg-[var(--m3-primary)] hover:text-[var(--m3-on-primary)] focus-visible:outline-none disabled:cursor-not-allowed disabled:text-[var(--m3-primary)]/60 disabled:hover:bg-transparent"
-            >
-              <MdFlashOn className="h-5 w-5" />
-              {loading ? 'Yükleniyor...' : 'Verileri yenile'}
-            </button>
+        <div className="flex items-start justify-between gap-6">
+          <div className="space-y-5">
+            <div className="flex items-center gap-3 text-[var(--m3-on-primary-container)]">
+              <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-[var(--m3-primary)] text-[var(--m3-on-primary)]">
+                <MdShield className="h-5 w-5" />
+              </span>
+              <div>
+                <p className="text-xs uppercase tracking-[0.3em] opacity-80">Yönetim alanı</p>
+                <h2 className="text-2xl font-semibold md:text-3xl">
+                  Dosyalarınızı yönetin
+                </h2>
+              </div>
+            </div>
+            <p className="max-w-xl text-sm text-[var(--m3-on-surface-variant)]">
+              Tüm yüklenen dosyalarınızı görüntüleyin, paylaşın ve yönetin. Bağlantıları kopyalayın,
+              dosyaları önizleyin veya silin.
+            </p>
+            <div className="flex flex-wrap gap-3">
+              <button
+                type="button"
+                onClick={onBackToUpload}
+                className="inline-flex items-center gap-2 rounded-full border border-[var(--m3-primary)] px-5 py-2.5 text-sm font-semibold text-[var(--m3-primary)] transition hover:bg-[var(--m3-primary)] hover:text-[var(--m3-on-primary)] focus-visible:outline-none"
+              >
+                <MdArrowBack className="h-5 w-5" />
+                Yüklemeye dön
+              </button>
+            </div>
           </div>
-        </div>
-
-        <div className="grid gap-4 self-start rounded-[var(--m3-radius-lg)] bg-[var(--m3-surface-container)]/80 p-4"
-          style={{ boxShadow: 'var(--m3-elev-2)' }}
-        >
-          <SectionTitle
-            icon={<MdTimeline className="h-5 w-5" />}
-            title="Upload panoraması"
-            description="Panel kenarında öne çıkan göstergeler."
-          />
-          <dl className="grid gap-3 text-sm">
-            <div className="flex items-center justify-between rounded-[var(--m3-radius-md)] bg-[var(--m3-primary-container)]/40 px-4 py-2">
-              <dt className="text-xs uppercase tracking-[0.2em] text-[var(--m3-on-primary-container)]">
-                Toplam dosya
-              </dt>
-              <dd className="text-lg font-semibold text-[var(--m3-on-primary-container)]">
-                {summaries.totalFiles}
-              </dd>
-            </div>
-            <div className="flex items-center justify-between rounded-[var(--m3-radius-md)] bg-[var(--m3-secondary-container)]/40 px-4 py-2">
-              <dt className="text-xs uppercase tracking-[0.2em] text-[var(--m3-on-secondary-container)]">
-                Toplam boyut
-              </dt>
-              <dd className="text-lg font-semibold text-[var(--m3-on-secondary-container)]">
-                {formatBytes(summaries.totalSize)}
-              </dd>
-            </div>
-            <div className="flex items-center justify-between rounded-[var(--m3-radius-md)] bg-[var(--m3-surface-variant)]/60 px-4 py-2">
-              <dt className="text-xs uppercase tracking-[0.2em] text-[var(--m3-on-surface-variant)]">
-                En son yükleme
-              </dt>
-              <dd className="text-right text-sm font-medium text-[var(--m3-on-surface)]">
-                {summaries.lastUpload
-                  ? new Date(summaries.lastUpload).toLocaleString()
-                  : 'Kayıt yok'}
-              </dd>
-            </div>
-            <div className="flex items-center justify-between rounded-[var(--m3-radius-md)] bg-[var(--m3-error-container)]/50 px-4 py-2">
-              <dt className="text-xs uppercase tracking-[0.2em] text-[var(--m3-on-error-container)]">
-                Kısa bağlantılar
-              </dt>
-              <dd className="text-lg font-semibold text-[var(--m3-on-error-container)]">
-                {summaries.withShortLink}
-              </dd>
-            </div>
-          </dl>
+          <div className="grid gap-3 self-start rounded-[var(--m3-radius-lg)] bg-white p-4"
+            style={{ boxShadow: 'var(--m3-elev-2)' }}
+          >
+            <dl className="grid gap-2 text-sm">
+              <div className="flex items-center justify-between rounded-[var(--m3-radius-md)] bg-[var(--m3-primary-container)] px-4 py-2">
+                <dt className="text-xs uppercase tracking-[0.2em] text-[var(--m3-on-primary-container)]">
+                  Dosya
+                </dt>
+                <dd className="text-lg font-semibold text-[var(--m3-on-primary-container)]">
+                  {summaries.totalFiles}
+                </dd>
+              </div>
+              <div className="flex items-center justify-between rounded-[var(--m3-radius-md)] bg-[var(--m3-secondary-container)] px-4 py-2">
+                <dt className="text-xs uppercase tracking-[0.2em] text-[var(--m3-on-secondary-container)]">
+                  Boyut
+                </dt>
+                <dd className="text-lg font-semibold text-[var(--m3-on-secondary-container)]">
+                  {formatBytes(summaries.totalSize)}
+                </dd>
+              </div>
+              <div className="flex items-center justify-between rounded-[var(--m3-radius-md)] bg-[var(--m3-primary-container)] px-4 py-2">
+                <dt className="text-xs uppercase tracking-[0.2em] text-[var(--m3-on-primary-container)]">
+                  Kısa URL
+                </dt>
+                <dd className="text-lg font-semibold text-[var(--m3-on-primary-container)]">
+                  {summaries.withShortLink}
+                </dd>
+              </div>
+            </dl>
+          </div>
         </div>
       </section>
 
@@ -298,62 +256,55 @@ export default function AdminPanel({ onBackToUpload }: AdminPanelProps) {
       ) : (
         <section className="space-y-6">
           <div
-            className="flex flex-col gap-4 rounded-[var(--m3-radius-lg)] border border-[color:rgba(148,163,184,0.15)] bg-[var(--m3-surface)]/70 p-4 md:flex-row md:items-center md:justify-between md:p-6"
-            style={{ boxShadow: 'var(--m3-elev-1)' }}
+            className="flex flex-col gap-4 rounded-[var(--m3-radius-lg)] bg-white p-4 md:flex-row md:items-center md:justify-between md:p-6"
+            style={{ boxShadow: 'var(--m3-elev-2)' }}
           >
-            <SectionTitle
-              icon={<MdShield className="h-5 w-5" />}
-              title="Filtrele ve bul"
-              description="Dosyalarınızı hızlıca süzün, paylaşım durumunu takip edin."
-            />
-            <div className="flex flex-col gap-3 md:flex-row md:items-center">
-              <div className="relative flex-1">
-                <MdSearch className="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-[var(--m3-on-surface-variant)]/70" />
-                <input
-                  type="search"
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  placeholder="Dosya ismi veya slug ara"
-                  className="w-full rounded-full border border-transparent bg-[var(--m3-surface-variant)]/60 px-10 py-2 text-sm text-[var(--m3-on-surface)] shadow-inner focus:border-[var(--m3-primary)] focus:ring-2 focus:ring-[var(--m3-primary)]/30"
-                />
-              </div>
-              <div className="flex items-center gap-2">
+            <div className="relative flex-1">
+              <MdSearch className="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-[var(--m3-on-surface-variant)]/70" />
+              <input
+                type="search"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                placeholder="Dosya ismi veya slug ara"
+                className="w-full rounded-full border border-[var(--m3-outline)]/30 bg-[var(--m3-surface-variant)]/60 px-10 py-2.5 text-sm text-[var(--m3-on-surface)] focus:border-[var(--m3-primary)] focus:ring-2 focus:ring-[var(--m3-primary)]/30 focus-visible:outline-none"
+              />
+            </div>
+            <div className="flex items-center gap-2">
+              <button
+                type="button"
+                onClick={() => setShowShortLinksOnly((prev) => !prev)}
+                className={`inline-flex items-center gap-2 rounded-full border px-4 py-2 text-xs font-semibold transition ${
+                  showShortLinksOnly
+                    ? 'border-[var(--m3-primary)] bg-[var(--m3-primary)] text-[var(--m3-on-primary)]'
+                    : 'border-[var(--m3-outline)]/30 text-[var(--m3-on-surface-variant)] hover:border-[var(--m3-primary)] hover:text-[var(--m3-primary)]'
+                }`}
+              >
+                <MdLink className="h-4 w-4" />
+                Kısa URL olanlar
+              </button>
+              <div className="flex rounded-full bg-[var(--m3-surface-variant)]/80 p-1">
                 <button
                   type="button"
-                  onClick={() => setShowShortLinksOnly((prev) => !prev)}
-                  className={`inline-flex items-center gap-2 rounded-full border px-4 py-2 text-xs font-semibold transition ${
-                    showShortLinksOnly
-                      ? 'border-[var(--m3-primary)] bg-[var(--m3-primary)] text-[var(--m3-on-primary)]'
-                      : 'border-[color:rgba(148,163,184,0.3)] text-[var(--m3-on-surface-variant)] hover:border-[var(--m3-primary)] hover:text-[var(--m3-primary)]'
+                  onClick={() => setViewMode('grid')}
+                  className={`inline-flex items-center gap-1 rounded-full px-3 py-1.5 text-xs font-semibold transition ${
+                    viewMode === 'grid'
+                      ? 'bg-[var(--m3-primary)] text-[var(--m3-on-primary)]'
+                      : 'text-[var(--m3-on-surface-variant)] hover:text-[var(--m3-primary)]'
                   }`}
                 >
-                  <MdLink className="h-4 w-4" />
-                  Kısa URL olanlar
+                  <MdViewModule className="h-4 w-4" /> Kart
                 </button>
-                <div className="flex rounded-full bg-[var(--m3-surface-variant)]/80 p-1">
-                  <button
-                    type="button"
-                    onClick={() => setViewMode('grid')}
-                    className={`inline-flex items-center gap-1 rounded-full px-3 py-1.5 text-xs font-semibold transition ${
-                      viewMode === 'grid'
-                        ? 'bg-[var(--m3-primary)] text-[var(--m3-on-primary)]'
-                        : 'text-[var(--m3-on-surface-variant)] hover:text-[var(--m3-primary)]'
-                    }`}
-                  >
-                    <MdViewModule className="h-4 w-4" /> Kart
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setViewMode('list')}
-                    className={`inline-flex items-center gap-1 rounded-full px-3 py-1.5 text-xs font-semibold transition ${
-                      viewMode === 'list'
-                        ? 'bg-[var(--m3-primary)] text-[var(--m3-on-primary)]'
-                        : 'text-[var(--m3-on-surface-variant)] hover:text-[var(--m3-primary)]'
-                    }`}
-                  >
-                    <MdViewAgenda className="h-4 w-4" /> Liste
-                  </button>
-                </div>
+                <button
+                  type="button"
+                  onClick={() => setViewMode('list')}
+                  className={`inline-flex items-center gap-1 rounded-full px-3 py-1.5 text-xs font-semibold transition ${
+                    viewMode === 'list'
+                      ? 'bg-[var(--m3-primary)] text-[var(--m3-on-primary)]'
+                      : 'text-[var(--m3-on-surface-variant)] hover:text-[var(--m3-primary)]'
+                  }`}
+                >
+                  <MdViewAgenda className="h-4 w-4" /> Liste
+                </button>
               </div>
             </div>
           </div>

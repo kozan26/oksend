@@ -208,7 +208,7 @@ function App() {
                     Anlık linkler
                   </span>
                 </div>
-                <div className="flex flex-wrap gap-2">
+                <div className="flex flex-wrap gap-2 justify-center">
                   <button
                     type="button"
                     onClick={() => setCurrentView('admin')}
