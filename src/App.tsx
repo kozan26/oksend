@@ -37,7 +37,7 @@ function App() {
   const handlePasswordSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!password.trim()) {
-      setPasswordError('Password is required');
+      setPasswordError('Parola gerekli');
       return;
     }
 
@@ -54,7 +54,7 @@ function App() {
 
       if (!response.ok) {
         const errorData = await response.json().catch(() => ({}));
-        setPasswordError(errorData.reason || errorData.error || 'Invalid password');
+        setPasswordError(errorData.reason || errorData.error || 'Geçersiz parola');
         return;
       }
 
@@ -62,9 +62,9 @@ function App() {
       setPassword(password);
       setAuthenticated(true);
       setPasswordError('');
-      showToast('Authenticated successfully', 'success');
+      showToast('Başarıyla doğrulandı', 'success');
     } catch (error) {
-      setPasswordError('Failed to verify password. Please try again.');
+      setPasswordError('Parola doğrulanamadı. Lütfen tekrar deneyin.');
     } finally {
       setValidating(false);
     }
@@ -101,7 +101,7 @@ function App() {
                 htmlFor="password"
                 className="block text-sm font-medium text-gray-700 mb-2"
               >
-                Enter Password
+                Parolayı Gir
               </label>
               <input
                 type="password"
@@ -112,7 +112,7 @@ function App() {
                   setPasswordError('');
                 }}
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                placeholder="Upload password"
+                placeholder="Yükleme parolası"
                 autoFocus
               />
               {passwordError && (
@@ -127,10 +127,10 @@ function App() {
               {validating ? (
                 <>
                   <div className="animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent"></div>
-                  Validating...
+                  Doğrulanıyor...
                 </>
               ) : (
-                'Authenticate'
+                'Doğrula'
               )}
             </button>
           </form>
@@ -149,7 +149,7 @@ function App() {
                 ozan.cloud
               </h1>
               <p className="text-sm text-gray-600 mt-1">
-                Simple drag-and-drop file sharing
+                Sürükle-bırak ile basit dosya paylaşımı
               </p>
             </div>
             <nav className="flex gap-2">
@@ -166,7 +166,7 @@ function App() {
                 }`}
               >
                 <MdCloudUpload className="w-5 h-5" />
-                Upload
+                Yükle
               </button>
               <button
                 type="button"
@@ -181,7 +181,7 @@ function App() {
                 }`}
               >
                 <MdSettings className="w-5 h-5" />
-                Admin
+                Yönetim
               </button>
             </nav>
           </div>
@@ -201,7 +201,7 @@ function App() {
                 <div className="bg-white rounded-xl shadow-lg overflow-hidden">
                   <div className="bg-gradient-to-r from-blue-500 to-purple-600 px-6 py-4">
                     <h2 className="text-xl font-bold text-white">
-                      Recently Uploaded ({uploadedFiles.length})
+                      Son Yüklenenler ({uploadedFiles.length})
                     </h2>
                   </div>
                   <div className="divide-y divide-gray-200">

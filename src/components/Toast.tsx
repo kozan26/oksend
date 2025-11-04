@@ -27,7 +27,7 @@ export default function Toast({ toasts, onRemove }: ToastProps) {
           <button
             onClick={() => onRemove(toast.id)}
             className="ml-4 text-gray-400 hover:text-gray-600"
-            aria-label="Close"
+            aria-label="Kapat"
           >
             <svg
               className="w-5 h-5"

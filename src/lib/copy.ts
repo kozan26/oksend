@@ -26,7 +26,7 @@ export async function copyToClipboard(text: string): Promise<boolean> {
       }
     }
   } catch (err) {
-    console.error('Failed to copy to clipboard:', err);
+    console.error('Panoya kopyalama başarısız:', err);
     return false;
   }
 }

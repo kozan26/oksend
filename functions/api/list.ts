@@ -38,7 +38,7 @@ export const onRequestGet = async (context: PagesFunctionContext<Env>) => {
   // Validate authentication
   if (!validateAuth(request, env)) {
     return new Response(
-      JSON.stringify({ error: 'Unauthorized' }),
+      JSON.stringify({ error: 'Yetkisiz erişim' }),
       {
         status: 401,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
@@ -67,7 +67,7 @@ export const onRequestGet = async (context: PagesFunctionContext<Env>) => {
         obj.httpMetadata?.contentType || 'application/octet-stream',
       lastModified: obj.uploaded.toISOString(),
       url: baseUrl ? `${baseUrl}/d/${obj.key}` : `/d/${obj.key}`,
-      originalFilename: obj.customMetadata?.originalFilename || obj.key.split('/').pop() || 'file',
+      originalFilename: obj.customMetadata?.originalFilename || obj.key.split('/').pop() || 'dosya',
     }));
 
     // Sort by lastModified (newest first)
@@ -83,11 +83,11 @@ export const onRequestGet = async (context: PagesFunctionContext<Env>) => {
       }
     );
   } catch (error) {
-    console.error('List error:', error);
+    console.error('Listeleme hatası:', error);
     return new Response(
       JSON.stringify({
-        error: 'Failed to list files',
-        details: error instanceof Error ? error.message : 'Unknown error',
+        error: 'Dosyalar listelenemedi',
+        details: error instanceof Error ? error.message : 'Bilinmeyen hata',
       }),
       {
         status: 500,

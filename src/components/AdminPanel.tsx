@@ -55,20 +55,20 @@ export default function AdminPanel() {
 
       if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(errorData.reason || 'Failed to load files');
+        throw new Error(errorData.reason || 'Dosyalar yüklenemedi');
       }
 
       const data = await response.json();
       setFiles(data.items || []);
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to load files');
+      setError(err instanceof Error ? err.message : 'Dosyalar yüklenemedi');
     } finally {
       setLoading(false);
     }
   };
 
   const handleDeleteFile = async (key: string) => {
-    if (!confirm(`Are you sure you want to delete this file?\n\n${key}`)) {
+    if (!confirm(`Bu dosyayı silmek istediğinize emin misiniz?\n\n${key}`)) {
       return;
     }
 
@@ -86,13 +86,13 @@ export default function AdminPanel() {
 
       if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(errorData.error || 'Failed to delete file');
+        throw new Error(errorData.error || 'Dosya silinemedi');
       }
 
       // Remove from local state
       setFiles((prev) => prev.filter((f) => f.key !== key));
     } catch (err) {
-      alert(err instanceof Error ? err.message : 'Failed to delete file');
+      alert(err instanceof Error ? err.message : 'Dosya silinemedi');
     } finally {
       setDeleting(null);
     }
@@ -128,8 +128,8 @@ export default function AdminPanel() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-2xl font-bold text-gray-900">Admin Panel</h2>
-          <p className="text-sm text-gray-600 mt-1">Manage uploaded files</p>
+          <h2 className="text-2xl font-bold text-gray-900">Yönetim Paneli</h2>
+          <p className="text-sm text-gray-600 mt-1">Yüklenen dosyaları yönetin</p>
         </div>
         <button
           onClick={loadFiles}
@@ -139,7 +139,7 @@ export default function AdminPanel() {
           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
           </svg>
-          {loading ? 'Loading...' : 'Refresh'}
+          {loading ? 'Yükleniyor...' : 'Yenile'}
         </button>
       </div>
 
@@ -152,11 +152,11 @@ export default function AdminPanel() {
       {loading && files.length === 0 ? (
         <div className="text-center py-12">
           <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
-          <p className="mt-4 text-gray-600">Loading files...</p>
+          <p className="mt-4 text-gray-600">Dosyalar yükleniyor...</p>
         </div>
       ) : files.length === 0 ? (
         <div className="text-center py-12 bg-gray-50 rounded-lg">
-          <p className="text-gray-600">No files uploaded yet</p>
+          <p className="text-gray-600">Henüz dosya yüklenmedi</p>
         </div>
       ) : (
         <div className="bg-white rounded-lg shadow overflow-hidden">
@@ -165,19 +165,19 @@ export default function AdminPanel() {
               <thead className="bg-gray-50">
                 <tr>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    File
+                    Dosya
                   </th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Size
+                    Boyut
                   </th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Type
+                    Tür
                   </th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Uploaded
+                    Yüklenme Tarihi
                   </th>
                   <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Actions
+                    İşlemler
                   </th>
                 </tr>
               </thead>
@@ -192,7 +192,11 @@ export default function AdminPanel() {
                             {file.filename}
                           </p>
                           <p className="text-xs text-gray-500 truncate max-w-xs font-mono">
-                            {file.key}
+                            {file.shortUrl 
+                              ? (file.shortUrl.startsWith('http') ? file.shortUrl : window.location.origin + file.shortUrl)
+                              : file.url.startsWith('http') 
+                                ? file.url 
+                                : window.location.origin + file.url}
                           </p>
                         </div>
                       </div>
@@ -208,21 +212,21 @@ export default function AdminPanel() {
                         ? new Date(file.uploaded).toLocaleDateString() +
                           ' ' +
                           new Date(file.uploaded).toLocaleTimeString()
-                        : 'Unknown'}
+                        : 'Bilinmiyor'}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium space-x-2">
                       <button
                         onClick={() => handleCopyUrl(file)}
                         className="text-blue-600 hover:text-blue-900 px-3 py-1 rounded hover:bg-blue-50 transition-colors flex items-center gap-1"
-                        title={file.shortUrl ? "Copy short URL" : "Copy URL"}
+                        title={file.shortUrl ? 'Kısa URL\'i kopyala' : 'URL\'i kopyala'}
                       >
                         {copiedKey === file.key ? (
                           <>
-                            <MdCheckCircle className="w-4 h-4" /> Copied
+                            <MdCheckCircle className="w-4 h-4" /> Kopyalandı
                           </>
                         ) : (
                           <>
-                            <MdLink className="w-4 h-4" /> {file.shortUrl ? "Copy Short URL" : "Copy URL"}
+                            <MdLink className="w-4 h-4" /> {file.shortUrl ? 'Kısa URL\'i kopyala' : 'URL\'i kopyala'}
                           </>
                         )}
                       </button>
@@ -231,18 +235,18 @@ export default function AdminPanel() {
                         target="_blank"
                         rel="noopener noreferrer"
                         className="text-green-600 hover:text-green-900 px-3 py-1 rounded hover:bg-green-50 transition-colors inline-block"
-                        title={file.shortUrl ? "Open short URL" : "Open file"}
+                        title={file.shortUrl ? 'Kısa URL\'i aç' : 'Dosyayı aç'}
                       >
-                        Open
+                        Aç
                       </a>
                       <button
                         onClick={() => handleDeleteFile(file.key)}
                         disabled={deleting === file.key}
                         className="text-red-600 hover:text-red-900 px-3 py-1 rounded hover:bg-red-50 disabled:opacity-50 transition-colors flex items-center gap-1"
-                        title="Delete file"
+                        title="Dosyayı sil"
                       >
                         <MdDelete className="w-4 h-4" />
-                        {deleting === file.key ? 'Deleting...' : 'Delete'}
+                        {deleting === file.key ? 'Siliniyor...' : 'Sil'}
                       </button>
                     </td>
                   </tr>
@@ -252,7 +256,7 @@ export default function AdminPanel() {
           </div>
           <div className="bg-gray-50 px-6 py-3 border-t border-gray-200">
             <p className="text-sm text-gray-600">
-              Total: <strong>{files.length}</strong> file{files.length !== 1 ? 's' : ''}
+              Toplam: <strong>{files.length}</strong> dosya
             </p>
           </div>
         </div>

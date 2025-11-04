@@ -45,16 +45,16 @@ export default function FileRow({ file, baseUrl }: FileRowProps) {
               {file.filename}
             </p>
             {file.status === 'uploading' && (
-              <span className="text-xs text-blue-600">Uploading...</span>
+              <span className="text-xs text-blue-600">Yükleniyor...</span>
             )}
             {file.status === 'success' && (
               <span className="text-xs text-green-600 flex items-center gap-1">
-                <MdCheckCircle className="w-3 h-3" /> Uploaded
+                <MdCheckCircle className="w-3 h-3" /> Yüklendi
               </span>
             )}
             {file.status === 'error' && (
               <span className="text-xs text-red-600 flex items-center gap-1">
-                <MdError className="w-3 h-3" /> Failed
+                <MdError className="w-3 h-3" /> Hata
               </span>
             )}
           </div>
@@ -78,12 +78,12 @@ export default function FileRow({ file, baseUrl }: FileRowProps) {
                   onClick={handleCopyLink}
                   className="px-3 py-1 text-xs bg-blue-600 text-white rounded hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 >
-                  {copied ? 'Copied!' : 'Copy'}
+                  {copied ? 'Kopyalandı!' : 'Kopyala'}
                 </button>
               </div>
               {file.shortUrl && file.fullUrl && (
                 <p className="text-xs text-gray-500">
-                  Short link: <span className="font-mono">{file.shortUrl.replace(window.location.origin, '')}</span>
+                  Kısa bağlantı: <span className="font-mono">{file.shortUrl.replace(window.location.origin, '')}</span>
                 </p>
               )}
             </div>
@@ -96,7 +96,7 @@ export default function FileRow({ file, baseUrl }: FileRowProps) {
             rel="noopener noreferrer"
             className="ml-4 text-blue-600 hover:text-blue-800 text-sm font-medium"
           >
-            Open
+            Aç
           </a>
         )}
       </div>

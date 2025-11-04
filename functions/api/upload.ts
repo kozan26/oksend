@@ -39,7 +39,7 @@ async function verifyTurnstile(
     const result = await response.json<{ success: boolean }>();
     return result.success === true;
   } catch (error) {
-    console.error('Turnstile verification error:', error);
+    console.error('Turnstile doğrulama hatası:', error);
     return false;
   }
 }
@@ -50,13 +50,13 @@ async function verifyTurnstile(
 function validateAuth(request: Request, env: Env): { valid: boolean; reason?: string } {
   const authHeader = request.headers.get('X-Auth');
   if (!env.UPLOAD_PASSWORD) {
-    return { valid: false, reason: 'UPLOAD_PASSWORD environment variable not set' };
+    return { valid: false, reason: 'UPLOAD_PASSWORD ortam değişkeni ayarlanmamış' };
   }
   if (!authHeader) {
-    return { valid: false, reason: 'X-Auth header missing' };
+    return { valid: false, reason: 'X-Auth başlığı eksik' };
   }
   if (authHeader !== env.UPLOAD_PASSWORD) {
-    return { valid: false, reason: 'Password mismatch' };
+    return { valid: false, reason: 'Parola eşleşmiyor' };
   }
   return { valid: true };
 }
@@ -83,7 +83,7 @@ function validateSize(
   if (sizeBytes > maxBytes) {
     return {
       valid: false,
-      error: `File size exceeds maximum of ${maxSizeMB}MB`,
+      error: `Dosya boyutu en fazla ${maxSizeMB}MB olabilir`,
     };
   }
 
@@ -103,7 +103,7 @@ function validateMimeType(
     if (blocked.some((blockedType) => mimeType.includes(blockedType))) {
       return {
         valid: false,
-        error: `File type ${mimeType} is blocked`,
+        error: `Dosya türü ${mimeType} engellendi`,
       };
     }
   }
@@ -114,7 +114,7 @@ function validateMimeType(
     if (!allowed.some((allowedType) => mimeType.includes(allowedType))) {
       return {
         valid: false,
-        error: `File type ${mimeType} is not allowed`,
+        error: `Dosya türü ${mimeType} izin verilenler arasında değil`,
       };
     }
   }
@@ -162,11 +162,11 @@ export const onRequestPost = async (
   // Validate authentication
   const authResult = validateAuth(request, env);
   if (!authResult.valid) {
-    console.error('Authentication failed:', authResult.reason);
+    console.error('Kimlik doğrulama başarısız:', authResult.reason);
     return new Response(
       JSON.stringify({ 
-        error: 'Unauthorized',
-        reason: authResult.reason || 'Authentication failed'
+        error: 'Yetkisiz erişim',
+        reason: authResult.reason || 'Kimlik doğrulama başarısız'
       }),
       {
         status: 401,
@@ -184,7 +184,7 @@ export const onRequestPost = async (
     
     if (!turnstileToken) {
       return new Response(
-        JSON.stringify({ error: 'Turnstile verification required' }),
+        JSON.stringify({ error: 'Turnstile doğrulaması gerekli' }),
         {
           status: 400,
           headers: { ...corsHeaders, 'Content-Type': 'application/json' },
@@ -201,7 +201,7 @@ export const onRequestPost = async (
 
     if (!isValid) {
       return new Response(
-        JSON.stringify({ error: 'Turnstile verification failed' }),
+        JSON.stringify({ error: 'Turnstile doğrulaması başarısız oldu' }),
         {
           status: 400,
           headers: { ...corsHeaders, 'Content-Type': 'application/json' },
@@ -215,7 +215,7 @@ export const onRequestPost = async (
 
   if (!file) {
     return new Response(
-      JSON.stringify({ error: 'No file provided' }),
+      JSON.stringify({ error: 'Dosya gönderilmedi' }),
       {
         status: 400,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
@@ -264,7 +264,7 @@ export const onRequestPost = async (
     
     if (arrayBuffer.byteLength > maxBytes) {
       return new Response(
-        JSON.stringify({ error: `File size exceeds maximum of ${maxSizeMB}MB` }),
+        JSON.stringify({ error: `Dosya boyutu en fazla ${maxSizeMB}MB olabilir` }),
         {
           status: 400,
           headers: { ...corsHeaders, 'Content-Type': 'application/json' },
@@ -312,7 +312,7 @@ export const onRequestPost = async (
           shortUrl = baseUrl ? `${baseUrl}/s/${generatedSlug}` : `/s/${generatedSlug}`;
         }
       } catch (error) {
-        console.error('Failed to generate short URL:', error);
+        console.error('Kısa URL oluşturulamadı:', error);
         // Continue without short URL if generation fails
       }
     }
@@ -349,11 +349,11 @@ export const onRequestPost = async (
       }
     );
   } catch (error) {
-    console.error('Upload error:', error);
+    console.error('Yükleme hatası:', error);
     return new Response(
       JSON.stringify({
-        error: 'Failed to upload file',
-        details: error instanceof Error ? error.message : 'Unknown error',
+        error: 'Dosya yüklenemedi',
+        details: error instanceof Error ? error.message : 'Bilinmeyen hata',
       }),
       {
         status: 500,

@@ -65,7 +65,7 @@ export default function Dropzone({ onFilesUploaded, onError }: DropzoneProps) {
           uploadedFiles.push(result);
         } catch (error) {
           const errorMessage =
-            error instanceof Error ? error.message : 'Upload failed';
+            error instanceof Error ? error.message : 'Yükleme başarısız oldu';
           uploadedFiles.push({
             key: '',
             filename: file.name,
@@ -75,7 +75,7 @@ export default function Dropzone({ onFilesUploaded, onError }: DropzoneProps) {
             status: 'error',
             error: errorMessage,
           });
-          onError(`Failed to upload ${file.name}: ${errorMessage}`);
+          onError(`${file.name} yüklenemedi: ${errorMessage}`);
         }
       }
 
@@ -105,10 +105,10 @@ export default function Dropzone({ onFilesUploaded, onError }: DropzoneProps) {
               progress: 100,
             });
           } catch (error) {
-            reject(new Error('Invalid response from server'));
+            reject(new Error('Sunucudan geçersiz yanıt alındı'));
           }
         } else {
-          let errorMessage = xhr.responseText || `Upload failed: ${xhr.statusText}`;
+          let errorMessage = xhr.responseText || `Yükleme başarısız: ${xhr.statusText}`;
           try {
             const errorJson = JSON.parse(xhr.responseText);
             if (errorJson.reason) {
@@ -124,11 +124,11 @@ export default function Dropzone({ onFilesUploaded, onError }: DropzoneProps) {
       });
 
       xhr.addEventListener('error', () => {
-        reject(new Error('Network error during upload'));
+        reject(new Error('Yükleme sırasında ağ hatası oluştu'));
       });
 
       xhr.addEventListener('abort', () => {
-        reject(new Error('Upload aborted'));
+        reject(new Error('Yükleme iptal edildi'));
       });
 
       xhr.open('POST', '/api/upload');
@@ -191,16 +191,16 @@ export default function Dropzone({ onFilesUploaded, onError }: DropzoneProps) {
             </div>
           )}
           <h3 className="text-2xl font-bold text-gray-900 mb-2">
-            {uploading ? 'Uploading files...' : isDragging ? 'Drop files here' : 'Upload Files'}
+            {uploading ? 'Dosyalar yükleniyor...' : isDragging ? 'Dosyaları buraya bırakın' : 'Dosya Yükle'}
           </h3>
           <p className="text-base text-gray-600 mb-1">
             {uploading 
-              ? 'Please wait while your files are being uploaded'
-              : 'Drag and drop your files here, or click to browse'}
+              ? 'Dosyalarınız yüklenirken lütfen bekleyin'
+              : 'Dosyalarınızı buraya sürükleyip bırakın ya da gözatmak için tıklayın'}
           </p>
           {!uploading && (
             <p className="text-sm text-gray-500 mt-2">
-              Supports multiple files • No file size limit
+              Birden fazla dosya desteklenir • Dosya boyutu sınırı yok
             </p>
           )}
         </label>
@@ -208,7 +208,7 @@ export default function Dropzone({ onFilesUploaded, onError }: DropzoneProps) {
           <div className="absolute inset-0 flex items-center justify-center bg-white bg-opacity-80 rounded-xl">
             <div className="text-center">
               <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mb-2"></div>
-              <p className="text-sm text-gray-600">Processing...</p>
+              <p className="text-sm text-gray-600">İşleniyor...</p>
             </div>
           </div>
         )}

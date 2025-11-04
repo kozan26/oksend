@@ -37,7 +37,7 @@ export const onRequestPost = async (context: PagesFunctionContext<Env>) => {
   // Validate authentication
   if (!validateAuth(request, env)) {
     return new Response(
-      JSON.stringify({ error: 'Unauthorized' }),
+      JSON.stringify({ error: 'Yetkisiz erişim' }),
       {
         status: 401,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
@@ -51,7 +51,7 @@ export const onRequestPost = async (context: PagesFunctionContext<Env>) => {
 
     if (!body || !body.key) {
       return new Response(
-        JSON.stringify({ error: 'Key is required' }),
+        JSON.stringify({ error: 'Anahtar bilgisi gerekli' }),
         {
           status: 400,
           headers: { ...corsHeaders, 'Content-Type': 'application/json' },
@@ -70,12 +70,12 @@ export const onRequestPost = async (context: PagesFunctionContext<Env>) => {
       }
     );
   } catch (error) {
-    console.error('Delete error:', error);
+    console.error('Silme hatası:', error);
     
     // Handle JSON parse error
     if (error instanceof SyntaxError) {
       return new Response(
-        JSON.stringify({ error: 'Invalid request body' }),
+        JSON.stringify({ error: 'Geçersiz istek gövdesi' }),
         {
           status: 400,
           headers: { ...corsHeaders, 'Content-Type': 'application/json' },
@@ -85,8 +85,8 @@ export const onRequestPost = async (context: PagesFunctionContext<Env>) => {
 
     return new Response(
       JSON.stringify({
-        error: 'Failed to delete file',
-        details: error instanceof Error ? error.message : 'Unknown error',
+        error: 'Dosya silinemedi',
+        details: error instanceof Error ? error.message : 'Bilinmeyen hata',
       }),
       {
         status: 500,

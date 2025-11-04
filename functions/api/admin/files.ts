@@ -12,10 +12,10 @@ interface Env {
 function validateAuth(request: Request, env: Env): { valid: boolean; reason?: string } {
   const authHeader = request.headers.get('X-Auth');
   if (!env.UPLOAD_PASSWORD || !authHeader) {
-    return { valid: false, reason: !env.UPLOAD_PASSWORD ? 'UPLOAD_PASSWORD not set' : 'X-Auth header missing' };
+    return { valid: false, reason: !env.UPLOAD_PASSWORD ? 'UPLOAD_PASSWORD ayarlanmamış' : 'X-Auth başlığı eksik' };
   }
   if (authHeader !== env.UPLOAD_PASSWORD) {
-    return { valid: false, reason: 'Password mismatch' };
+    return { valid: false, reason: 'Parola eşleşmiyor' };
   }
   return { valid: true };
 }
@@ -42,7 +42,7 @@ export const onRequestGet = async (context: PagesFunctionContext<Env>) => {
   const authResult = validateAuth(request, env);
   if (!authResult.valid) {
     return new Response(
-      JSON.stringify({ error: 'Unauthorized', reason: authResult.reason }),
+      JSON.stringify({ error: 'Yetkisiz erişim', reason: authResult.reason }),
       {
         status: 401,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
@@ -87,7 +87,7 @@ export const onRequestGet = async (context: PagesFunctionContext<Env>) => {
             }
           }
         } catch (error) {
-          console.error(`Error reading metadata for ${key}:`, error);
+          console.error(`${key} için metaveri okunamadı:`, error);
           // Continue without metadata if head() fails
         }
         
@@ -118,11 +118,11 @@ export const onRequestGet = async (context: PagesFunctionContext<Env>) => {
       }
     );
   } catch (error) {
-    console.error('Admin files list error:', error);
+    console.error('Yönetici dosya listeleme hatası:', error);
     return new Response(
       JSON.stringify({
-        error: 'Failed to list files',
-        details: error instanceof Error ? error.message : 'Unknown error',
+        error: 'Dosyalar listelenemedi',
+        details: error instanceof Error ? error.message : 'Bilinmeyen hata',
       }),
       {
         status: 500,

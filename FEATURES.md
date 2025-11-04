@@ -1,560 +1,559 @@
-# oksend Feature Roadmap
+# oksend Özellik Yol Haritası
 
-This document serves as a reference for potential features to add to oksend. Features are organized by priority and category.
+Bu belge, oksend için eklenmesi düşünülen olası özelliklere yönelik bir referans niteliğindedir. Özellikler öncelik ve kategoriye göre düzenlenmiştir.
 
-## Current Features
+## Mevcut Özellikler
 
-- ✅ Drag-and-drop file uploads
-- ✅ Password-protected upload/delete operations
-- ✅ Short URL generation with landing pages
-- ✅ Admin panel for file management
-- ✅ File listing and deletion
-- ✅ Modern upload UI with animations
-- ✅ File metadata display (size, type, upload date)
-- ✅ Copy shareable links
-- ✅ Real-time upload progress
-- ✅ Size & MIME type validation
-- ✅ Bot protection (Turnstile integration - optional)
-
----
-
-## High Priority Features (Core Functionality)
-
-### 1. Search and Filter in Admin Panel
-**Priority:** 🔴 High  
-**Effort:** Medium  
-**Description:**
-- Search files by filename
-- Filter by file type, date range, size
-- Sort by name, date, size (ascending/descending)
-- Real-time search as you type
-- Clear filters button
-
-**Benefits:**
-- Quickly find files in large collections
-- Better organization and management
-- Improved user experience
-
-**Implementation Notes:**
-- Add search input in AdminPanel component
-- Client-side filtering on existing data
-- Consider server-side filtering for very large datasets
+- ✅ Sürükle-bırak dosya yüklemeleri
+- ✅ Parola korumalı yükleme/silme işlemleri
+- ✅ Açılış sayfalarıyla kısa URL üretimi
+- ✅ Dosya yönetimi için yönetim paneli
+- ✅ Dosya listeleme ve silme
+- ✅ Animasyonlu modern yükleme arayüzü
+- ✅ Dosya metaverisi gösterimi (boyut, tür, yüklenme tarihi)
+- ✅ Paylaşılabilir bağlantıları kopyalama
+- ✅ Gerçek zamanlı yükleme ilerlemesi
+- ✅ Boyut ve MIME türü doğrulaması
+- ✅ Bot koruması (Turnstile entegrasyonu - isteğe bağlı)
 
 ---
 
-### 2. Bulk Operations
-**Priority:** 🔴 High  
-**Effort:** Medium  
-**Description:**
-- Select multiple files with checkboxes
-- Bulk delete selected files
-- Bulk download as ZIP archive
-- Bulk copy URLs (comma-separated)
-- Select all / Deselect all functionality
+## Yüksek Öncelikli Özellikler (Çekirdek İşlevsellik)
 
-**Benefits:**
-- Save time when managing many files
-- Efficient cleanup of old files
-- Better workflow for power users
+### 1. Yönetim Panelinde Arama ve Filtreleme
+**Öncelik:** 🔴 Yüksek  
+**Efor:** Orta  
+**Açıklama:**
+- Dosyaları ada göre arama
+- Dosya türü, tarih aralığı, boyuta göre filtreleme
+- Ada, tarihe, boyuta göre artan/azalan sıralama
+- Yazdıkça gerçek zamanlı arama
+- Filtreleri temizle butonu
 
-**Implementation Notes:**
-- Add checkbox column to admin table
-- Track selected files in state
-- Implement ZIP generation on backend or client-side
-- Confirm dialog for bulk delete
+**Faydalar:**
+- Büyük koleksiyonlarda dosyaları hızlı bulma
+- Daha iyi organizasyon ve yönetim
+- Geliştirilmiş kullanıcı deneyimi
 
----
-
-### 3. File Preview
-**Priority:** 🔴 High  
-**Effort:** High  
-**Description:**
-- Image gallery view with thumbnails
-- PDF viewer using PDF.js
-- Text file preview with syntax highlighting
-- Video/audio player embedded
-- Lightbox for full-size images
-- Preview in modal or side panel
-
-**Benefits:**
-- No need to download to preview
-- Better user experience
-- Faster file identification
-
-**Implementation Notes:**
-- Add preview endpoint or use existing download endpoint
-- Implement different preview components for each file type
-- Consider caching thumbnails in R2 or generating on-the-fly
-- Use libraries like react-pdf, react-player
+**Uygulama Notları:**
+- AdminPanel bileşenine arama alanı ekleyin
+- Mevcut veriler üzerinde istemci tarafı filtreleme kullanın
+- Çok büyük veri kümeleri için sunucu tarafı filtrelemeyi değerlendirin
 
 ---
 
-### 4. Link Expiration
-**Priority:** 🔴 High  
-**Effort:** Medium  
-**Description:**
-- Set expiration dates for short URLs
-- Auto-delete expired files (optional)
-- Expiration warnings on landing page
-- Configure default expiration time
-- Extend expiration date option
+### 2. Toplu İşlemler
+**Öncelik:** 🔴 Yüksek  
+**Efor:** Orta  
+**Açıklama:**
+- Onay kutuları ile birden fazla dosya seçme
+- Seçili dosyaları toplu silme
+- ZIP arşivi olarak toplu indirme
+- Bağlantıları toplu kopyalama (virgülle ayrılmış)
+- Tümünü seç / tümünü bırak işlevi
 
-**Benefits:**
-- Better security and privacy
-- Automatic cleanup
-- Control over link lifetime
+**Faydalar:**
+- Çok sayıda dosya yönetirken zaman kazandırır
+- Eski dosyaları verimli şekilde temizleme
+- Güçlü kullanıcılar için daha iyi iş akışı
 
-**Implementation Notes:**
-- Store expiration timestamps in KV metadata
-- Check expiration in slug resolution endpoint
-- Add expiration UI in upload response and admin panel
-- Background job or cron to clean expired files (consider Durable Objects or scheduled Workers)
-
----
-
-### 5. Individual File Password Protection
-**Priority:** 🔴 High  
-**Effort:** Medium  
-**Description:**
-- Password-protect specific files/links
-- Separate from upload password
-- Password prompt on landing page before download
-- Optional password per file on upload
-- Change password for existing files
-
-**Benefits:**
-- Extra layer of security
-- Share sensitive files with specific people
-- Control access without changing main password
-
-**Implementation Notes:**
-- Store passwords in KV (hashed) or R2 metadata (encrypted)
-- Add password form to landing page
-- Session/token-based access after password entry
-- Use bcrypt or similar for password hashing
+**Uygulama Notları:**
+- Yönetim tablosuna onay kutusu sütunu ekleyin
+- Seçili dosyaları durumda takip edin
+- ZIP üretimini arka uçta veya istemci tarafında uygulayın
+- Toplu silme için onay penceresi ekleyin
 
 ---
 
-## Medium Priority Features (UX Improvements)
+### 3. Dosya Önizleme
+**Öncelik:** 🔴 Yüksek  
+**Efor:** Yüksek  
+**Açıklama:**
+- Küçük görsellerle görüntü galerisi
+- PDF.js kullanarak PDF görüntüleme
+- Sözdizimi vurgulamalı metin dosyası önizlemesi
+- Gömülü video/ses oynatma
+- Tam boy görseller için lightbox
+- Önizlemeyi modal veya yan panelde gösterme
 
-### 6. QR Code Generation
-**Priority:** 🟡 Medium  
-**Effort:** Low  
-**Description:**
-- Generate QR codes for share links
-- Display QR on landing page
-- Download QR code as image
-- Different sizes (small, medium, large)
-- QR code in admin panel for each file
+**Faydalar:**
+- Önizleme için indirme zorunluluğunu ortadan kaldırır
+- Daha iyi kullanıcı deneyimi
+- Dosyaları daha hızlı tanımlama
 
-**Benefits:**
-- Quick mobile sharing
-- Easy file transfer to mobile devices
-- Modern sharing method
-
-**Implementation Notes:**
-- Use library like `qrcode` or `qrcode.react`
-- Generate client-side or server-side
-- Cache QR codes if server-side
-
----
-
-### 7. Statistics and Analytics
-**Priority:** 🟡 Medium  
-**Effort:** High  
-**Description:**
-- Download count per file
-- Storage usage dashboard (total, per file type)
-- Upload/download trends (charts)
-- Most accessed files list
-- Date range statistics
-- Download history/timeline
-
-**Benefits:**
-- Insights into file usage
-- Storage management
-- Identify popular content
-
-**Implementation Notes:**
-- Store download events in KV or D1 database
-- Aggregate data for dashboard
-- Use chart library like Chart.js or recharts
-- Consider analytics.js for event tracking
+**Uygulama Notları:**
+- Önizleme uç noktası ekleyin veya mevcut indirme uç noktasını kullanın
+- Her dosya türü için farklı önizleme bileşenleri oluşturun
+- Küçük görselleri R2 içinde önbelleğe alın veya anlık oluşturun
+- react-pdf ve react-player gibi kütüphanelerden yararlanın
 
 ---
 
-### 8. Image Gallery View
-**Priority:** 🟡 Medium  
-**Effort:** Medium  
-**Description:**
-- Grid view option for images
-- Thumbnail generation and caching
-- Lightbox gallery navigation
-- Filter to show only images
-- Full-screen image viewer
+### 4. Bağlantı Süre Sonu
+**Öncelik:** 🔴 Yüksek  
+**Efor:** Orta  
+**Açıklama:**
+- Kısa URL'ler için son kullanma tarihleri belirleme
+- Süresi dolan dosyaları otomatik silme (isteğe bağlı)
+- Açılış sayfasında süre sonu uyarıları
+- Varsayılan süre sonu ayarı
+- Var olan dosyaların süresini uzatma seçeneği
 
-**Benefits:**
-- Better visual browsing
-- Faster image discovery
-- Professional gallery experience
+**Faydalar:**
+- Daha iyi güvenlik ve gizlilik
+- Otomatik temizlik
+- Bağlantı ömrü üzerinde kontrol
 
-**Implementation Notes:**
-- Generate thumbnails on upload or on-demand
-- Store thumbnails in R2 with `_thumb` suffix
-- Use library like react-image-gallery or photoswipe
-- Lazy load images for performance
-
----
-
-### 9. Dark Mode
-**Priority:** 🟡 Medium  
-**Effort:** Low  
-**Description:**
-- Toggle theme preference
-- System preference detection
-- Persistent theme storage (localStorage)
-- Smooth theme transitions
-- Dark mode for landing pages too
-
-**Benefits:**
-- Better for low-light environments
-- Modern UI standard
-- User preference support
-
-**Implementation Notes:**
-- Add theme provider context
-- Use CSS variables for colors
-- Toggle button in header
-- Detect system preference with `prefers-color-scheme`
+**Uygulama Notları:**
+- Sona erme zaman damgalarını KV metaverisinde saklayın
+- Slug çözümleme uç noktasında süre sonunu kontrol edin
+- Yükleme yanıtı ve yönetim paneline süre sonu arayüzü ekleyin
+- Temizlik için arka plan işi veya zamanlanmış Worker kullanmayı düşünün
 
 ---
 
-### 10. File Organization
-**Priority:** 🟡 Medium  
-**Effort:** High  
-**Description:**
-- Tags/categories system
-- Custom folders/virtual organization
-- Favorite/bookmark files
-- Filter by tags/categories
-- Multiple tags per file
+### 5. Dosya Bazında Parola Koruması
+**Öncelik:** 🔴 Yüksek  
+**Efor:** Orta  
+**Açıklama:**
+- Belirli dosya/bağlantıları parola ile koruma
+- Yükleme parolasından bağımsız çalışma
+- İndirme öncesi açılış sayfasında parola istemi
+- Yükleme sırasında dosya özelinde isteğe bağlı parola
+- Mevcut dosyaların parolasını değiştirme
 
-**Benefits:**
-- Better file organization
-- Easier file discovery
-- Personal customization
+**Faydalar:**
+- Ek güvenlik katmanı
+- Hassas dosyaları seçili kişilerle paylaşma
+- Ana parolayı değiştirmeden erişim kontrolü
 
-**Implementation Notes:**
-- Store tags in KV or file metadata
-- Tag management UI in admin panel
-- Virtual folders (just metadata, files stay in R2)
-- Consider D1 database for complex relationships
-
----
-
-## Advanced Features
-
-### 11. Custom Share Settings
-**Priority:** 🟢 Low  
-**Effort:** High  
-**Description:**
-- Download limits (e.g., max 10 downloads)
-- Time-limited access (hours/days)
-- IP restrictions (whitelist/blacklist)
-- One-time download links
-- Expiration date picker UI
-
-**Benefits:**
-- Fine-grained access control
-- Enhanced security
-- Professional features
-
-**Implementation Notes:**
-- Complex state management in KV
-- Track downloads per link
-- IP tracking and validation
-- Rate limiting implementation
+**Uygulama Notları:**
+- Parolaları KV içinde (hash'lenmiş) veya R2 metaverisinde (şifrelenmiş) saklayın
+- Açılış sayfasına parola formu ekleyin
+- Parola sonrası erişim için oturum/token tabanlı yaklaşım kullanın
+- Parola hash'lemek için bcrypt veya benzeri bir kütüphane tercih edin
 
 ---
 
-### 12. Batch Upload Progress
-**Priority:** 🟢 Low  
-**Effort:** Medium  
-**Description:**
-- Individual file progress bars
-- Pause/resume uploads
-- Retry failed uploads
-- Upload queue management
-- Upload speed indication
+## Orta Öncelikli Özellikler (UX İyileştirmeleri)
 
-**Benefits:**
-- Better upload feedback
-- Handle network interruptions
-- Professional upload experience
+### 6. QR Kod Üretimi
+**Öncelik:** 🟡 Orta  
+**Efor:** Düşük  
+**Açıklama:**
+- Paylaşım bağlantıları için QR kod üretimi
+- Açılış sayfasında QR görüntüleme
+- QR kodunu görsel olarak indirme
+- Farklı boyut seçenekleri (küçük, orta, büyük)
+- Her dosya için yönetim panelinde QR gösterimi
 
-**Implementation Notes:**
-- Enhanced progress tracking in Dropzone
-- Queue management system
-- Resume upload capability (chunked uploads)
-- Error recovery logic
+**Faydalar:**
+- Mobil cihazlarla hızlı paylaşım
+- Dosyaları telefona aktarmayı kolaylaştırır
+- Modern paylaşım yöntemi
 
----
-
-### 13. Export/Import
-**Priority:** 🟢 Low  
-**Effort:** Medium  
-**Description:**
-- Export file list as CSV/JSON
-- Backup file metadata
-- Import file list (for migration)
-- Export with URLs and metadata
-- Scheduled backups
-
-**Benefits:**
-- Data portability
-- Backup and restore
-- Migration support
-
-**Implementation Notes:**
-- CSV/JSON generation in frontend or backend
-- Include all file metadata
-- Import validation and error handling
+**Uygulama Notları:**
+- `qrcode` veya `qrcode.react` gibi kütüphaneleri kullanın
+- İhtiyaca göre istemci veya sunucu tarafında üretin
+- Sunucu tarafında üretilecekse QR kodlarını önbelleğe alın
 
 ---
 
-### 14. Advanced Admin Features
-**Priority:** 🟢 Low  
-**Effort:** Medium  
-**Description:**
-- File rename functionality
-- Move files (change R2 key)
-- File metadata editing
-- Duplicate file detection (by hash)
-- File details modal/edit form
+### 7. İstatistikler ve Analitik
+**Öncelik:** 🟡 Orta  
+**Efor:** Yüksek  
+**Açıklama:**
+- Dosya başına indirme sayısı
+- Depolama kullanım panosu (toplam, dosya türüne göre)
+- Yükleme/indirme trendleri (grafikler)
+- En çok erişilen dosyalar listesi
+- Tarih aralığı istatistikleri
+- İndirme geçmişi/zaman çizelgesi
 
-**Benefits:**
-- Better file management
-- Organize after upload
-- Prevent duplicates
+**Faydalar:**
+- Dosya kullanımına dair içgörüler
+- Depolama yönetimi
+- Popüler içerikleri belirleme
 
-**Implementation Notes:**
-- R2 key manipulation (copy + delete)
-- Store file hashes in metadata
-- Metadata editing UI
-- Hash calculation on upload
-
----
-
-### 15. API Enhancements
-**Priority:** 🟢 Low  
-**Effort:** High  
-**Description:**
-- REST API documentation (OpenAPI/Swagger)
-- API key authentication
-- Webhook support for events (upload, delete, download)
-- Rate limiting per user/IP
-- GraphQL endpoint (optional)
-
-**Benefits:**
-- Programmatic access
-- Integration capabilities
-- Developer-friendly
-
-**Implementation Notes:**
-- OpenAPI specification
-- API key generation and management
-- Webhook delivery system
-- Rate limiting middleware
-- Consider Hono or tRPC for better API structure
+**Uygulama Notları:**
+- İndirme olaylarını KV veya D1 veritabanında saklayın
+- Panoya yönelik verileri birleştirin
+- Chart.js veya recharts gibi grafik kütüphanelerini kullanın
+- Olay takibi için analytics.js değerlendirin
 
 ---
 
-## Nice to Have Features
+### 8. Görsel Galeri Görünümü
+**Öncelik:** 🟡 Orta  
+**Efor:** Orta  
+**Açıklama:**
+- Görseller için grid görünümü seçeneği
+- Küçük görsellerin üretilmesi ve önbelleğe alınması
+- Lightbox galeri gezintisi
+- Sadece görselleri göstermek için filtre
+- Tam ekran görsel görüntüleme
 
-### 16. Social Sharing Buttons
-**Priority:** 🟢 Low  
-**Effort:** Low  
-**Description:**
-- Share to Twitter, Facebook, LinkedIn
-- Custom share messages
-- Embed codes for websites
-- Share buttons on landing page
+**Faydalar:**
+- Daha iyi görsel gezinme
+- Görselleri daha hızlı bulma
+- Profesyonel galeri deneyimi
 
-**Benefits:**
-- Easy content sharing
-- Social media integration
-- Increased visibility
-
----
-
-### 17. Presigned Upload URLs
-**Priority:** 🟡 Medium  
-**Effort:** High  
-**Description:**
-- Direct upload to R2 (bypass Worker limits)
-- Support for very large files (>100MB)
-- Resumable uploads
-- Multipart upload support
-
-**Note:** Already stubbed in `functions/api/sign.ts`
-
-**Benefits:**
-- Handle large files
-- Better performance
-- Reduced Worker costs
+**Uygulama Notları:**
+- Küçük görselleri yükleme sırasında veya talep üzerine üretin
+- Küçük görselleri `_thumb` son ekiyle R2 içinde saklayın
+- react-image-gallery veya photoswipe gibi kütüphaneleri kullanın
+- Performans için görselleri tembel yükleme (lazy load) yöntemiyle getirin
 
 ---
 
-### 18. File Compression
-**Priority:** 🟢 Low  
-**Effort:** High  
-**Description:**
-- Auto-compress images (optional)
-- ZIP creation on-the-fly
-- Space optimization
-- Compression quality settings
+### 9. Karanlık Mod
+**Öncelik:** 🟡 Orta  
+**Efor:** Düşük  
+**Açıklama:**
+- Tema tercih geçişi
+- Sistem tercihinin algılanması
+- Kalıcı tema depolaması (localStorage)
+- Yumuşak tema geçişleri
+- Açılış sayfalarında da karanlık mod
 
-**Benefits:**
-- Save storage space
-- Faster transfers
-- Cost reduction
+**Faydalar:**
+- Düşük ışıkta daha konforlu kullanım
+- Modern arayüz standardı
+- Kullanıcı tercihlerini destekler
 
----
-
-### 19. Virus Scanning
-**Priority:** 🟡 Medium  
-**Effort:** Very High  
-**Description:**
-- Integrate with ClamAV or similar
-- Scan uploads automatically
-- Quarantine suspicious files
-- Scan results in admin panel
-
-**Benefits:**
-- Security enhancement
-- Protect users
-- Prevent malware distribution
+**Uygulama Notları:**
+- Tema sağlayıcı (context) ekleyin
+- Renkler için CSS değişkenleri kullanın
+- Üst menüde tema geçiş butonu ekleyin
+- Sistem tercihlerini `prefers-color-scheme` ile algılayın
 
 ---
 
-### 20. Email Notifications
-**Priority:** 🟢 Low  
-**Effort:** Medium  
-**Description:**
-- Notification when files are accessed
-- Daily/weekly summaries
-- Share link notifications
-- Configurable notification preferences
+### 10. Dosya Organizasyonu
+**Öncelik:** 🟡 Orta  
+**Efor:** Yüksek  
+**Açıklama:**
+- Etiket/kategori sistemi
+- Özel klasörler/sanal organizasyon
+- Dosyaları favorilere/yer imlerine ekleme
+- Etiket veya kategoriye göre filtreleme
+- Dosya başına birden fazla etiket
 
-**Benefits:**
-- Stay informed
-- Monitor usage
-- Security alerts
+**Faydalar:**
+- Daha iyi dosya organizasyonu
+- Dosyaları kolayca bulma
+- Kişisel özelleştirme
 
----
-
-## Quick Wins (Easy to Implement)
-
-These features can be implemented quickly with significant UX improvements:
-
-1. ✅ **Search bar in admin panel** - Simple filtering logic
-2. ✅ **Bulk select checkbox** - Basic state management
-3. ✅ **QR code for share links** - Library integration
-4. ✅ **Dark mode toggle** - CSS variables + context
-5. ✅ **Image gallery view** - Grid layout + filtering
-6. ✅ **Download count badges** - Simple counter in KV
-7. ✅ **File type icons** - Already partially implemented
-8. ✅ **Copy all URLs button** - Join URLs with newlines
-9. ✅ **Sort table columns** - Array.sort() on data
-10. ✅ **Pagination for large lists** - Slice arrays, page controls
+**Uygulama Notları:**
+- Etiketleri KV veya dosya metaverisinde saklayın
+- Yönetim paneline etiket yönetimi arayüzü ekleyin
+- Sanal klasörleri metaveriyle yönetin (dosyalar R2'de kalır)
+- Karmaşık ilişkiler için D1 veritabanını değerlendirin
 
 ---
 
-## Implementation Priority Recommendations
+## Gelişmiş Özellikler
 
-### Phase 1 (Immediate - High Impact, Low Effort)
-1. Search and filter in admin panel
-2. Bulk select and delete
-3. QR code generation
-4. Dark mode
-5. Sort and pagination
+### 11. Özelleştirilmiş Paylaşım Ayarları
+**Öncelik:** 🟢 Düşük  
+**Efor:** Yüksek  
+**Açıklama:**
+- İndirme limiti (ör. en fazla 10 indirme)
+- Süre sınırlı erişim (saat/gün)
+- IP kısıtlamaları (beyaz/siyah liste)
+- Tek kullanımlık indirme bağlantıları
+- Süre sonu tarih seçici arayüzü
 
-### Phase 2 (Short-term - High Value)
-1. File preview (images, PDFs, text)
-2. Link expiration
-3. Image gallery view
-4. Statistics dashboard
-5. Individual file passwords
+**Faydalar:**
+- İnce ayarlı erişim kontrolü
+- Güvenliği artırır
+- Profesyonel özellikler sunar
 
-### Phase 3 (Medium-term - Advanced Features)
-1. Bulk operations (download ZIP)
-2. File organization (tags, folders)
-3. Presigned upload URLs
-4. Custom share settings
-5. API enhancements
-
-### Phase 4 (Long-term - Nice to Have)
-1. Virus scanning
-2. Email notifications
-3. Advanced analytics
-4. Social sharing
-5. File compression
+**Uygulama Notları:**
+- KV içinde karmaşık durum yönetimi
+- Bağlantı başına indirme takibi
+- IP takibi ve doğrulaması
+- Oran sınırlama (rate limiting) uygulanması
 
 ---
 
-## Technical Considerations
+### 12. Toplu Yükleme İlerlemesi
+**Öncelik:** 🟢 Düşük  
+**Efor:** Orta  
+**Açıklama:**
+- Dosya bazında ilerleme çubukları
+- Yüklemeyi duraklat/başlat
+- Başarısız yüklemeleri yeniden deneme
+- Yükleme kuyruğu yönetimi
+- Yükleme hızı gösterimi
 
-### Storage Options
-- **R2**: File storage (current)
-- **KV**: Metadata, short links, stats (current)
-- **D1**: Consider for complex relationships (tags, analytics)
-- **Durable Objects**: For real-time features, queues
+**Faydalar:**
+- Daha iyi yükleme geri bildirimi
+- Ağ kesintilerini tolere eder
+- Profesyonel yükleme deneyimi
 
-### Performance
-- Thumbnail generation (on upload vs on-demand)
-- Caching strategies (Cloudflare Cache API)
-- Lazy loading for large lists
-- Pagination vs infinite scroll
-
-### Security
-- Password hashing (bcrypt)
-- Rate limiting
-- IP restrictions
-- File validation (magic bytes, not just extensions)
-
-### Scalability
-- Large file lists (pagination, virtual scrolling)
-- Many concurrent uploads
-- Storage usage monitoring
-- Cost optimization
+**Uygulama Notları:**
+- Dropzone içinde gelişmiş ilerleme takibi
+- Kuyruk yönetim sistemi
+- Yüklemeyi sürdürme (parçalı yükleme) özelliği
+- Hata kurtarma mantığı
 
 ---
 
-## Notes for Future Development
+### 13. Dışa/İçe Aktarma
+**Öncelik:** 🟢 Düşük  
+**Efor:** Orta  
+**Açıklama:**
+- Dosya listesini CSV/JSON olarak dışa aktarma
+- Dosya metaverisini yedekleme
+- Dosya listesini içe aktarma (taşıma için)
+- Bağlantılar ve metaveriyle birlikte dışa aktarma
+- Zamanlanmış yedekler
 
-- Always consider Cloudflare Workers limits (CPU time, memory, request size)
-- R2 has generous free tier but monitor usage
-- KV has no native list operation - work around this limitation
-- Use D1 for complex queries if needed
-- Consider Durable Objects for stateful operations
-- Keep frontend bundle size reasonable
-- Optimize images and assets
-- Test with large files and many files
-- Monitor Cloudflare analytics for usage patterns
+**Faydalar:**
+- Veri taşınabilirliği
+- Yedekleme ve geri yükleme
+- Geçiş (migrasyon) desteği
 
----
-
-## Contributing
-
-When implementing features:
-1. Update this document with status
-2. Add tests if applicable
-3. Update README.md if needed
-4. Document API changes
-5. Consider backward compatibility
+**Uygulama Notları:**
+- CSV/JSON üretimini ön yüzde veya arka uçta gerçekleştirin
+- Tüm dosya metaverisini dahil edin
+- İçe aktarmada doğrulama ve hata yönetimi sağlayın
 
 ---
 
-**Last Updated:** 2025-01-01  
-**Version:** 1.0
+### 14. Gelişmiş Yönetici Özellikleri
+**Öncelik:** 🟢 Düşük  
+**Efor:** Orta  
+**Açıklama:**
+- Dosya yeniden adlandırma
+- Dosyaları taşıma (R2 anahtarını değiştirme)
+- Dosya metaverisini düzenleme
+- Yinelenen dosya tespiti (hash ile)
+- Dosya detayları modalı/düzenleme formu
 
+**Faydalar:**
+- Daha iyi dosya yönetimi
+- Yükleme sonrası düzenleme imkânı
+- Yinelenenleri engelleme
+
+**Uygulama Notları:**
+- R2 anahtarıyla kopyala + sil yaklaşımı
+- Dosya hash'lerini metaveride saklayın
+- Metaveri düzenleme arayüzü ekleyin
+- Hash hesaplamasını yükleme sırasında yapın
+
+---
+
+### 15. API Geliştirmeleri
+**Öncelik:** 🟢 Düşük  
+**Efor:** Yüksek  
+**Açıklama:**
+- REST API dokümantasyonu (OpenAPI/Swagger)
+- API anahtarı ile kimlik doğrulama
+- Olaylar için webhook desteği (yükleme, silme, indirme)
+- Kullanıcı/IP bazında oran sınırlama
+- GraphQL uç noktası (isteğe bağlı)
+
+**Faydalar:**
+- Programatik erişim
+- Entegrasyon imkânları
+- Geliştirici dostu yapı
+
+**Uygulama Notları:**
+- OpenAPI şeması oluşturun
+- API anahtarı oluşturma ve yönetimi sağlayın
+- Webhook teslim sistemi ekleyin
+- Oran sınırlama ara katmanı yazın
+- Daha iyi API yapısı için Hono veya tRPC değerlendirin
+
+---
+
+## Nice to Have Özellikler
+
+### 16. Sosyal Paylaşım Butonları
+**Öncelik:** 🟢 Düşük  
+**Efor:** Düşük  
+**Açıklama:**
+- Twitter, Facebook, LinkedIn'e paylaş
+- Özelleştirilebilir paylaşım mesajları
+- Web siteleri için yerleştirme (embed) kodları
+- Açılış sayfasında paylaşım butonları
+
+**Faydalar:**
+- İçeriği kolayca paylaşma
+- Sosyal medya entegrasyonu
+- Görünürlüğü artırır
+
+---
+
+### 17. Ön İmzalı Yükleme URL'leri
+**Öncelik:** 🟡 Orta  
+**Efor:** Yüksek  
+**Açıklama:**
+- R2'ye doğrudan yükleme (Worker sınırlarını aşar)
+- Çok büyük dosyalar için destek (>100 MB)
+- Devam ettirilebilir yüklemeler
+- Çok parçalı yükleme desteği
+
+**Not:** `functions/api/sign.ts` dosyasında temel yapısı hazır.
+
+**Faydalar:**
+- Büyük dosyaları yönetme
+- Daha iyi performans
+- Worker maliyetlerini azaltır
+
+---
+
+### 18. Dosya Sıkıştırma
+**Öncelik:** 🟢 Düşük  
+**Efor:** Yüksek  
+**Açıklama:**
+- Görselleri otomatik sıkıştırma (isteğe bağlı)
+- Anlık ZIP oluşturma
+- Alan optimizasyonu
+- Sıkıştırma kalite ayarları
+
+**Faydalar:**
+- Depolama alanından tasarruf
+- Daha hızlı transfer
+- Maliyet düşürme
+
+---
+
+### 19. Virüs Taraması
+**Öncelik:** 🟡 Orta  
+**Efor:** Çok Yüksek  
+**Açıklama:**
+- ClamAV veya benzeri bir araçla entegrasyon
+- Yüklemeleri otomatik tarama
+- Şüpheli dosyaları karantinaya alma
+- Yönetim panelinde tarama sonuçlarını gösterme
+
+**Faydalar:**
+- Güvenliği artırır
+- Kullanıcıları korur
+- Zararlı yazılım yayılımını engeller
+
+---
+
+### 20. E-posta Bildirimleri
+**Öncelik:** 🟢 Düşük  
+**Efor:** Orta  
+**Açıklama:**
+- Dosyalara erişildiğinde bildirim gönderme
+- Günlük/haftalık özetler
+- Paylaşım bağlantısı bildirimleri
+- Yapılandırılabilir bildirim tercihleri
+
+**Faydalar:**
+- Haberdar olun
+- Kullanımı izleyin
+- Güvenlik uyarıları oluşturun
+
+---
+
+## Hızlı Kazanımlar (Kolay Uygulamalar)
+
+Bu özellikler kısa sürede uygulanabilir ve kullanıcı deneyimine doğrudan katkı sağlar:
+
+1. ✅ **Yönetim panelinde arama çubuğu** - Basit filtreleme mantığı
+2. ✅ **Toplu seçim onay kutusu** - Temel durum yönetimi
+3. ✅ **Paylaşım bağlantıları için QR kodu** - Kütüphane entegrasyonu
+4. ✅ **Karanlık mod geçişi** - CSS değişkenleri + context
+5. ✅ **Görsel galeri görünümü** - Grid yerleşimi + filtreleme
+6. ✅ **İndirme sayısı rozetleri** - KV içinde basit sayaç
+7. ✅ **Dosya türü simgeleri** - Halihazırda kısmen mevcut
+8. ✅ **Tüm URL'leri kopyala butonu** - URL'leri satır sonuyla birleştirin
+9. ✅ **Tablo sütunlarını sıralama** - Veriler üzerinde `array.sort()`
+10. ✅ **Büyük listeler için sayfalama** - Dizileri dilimleyin, sayfa denetimleri ekleyin
+
+---
+
+## Uygulama Öncelik Önerileri
+
+### Faz 1 (Hemen - Yüksek Etki, Düşük Efor)
+1. Yönetim panelinde arama ve filtreleme
+2. Toplu seçim ve silme
+3. QR kod üretimi
+4. Karanlık mod
+5. Sıralama ve sayfalama
+
+### Faz 2 (Kısa Vadeli - Yüksek Değer)
+1. Dosya önizleme (görsel, PDF, metin)
+2. Bağlantı süre sonu
+3. Görsel galeri görünümü
+4. İstatistik panosu
+5. Dosya bazında parolalar
+
+### Faz 3 (Orta Vadeli - Gelişmiş Özellikler)
+1. Toplu işlemler (ZIP indirme)
+2. Dosya organizasyonu (etiketler, klasörler)
+3. Ön imzalı yükleme URL'leri
+4. Özelleştirilmiş paylaşım ayarları
+5. API geliştirmeleri
+
+### Faz 4 (Uzun Vadeli - İyi Olur Özellikler)
+1. Virüs taraması
+2. E-posta bildirimleri
+3. Gelişmiş analitik
+4. Sosyal paylaşım
+5. Dosya sıkıştırma
+
+---
+
+## Teknik Hususlar
+
+### Depolama Seçenekleri
+- **R2**: Dosya depolama (mevcut)
+- **KV**: Metaveri, kısa bağlantılar, istatistikler (mevcut)
+- **D1**: Karmaşık ilişkiler için değerlendirilebilir (etiketler, analitik)
+- **Durable Objects**: Gerçek zamanlı özellikler, kuyruklar için
+
+### Performans
+- Küçük görsellerin üretimi (yükleme sırasında mı, talep üzerine mi)
+- Önbellekleme stratejileri (Cloudflare Cache API)
+- Büyük listeler için tembel yükleme
+- Sayfalama ve sonsuz kaydırma seçenekleri
+
+### Güvenlik
+- Parola hash'leme (bcrypt)
+- Oran sınırlama
+- IP kısıtlamaları
+- Dosya doğrulaması (sihirli bayt, sadece uzantıya güvenmeyin)
+
+### Ölçeklenebilirlik
+- Büyük dosya listeleri (sayfalama, sanal kaydırma)
+- Eşzamanlı çoklu yüklemeler
+- Depolama kullanımının izlenmesi
+- Maliyet optimizasyonu
+
+---
+
+## Gelecek Geliştirmeler İçin Notlar
+
+- Cloudflare Workers sınırlarını (CPU süresi, bellek, istek boyutu) hesaba katın
+- R2 cömert bir ücretsiz katman sunar ancak kullanımı takip edin
+- KV'nin yerleşik listeleme işlemi yoktur - bu kısıtlamayı aşacak tasarım yapın
+- Karmaşık sorgular için gerekirse D1 kullanın
+- Durum (state) gerektiren işlemler için Durable Objects'i düşünün
+- Ön yüz paket boyutunu makul seviyede tutun
+- Görselleri ve varlıkları optimize edin
+- Büyük dosyalarla ve çok sayıda dosyayla test yapın
+- Cloudflare analitiklerini izleyerek kullanım eğilimlerini takip edin
+
+---
+
+## Katkıda Bulunma
+
+Özellikleri uygularken:
+1. Bu belgeyi durumla güncelleyin
+2. Uygunsa testler ekleyin
+3. README.md dosyasını gereken yerlerde güncelleyin
+4. API değişikliklerini belgelendirin
+5. Geriye dönük uyumluluğu göz önünde bulundurun
+
+---
+
+**Son Güncelleme:** 2025-01-01  
+**Sürüm:** 1.0

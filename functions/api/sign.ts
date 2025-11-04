@@ -41,7 +41,7 @@ export const onRequestPost = async (context: PagesFunctionContext<Env>) => {
   // Validate authentication
   if (!validateAuth(request, env)) {
     return new Response(
-      JSON.stringify({ error: 'Unauthorized' }),
+      JSON.stringify({ error: 'Yetkisiz erişim' }),
       {
         status: 401,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
@@ -58,8 +58,8 @@ export const onRequestPost = async (context: PagesFunctionContext<Env>) => {
 
   return new Response(
     JSON.stringify({
-      error: 'Presigned uploads not yet implemented',
-      message: 'This feature will be available in v1.1',
+      error: 'Ön imzalı yüklemeler henüz uygulanmadı',
+      message: 'Bu özellik v1.1 sürümünde sunulacak',
     }),
     {
       status: 501,

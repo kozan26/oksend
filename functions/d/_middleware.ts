@@ -21,7 +21,7 @@ export const onRequestGet = async (context: PagesFunctionContext<Env>) => {
   const key = pathname.replace(/^\/d\//, '').replace(/\/$/, '');
 
   if (!key) {
-    return new Response('Invalid key', { status: 400 });
+    return new Response('Geçersiz anahtar', { status: 400 });
   }
 
   try {
@@ -29,7 +29,7 @@ export const onRequestGet = async (context: PagesFunctionContext<Env>) => {
     const object = await env.BUCKET.get(key);
 
     if (!object) {
-      return new Response('File not found', { status: 404 });
+      return new Response('Dosya bulunamadı', { status: 404 });
     }
 
     // Get download query parameter
@@ -43,7 +43,7 @@ export const onRequestGet = async (context: PagesFunctionContext<Env>) => {
 
     // Get original filename from metadata if available
     const originalFilename =
-      object.customMetadata?.originalFilename || key.split('/').pop() || 'file';
+      object.customMetadata?.originalFilename || key.split('/').pop() || 'dosya';
 
     // Prepare headers
     const headers = new Headers();
@@ -75,9 +75,9 @@ export const onRequestGet = async (context: PagesFunctionContext<Env>) => {
       headers,
     });
   } catch (error) {
-    console.error('Download error:', error);
+    console.error('İndirme hatası:', error);
     return new Response(
-      'Internal server error',
+      'Sunucu hatası',
       { status: 500 }
     );
   }

@@ -11,10 +11,10 @@ interface Env {
 function validateAuth(request: Request, env: Env): { valid: boolean; reason?: string } {
   const authHeader = request.headers.get('X-Auth');
   if (!env.UPLOAD_PASSWORD || !authHeader) {
-    return { valid: false, reason: !env.UPLOAD_PASSWORD ? 'UPLOAD_PASSWORD not set' : 'X-Auth header missing' };
+    return { valid: false, reason: !env.UPLOAD_PASSWORD ? 'UPLOAD_PASSWORD ayarlanmamış' : 'X-Auth başlığı eksik' };
   }
   if (authHeader !== env.UPLOAD_PASSWORD) {
-    return { valid: false, reason: 'Password mismatch' };
+    return { valid: false, reason: 'Parola eşleşmiyor' };
   }
   return { valid: true };
 }
@@ -41,7 +41,7 @@ export const onRequestGet = async (context: PagesFunctionContext<Env>) => {
   const authResult = validateAuth(request, env);
   if (!authResult.valid) {
     return new Response(
-      JSON.stringify({ error: 'Unauthorized', reason: authResult.reason }),
+      JSON.stringify({ error: 'Yetkisiz erişim', reason: authResult.reason }),
       {
         status: 401,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
@@ -53,7 +53,7 @@ export const onRequestGet = async (context: PagesFunctionContext<Env>) => {
   if (!env.LINKS) {
     return new Response(
       JSON.stringify({
-        error: 'KV namespace not configured',
+        error: 'KV namespace yapılandırılmamış',
         items: [],
         total: 0,
       }),
@@ -72,7 +72,7 @@ export const onRequestGet = async (context: PagesFunctionContext<Env>) => {
       JSON.stringify({
         items: [],
         total: 0,
-        message: 'KV namespace does not support listing all keys. Keys can only be accessed if the slug is known.',
+        message: 'KV namespace tüm anahtarları listelemeyi desteklemez. Anahtarlara yalnızca slug biliniyorsa erişilebilir.',
       }),
       {
         status: 200,
@@ -80,11 +80,11 @@ export const onRequestGet = async (context: PagesFunctionContext<Env>) => {
       }
     );
   } catch (error) {
-    console.error('Admin KV list error:', error);
+    console.error('Yönetici KV listeleme hatası:', error);
     return new Response(
       JSON.stringify({
-        error: 'Failed to list KV entries',
-        details: error instanceof Error ? error.message : 'Unknown error',
+        error: 'KV kayıtları listelenemedi',
+        details: error instanceof Error ? error.message : 'Bilinmeyen hata',
       }),
       {
         status: 500,
@@ -116,7 +116,7 @@ export const onRequestDelete = async (context: PagesFunctionContext<Env>) => {
   const authResult = validateAuth(request, env);
   if (!authResult.valid) {
     return new Response(
-      JSON.stringify({ error: 'Unauthorized', reason: authResult.reason }),
+      JSON.stringify({ error: 'Yetkisiz erişim', reason: authResult.reason }),
       {
         status: 401,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
@@ -127,7 +127,7 @@ export const onRequestDelete = async (context: PagesFunctionContext<Env>) => {
   // Check if KV is configured
   if (!env.LINKS) {
     return new Response(
-      JSON.stringify({ error: 'KV namespace not configured' }),
+      JSON.stringify({ error: 'KV namespace yapılandırılmamış' }),
       {
         status: 503,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
@@ -141,7 +141,7 @@ export const onRequestDelete = async (context: PagesFunctionContext<Env>) => {
 
     if (!slug) {
       return new Response(
-        JSON.stringify({ error: 'Slug parameter is required' }),
+        JSON.stringify({ error: 'Slug parametresi gerekli' }),
         {
           status: 400,
           headers: { ...corsHeaders, 'Content-Type': 'application/json' },
@@ -160,11 +160,11 @@ export const onRequestDelete = async (context: PagesFunctionContext<Env>) => {
       }
     );
   } catch (error) {
-    console.error('Admin KV delete error:', error);
+    console.error('Yönetici KV silme hatası:', error);
     return new Response(
       JSON.stringify({
-        error: 'Failed to delete KV entry',
-        details: error instanceof Error ? error.message : 'Unknown error',
+        error: 'KV kaydı silinemedi',
+        details: error instanceof Error ? error.message : 'Bilinmeyen hata',
       }),
       {
         status: 500,

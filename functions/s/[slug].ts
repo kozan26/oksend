@@ -10,9 +10,9 @@ interface Env {
  * Format bytes to human-readable string
  */
 function formatBytes(bytes: number): string {
-  if (bytes === 0) return '0 Bytes';
+  if (bytes === 0) return '0 Bayt';
   const k = 1024;
-  const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+  const sizes = ['Bayt', 'KB', 'MB', 'GB'];
   const i = Math.floor(Math.log(bytes) / Math.log(k));
   return Math.round((bytes / Math.pow(k, i)) * 100) / 100 + ' ' + sizes[i];
 }
@@ -53,13 +53,13 @@ export const onRequestGet = async (context: PagesFunctionContext<Env>) => {
   const slug = params.slug as string;
 
   if (!slug) {
-    return new Response('Invalid slug', { status: 400 });
+    return new Response('Geçersiz slug', { status: 400 });
   }
 
   // Check if KV is configured
   if (!env.LINKS) {
     return new Response(
-      'Slug links not configured',
+      'Slug bağlantıları yapılandırılmamış',
       { status: 503 }
     );
   }
@@ -71,11 +71,11 @@ export const onRequestGet = async (context: PagesFunctionContext<Env>) => {
     if (!key) {
       return new Response(
         `<!DOCTYPE html>
-<html lang="en">
+<html lang="tr">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Link Not Found - oksend</title>
+  <title>Bağlantı Bulunamadı - oksend</title>
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -105,8 +105,8 @@ export const onRequestGet = async (context: PagesFunctionContext<Env>) => {
 <body>
   <div class="container">
     <i class="material-icons" style="font-size: 64px; color: #6b7280; margin-bottom: 24px;">link_off</i>
-    <h1>Link Not Found</h1>
-    <p>This link may have expired or doesn't exist.</p>
+    <h1>Bağlantı bulunamadı</h1>
+    <p>Bu bağlantının süresi dolmuş olabilir ya da hiç oluşturulmamış olabilir.</p>
   </div>
 </body>
 </html>`,
@@ -130,14 +130,14 @@ export const onRequestGet = async (context: PagesFunctionContext<Env>) => {
         const object = await env.BUCKET.head(key);
         if (object) {
           fileInfo = {
-            filename: object.customMetadata?.originalFilename || key.split('/').pop() || 'file',
+            filename: object.customMetadata?.originalFilename || key.split('/').pop() || 'dosya',
             size: object.size,
             contentType: object.httpMetadata?.contentType || object.customMetadata?.contentType || 'application/octet-stream',
             lastModified: object.uploaded,
           };
         }
       } catch (error) {
-        console.error('Error fetching file metadata:', error);
+        console.error('Dosya metaverisi alınırken hata oluştu:', error);
         // Continue without metadata
       }
     }
@@ -148,11 +148,11 @@ export const onRequestGet = async (context: PagesFunctionContext<Env>) => {
     const downloadUrl = `${origin}/d/${key}`;
 
     // Get file info or use defaults
-    const filename = fileInfo?.filename || key.split('/').pop() || 'file';
+    const filename = fileInfo?.filename || key.split('/').pop() || 'dosya';
     const size = fileInfo?.size || 0;
     const contentType = fileInfo?.contentType || 'application/octet-stream';
     const fileIcon = getFileIcon(contentType);
-    const formattedSize = size > 0 ? formatBytes(size) : 'Unknown size';
+    const formattedSize = size > 0 ? formatBytes(size) : 'Bilinmeyen boyut';
 
     // Escape user input to prevent XSS
     const escapedFilename = escapeHtml(filename);
@@ -161,7 +161,7 @@ export const onRequestGet = async (context: PagesFunctionContext<Env>) => {
 
     // Generate HTML page
     const html = `<!DOCTYPE html>
-<html lang="en">
+<html lang="tr">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -257,16 +257,16 @@ export const onRequestGet = async (context: PagesFunctionContext<Env>) => {
     </span>
     <h1>${escapedFilename}</h1>
     <div class="file-info">
-      <div class="file-info-item"><strong>Size:</strong> ${escapedFormattedSize}</div>
-      <div class="file-info-item"><strong>Type:</strong> ${escapedContentType}</div>
-      ${fileInfo?.lastModified ? `<div class="file-info-item"><strong>Uploaded:</strong> ${escapeHtml(new Date(fileInfo.lastModified).toLocaleDateString())}</div>` : ''}
+      <div class="file-info-item"><strong>Boyut:</strong> ${escapedFormattedSize}</div>
+      <div class="file-info-item"><strong>Tür:</strong> ${escapedContentType}</div>
+      ${fileInfo?.lastModified ? `<div class="file-info-item"><strong>Yüklenme Tarihi:</strong> ${escapeHtml(new Date(fileInfo.lastModified).toLocaleDateString())}</div>` : ''}
     </div>
     <a href="${downloadUrl}" class="download-btn" download="${escapedFilename}">
       <i class="material-icons" style="vertical-align: middle; margin-right: 8px;">download</i>
-      Download File
+      Dosyayı İndir
     </a>
     <div class="brand">
-      Shared via <a href="${origin}">ozan.cloud</a>
+      Paylaşım: <a href="${origin}">ozan.cloud</a>
     </div>
   </div>
 </body>
@@ -280,14 +280,14 @@ export const onRequestGet = async (context: PagesFunctionContext<Env>) => {
       },
     });
   } catch (error) {
-    console.error('Slug resolution error:', error);
+    console.error('Slug çözümleme hatası:', error);
     return new Response(
       `<!DOCTYPE html>
-<html lang="en">
+<html lang="tr">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Error - oksend</title>
+  <title>Hata - oksend</title>
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -317,8 +317,8 @@ export const onRequestGet = async (context: PagesFunctionContext<Env>) => {
 <body>
   <div class="container">
     <i class="material-icons" style="font-size: 64px; color: #ef4444; margin-bottom: 24px;">error_outline</i>
-    <h1>Something went wrong</h1>
-    <p>We encountered an error loading this file.</p>
+    <h1>Bir şeyler ters gitti</h1>
+    <p>Bu dosyayı yüklerken bir hata ile karşılaştık.</p>
   </div>
 </body>
 </html>`,

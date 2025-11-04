@@ -2,9 +2,9 @@
  * Format bytes to human-readable string
  */
 export function formatBytes(bytes: number): string {
-  if (bytes === 0) return '0 Bytes';
+  if (bytes === 0) return '0 Bayt';
   const k = 1024;
-  const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+  const sizes = ['Bayt', 'KB', 'MB', 'GB'];
   const i = Math.floor(Math.log(bytes) / Math.log(k));
   return Math.round((bytes / Math.pow(k, i)) * 100) / 100 + ' ' + sizes[i];
 }
@@ -21,14 +21,14 @@ export function getFileExtension(filename: string): string {
  * Get MIME type category for display
  */
 export function getMimeCategory(mimeType: string): string {
-  if (mimeType.startsWith('image/')) return 'Image';
+  if (mimeType.startsWith('image/')) return 'Görsel';
   if (mimeType.startsWith('video/')) return 'Video';
-  if (mimeType.startsWith('audio/')) return 'Audio';
-  if (mimeType.startsWith('text/')) return 'Text';
+  if (mimeType.startsWith('audio/')) return 'Ses';
+  if (mimeType.startsWith('text/')) return 'Metin';
   if (mimeType.includes('pdf')) return 'PDF';
-  if (mimeType.includes('zip') || mimeType.includes('archive')) return 'Archive';
+  if (mimeType.includes('zip') || mimeType.includes('archive')) return 'Arşiv';
   if (mimeType.includes('json')) return 'JSON';
-  return 'File';
+  return 'Dosya';
 }
 
 /**

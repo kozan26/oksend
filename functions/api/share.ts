@@ -51,7 +51,7 @@ export const onRequestPost = async (context: PagesFunctionContext<Env>) => {
   // Validate authentication
   if (!validateAuth(request, env)) {
     return new Response(
-      JSON.stringify({ error: 'Unauthorized' }),
+      JSON.stringify({ error: 'Yetkisiz erişim' }),
       {
         status: 401,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
@@ -63,8 +63,8 @@ export const onRequestPost = async (context: PagesFunctionContext<Env>) => {
   if (!env.LINKS) {
     return new Response(
       JSON.stringify({
-        error: 'KV namespace not configured',
-        message: 'Slug-based links require KV binding',
+        error: 'KV namespace yapılandırılmamış',
+        message: 'Slug tabanlı bağlantılar için KV bağlaması gerekir',
       }),
       {
         status: 501,
@@ -82,7 +82,7 @@ export const onRequestPost = async (context: PagesFunctionContext<Env>) => {
 
     if (!body || !body.key) {
       return new Response(
-        JSON.stringify({ error: 'Key is required' }),
+        JSON.stringify({ error: 'Anahtar bilgisi gerekli' }),
         {
           status: 400,
           headers: { ...corsHeaders, 'Content-Type': 'application/json' },
@@ -94,7 +94,7 @@ export const onRequestPost = async (context: PagesFunctionContext<Env>) => {
     const object = await env.BUCKET.head(body.key);
     if (!object) {
       return new Response(
-        JSON.stringify({ error: 'File not found' }),
+        JSON.stringify({ error: 'Dosya bulunamadı' }),
         {
           status: 404,
           headers: { ...corsHeaders, 'Content-Type': 'application/json' },
@@ -118,7 +118,7 @@ export const onRequestPost = async (context: PagesFunctionContext<Env>) => {
 
     if (attempts >= 10) {
       return new Response(
-        JSON.stringify({ error: 'Failed to generate unique slug' }),
+        JSON.stringify({ error: 'Benzersiz slug üretilemedi' }),
         {
           status: 500,
           headers: { ...corsHeaders, 'Content-Type': 'application/json' },
@@ -147,12 +147,12 @@ export const onRequestPost = async (context: PagesFunctionContext<Env>) => {
       }
     );
   } catch (error) {
-    console.error('Share error:', error);
+    console.error('Paylaşım hatası:', error);
     
     // Handle JSON parse error
     if (error instanceof SyntaxError) {
       return new Response(
-        JSON.stringify({ error: 'Invalid request body' }),
+        JSON.stringify({ error: 'Geçersiz istek gövdesi' }),
         {
           status: 400,
           headers: { ...corsHeaders, 'Content-Type': 'application/json' },
@@ -162,8 +162,8 @@ export const onRequestPost = async (context: PagesFunctionContext<Env>) => {
 
     return new Response(
       JSON.stringify({
-        error: 'Failed to create share link',
-        details: error instanceof Error ? error.message : 'Unknown error',
+        error: 'Paylaşım bağlantısı oluşturulamadı',
+        details: error instanceof Error ? error.message : 'Bilinmeyen hata',
       }),
       {
         status: 500,
