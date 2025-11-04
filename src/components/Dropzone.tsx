@@ -1,5 +1,5 @@
 import { useCallback, useState, forwardRef, useImperativeHandle, useRef } from 'react';
-import { MdCloudUpload, MdInsights, MdLock, MdSpeed } from 'react-icons/md';
+import { MdCloudUpload } from 'react-icons/md';
 import { getAuthHeaders } from '../lib/auth';
 import type { UploadedFile } from '../App';
 
@@ -234,52 +234,6 @@ const Dropzone = forwardRef<DropzoneHandle, DropzoneProps>(
               </button>
             </div>
 
-            <dl
-              className={`flex w-full flex-wrap items-center justify-center gap-3 ${isCompact ? 'md:gap-4' : 'gap-4'}`}
-            >
-              <div
-                className="inline-flex items-center gap-2 rounded-full bg-[var(--m3-primary-container)]/75 px-4 py-2"
-                style={{ boxShadow: 'inset 0 -2px 4px rgba(30, 99, 213, 0.12)' }}
-              >
-                <MdSpeed className="h-4 w-4 text-[var(--m3-primary)]" />
-                <div className="text-left">
-                  <dt className="text-subhead font-semibold text-[var(--m3-on-primary-container)]">
-                    Hızlı transfer
-                  </dt>
-                  <dd className="text-caption text-[var(--m3-on-primary-container)]/70">
-                    Sunucuya anında ulaşır
-                  </dd>
-                </div>
-              </div>
-              <div
-                className="inline-flex items-center gap-2 rounded-full bg-[var(--m3-secondary-container)]/75 px-4 py-2"
-                style={{ boxShadow: 'inset 0 -2px 4px rgba(90, 106, 128, 0.12)' }}
-              >
-                <MdLock className="h-4 w-4 text-[var(--m3-secondary)]" />
-                <div className="text-left">
-                  <dt className="text-subhead font-semibold text-[var(--m3-on-secondary-container)]">
-                    Parola korumalı
-                  </dt>
-                  <dd className="text-caption text-[var(--m3-on-secondary-container)]/70">
-                    İzinsiz erişim yok
-                  </dd>
-                </div>
-              </div>
-              <div
-                className="inline-flex items-center gap-2 rounded-full bg-[var(--m3-surface-variant)]/70 px-4 py-2"
-                style={{ boxShadow: 'inset 0 -2px 4px rgba(67, 71, 78, 0.12)' }}
-              >
-                <MdInsights className="h-4 w-4 text-[var(--m3-primary)]" />
-                <div className="text-left">
-                  <dt className="text-subhead font-semibold text-[var(--m3-on-surface)]">
-                    Anlık linkler
-                  </dt>
-                  <dd className="text-caption text-[var(--m3-on-surface-variant)]">
-                    Paylaşım tek dokunuşla
-                  </dd>
-                </div>
-              </div>
-            </dl>
           </div>
 
           {uploading && (
