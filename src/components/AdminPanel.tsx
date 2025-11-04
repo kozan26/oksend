@@ -164,7 +164,7 @@ export default function AdminPanel({ onBackToUpload }: AdminPanelProps) {
   return (
     <div className="space-y-8 text-[var(--m3-on-surface)]">
       {/* Header Section */}
-      <section className="rounded-2xl bg-[var(--m3-surface)] border border-[var(--m3-surface-variant)]/50 px-8 py-10 shadow-apple-md">
+      <section className="rounded-2xl bg-[var(--m3-surface)] px-8 py-10 shadow-apple-md">
         <div className="flex flex-col gap-8 lg:flex-row lg:items-start lg:justify-between">
           <div className="space-y-4">
             <div className="flex items-center gap-4">
@@ -190,15 +190,15 @@ export default function AdminPanel({ onBackToUpload }: AdminPanelProps) {
 
           {/* Stats Cards */}
           <div className="grid grid-cols-3 gap-4 lg:w-auto">
-            <div className="rounded-xl bg-[var(--m3-surface-container)] border border-[var(--m3-surface-variant)]/50 px-4 py-4 text-center">
+            <div className="rounded-xl bg-[var(--m3-surface-container)] px-4 py-4 text-center">
               <div className="text-headline font-bold text-[var(--m3-on-surface)]">{summaries.totalFiles}</div>
               <div className="text-caption text-[var(--m3-on-surface-variant)] mt-1">Dosya</div>
             </div>
-            <div className="rounded-xl bg-[var(--m3-surface-container)] border border-[var(--m3-surface-variant)]/50 px-4 py-4 text-center">
+            <div className="rounded-xl bg-[var(--m3-surface-container)] px-4 py-4 text-center">
               <div className="text-subhead font-semibold text-[var(--m3-on-surface)]">{formatBytes(summaries.totalSize)}</div>
               <div className="text-caption text-[var(--m3-on-surface-variant)] mt-1">Toplam</div>
             </div>
-            <div className="rounded-xl bg-[var(--m3-surface-container)] border border-[var(--m3-surface-variant)]/50 px-4 py-4 text-center">
+            <div className="rounded-xl bg-[var(--m3-surface-container)] px-4 py-4 text-center">
               <div className="text-headline font-bold text-[var(--m3-on-surface)]">{summaries.withShortLink}</div>
               <div className="text-caption text-[var(--m3-on-surface-variant)] mt-1">Kısa URL</div>
             </div>
@@ -216,12 +216,12 @@ export default function AdminPanel({ onBackToUpload }: AdminPanelProps) {
 
       {/* Loading State */}
       {loading && files.length === 0 ? (
-        <div className="flex flex-col items-center justify-center rounded-2xl bg-[var(--m3-surface)] border border-[var(--m3-surface-variant)]/50 py-20 text-center shadow-apple-sm">
+        <div className="flex flex-col items-center justify-center rounded-2xl bg-[var(--m3-surface)] py-20 text-center shadow-apple-sm">
           <div className="h-12 w-12 animate-spin rounded-full border-[3px] border-[var(--m3-primary)] border-t-transparent" />
           <p className="mt-6 text-body text-[var(--m3-on-surface-variant)]">Dosyalar yükleniyor…</p>
         </div>
       ) : files.length === 0 ? (
-        <div className="flex flex-col items-center justify-center rounded-2xl bg-[var(--m3-surface)] border border-[var(--m3-surface-variant)]/50 py-20 text-center shadow-apple-sm">
+        <div className="flex flex-col items-center justify-center rounded-2xl bg-[var(--m3-surface)] py-20 text-center shadow-apple-sm">
           <div className="flex h-16 w-16 items-center justify-center rounded-full bg-[var(--m3-surface-container)] mb-4">
             <MdInfo className="h-8 w-8 text-[var(--m3-on-surface-variant)]" />
           </div>
@@ -233,7 +233,7 @@ export default function AdminPanel({ onBackToUpload }: AdminPanelProps) {
       ) : (
         <section className="space-y-6">
           {/* Search and Filter Bar */}
-          <div className="rounded-2xl bg-[var(--m3-surface)] border border-[var(--m3-surface-variant)]/50 p-6 shadow-apple-md">
+          <div className="rounded-2xl bg-[var(--m3-surface)] p-6 shadow-apple-md">
             <div className="flex flex-col gap-4 lg:flex-row lg:items-center">
               {/* Search Input */}
               <div className="relative flex-1">
@@ -294,7 +294,7 @@ export default function AdminPanel({ onBackToUpload }: AdminPanelProps) {
 
           {/* Empty Results */}
           {filteredFiles.length === 0 ? (
-            <div className="flex flex-col items-center justify-center rounded-2xl bg-[var(--m3-surface)] border border-[var(--m3-surface-variant)]/50 py-20 text-center shadow-apple-sm">
+            <div className="flex flex-col items-center justify-center rounded-2xl bg-[var(--m3-surface)] py-20 text-center shadow-apple-sm">
               <div className="flex h-16 w-16 items-center justify-center rounded-full bg-[var(--m3-surface-container)] mb-4">
                 <MdSearch className="h-8 w-8 text-[var(--m3-on-surface-variant)]" />
               </div>
@@ -309,7 +309,7 @@ export default function AdminPanel({ onBackToUpload }: AdminPanelProps) {
               {filteredFiles.map((file) => (
                 <article
                   key={file.key}
-                  className="group flex flex-col gap-4 rounded-2xl border border-[var(--m3-surface-variant)]/50 bg-[var(--m3-surface)] p-6 shadow-apple-sm transition-all duration-200 hover:shadow-apple-md"
+                  className="group flex flex-col gap-4 rounded-2xl bg-[var(--m3-surface)] p-6 shadow-apple-sm transition-all duration-200 hover:shadow-apple-md"
                 >
                   {/* File Header */}
                   <div className="flex items-start gap-4">
@@ -334,18 +334,18 @@ export default function AdminPanel({ onBackToUpload }: AdminPanelProps) {
 
                   {/* File Metadata */}
                   <div className="space-y-2">
-                    <div className="flex items-center justify-between rounded-xl bg-[var(--m3-surface-container-low)] border border-[var(--m3-surface-variant)]/50 px-3 py-2">
+                    <div className="flex items-center justify-between rounded-xl bg-[var(--m3-surface-container-low)] px-3 py-2">
                       <span className="text-caption text-[var(--m3-on-surface-variant)]">Boyut</span>
                       <span className="text-caption font-semibold text-[var(--m3-on-surface)]">{formatBytes(file.size)}</span>
                     </div>
-                    <div className="flex items-center justify-between rounded-xl bg-[var(--m3-surface-container-low)] border border-[var(--m3-surface-variant)]/50 px-3 py-2">
+                    <div className="flex items-center justify-between rounded-xl bg-[var(--m3-surface-container-low)] px-3 py-2">
                       <span className="text-caption text-[var(--m3-on-surface-variant)]">Tür</span>
                       <span className="text-caption font-semibold text-[var(--m3-on-surface)] truncate max-w-[150px]" title={file.contentType}>
                         {file.contentType}
                       </span>
                     </div>
                     {file.slug && (
-                      <div className="flex items-center justify-between rounded-xl bg-[var(--m3-primary-container)]/30 border border-[var(--m3-primary)]/30 px-3 py-2">
+                      <div className="flex items-center justify-between rounded-xl bg-[var(--m3-primary-container)]/30 px-3 py-2">
                         <span className="text-caption text-[var(--m3-primary)]">Slug</span>
                         <span className="text-caption font-mono font-semibold text-[var(--m3-primary)] truncate max-w-[150px]" title={file.slug}>
                           {file.slug}
@@ -406,7 +406,7 @@ export default function AdminPanel({ onBackToUpload }: AdminPanelProps) {
             </div>
           ) : (
             /* List View */
-            <div className="overflow-hidden rounded-2xl border border-[var(--m3-surface-variant)]/50 bg-[var(--m3-surface)] shadow-apple-md">
+            <div className="overflow-hidden rounded-2xl bg-[var(--m3-surface)] shadow-apple-md">
               <div className="overflow-x-auto">
                 <table className="min-w-full">
                   <thead className="bg-[var(--m3-surface-container)] border-b border-[var(--m3-surface-variant)]/50">
@@ -510,7 +510,7 @@ export default function AdminPanel({ onBackToUpload }: AdminPanelProps) {
           )}
 
           {/* Footer */}
-          <div className="rounded-2xl bg-[var(--m3-surface)] border border-[var(--m3-surface-variant)]/50 px-6 py-4 text-body text-[var(--m3-on-surface-variant)] shadow-apple-sm">
+          <div className="rounded-2xl bg-[var(--m3-surface)] px-6 py-4 text-body text-[var(--m3-on-surface-variant)] shadow-apple-sm">
             <span className="font-semibold text-[var(--m3-on-surface)]">{filteredFiles.length}</span> dosya
             listeleniyor — toplam <span className="font-semibold text-[var(--m3-on-surface)]">{files.length}</span>
           </div>
